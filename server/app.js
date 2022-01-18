@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const port = process.env.PORT || 3000
+const router = require('./routes')
+
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cors())
@@ -13,6 +15,8 @@ const imageKitUpload = require('./middlewares/imageKit')
 app.get('/', (req, res) => {
     res.send('image upload')
 })
+app.use(router);
+
 
 //pakai middleware instanceMulter.single('imageFile') dan imageKitUpload untuk upload image, nama file gambar dari postman adalah 'imagefile'
 app.post('/users', instanceMulter.single('imageFile'), imageKitUpload,  (req, res) => {
