@@ -4,14 +4,6 @@ module.exports = {
   theme: {},
   plugins: [require("daisyui")],
   daisyui: {
-    themes: [
-      {
-        light: {
-          primary: "#fb9400",
-          "primary-focus": "#ffecd1",
-          "primary-content": "#fff",
-        },
-      },
-    ],
+    themes: ["bumblebee"],
   },
 };
