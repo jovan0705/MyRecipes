@@ -15,9 +15,11 @@
     "cors": "^2.8.5",
     "dotenv": "^14.1.0",
     "express": "^4.17.2",
+    "jest": "^27.4.7",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.1",
-    "sequelize": "^6.13.0"
+    "sequelize": "^6.13.0",
+    "supertest": "^6.2.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.15",
