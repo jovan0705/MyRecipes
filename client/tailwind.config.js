@@ -1,4 +1,5 @@
 module.exports = {
+  mode: "jit",
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {},
   plugins: [require("daisyui")],
@@ -7,7 +8,7 @@ module.exports = {
       {
         light: {
           primary: "#fb9400",
-          "primary-focus": "#ffa72d",
+          "primary-focus": "#ffecd1",
           "primary-content": "#fff",
         },
       },
