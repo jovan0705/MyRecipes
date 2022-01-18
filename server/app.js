@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const port = process.env.PORT || 3000
+const { getRecipes } = require('./controller/recipeController')
+
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cors())
@@ -21,6 +23,9 @@ app.post('/users', instanceMulter.single('imageFile'), imageKitUpload,  (req, re
     
     res.status(200).json('image uploaded')
 })
+
+// fetch all recipes 
+app.get('/recipes', getRecipes)
 
 app.listen(port, () => {
     console.log(`app listening to http://localhost:${port}`)
