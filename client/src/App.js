@@ -1,22 +1,19 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./views/HomePage";
-<<<<<<< HEAD
 import RecipesPage from "./views/RecipesPage";
-=======
+import Container from "./views/Container";
 import Login from "./views/Auth/Login"
->>>>>>> sys/loginpage
 
 function App() {
   return (
     <div className="App">
       <Routes>
-<<<<<<< HEAD
-        <Route path="/" element={<RecipesPage />} />
-=======
-        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
->>>>>>> sys/loginpage
+        <Route path="/" element={<Container />}>
+          <Route path="home" element={<HomePage />} />
+          <Route path="recipes" element={<RecipesPage />} />
+        </Route>
       </Routes>
     </div>
   );
