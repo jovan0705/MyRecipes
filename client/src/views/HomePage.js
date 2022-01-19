@@ -11,7 +11,7 @@ const HomePage = () => {
           <div className="relative">
             <input
               type="text"
-              placeholder="Search by food name..."
+              placeholder="Search recipes..."
               className="w-full pr-16 input input-primary input-bordered input-sm"
             />
             <button className="absolute top-0 right-0 rounded-l-none btn btn-primary btn-sm text-base-content">
@@ -23,7 +23,10 @@ const HomePage = () => {
         <div className="flex-1 flex justify-end border">
           <div class="avatar">
             <div class="rounded-full w-10 h-10 ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img src="http://daisyui.com/tailwind-css-component-profile-1@94w.png" />
+              <img
+                src="http://daisyui.com/tailwind-css-component-profile-1@94w.png"
+                alt="avatar"
+              />
             </div>
           </div>
         </div>
