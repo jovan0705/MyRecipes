@@ -53,9 +53,9 @@ Jovan - 7
 Hadar - 7
 Ihza - 8
 ### USER FEATURE
-1. Login (jwt, bcrypt(comparePassword), authorization, authentication) - geri (done)
+1. Login (jwt, bcrypt(comparePassword), authorization, authentication) - geri (done, login dengan username belum diimplementasikan, login dengan email sudah bisa)
 2. Register (bcrypt(createPassword)) (ROLE NYA = admin dan user)- geri (done)
-3. Edit Profile (imageKit(buat upload profile picture)) - geri
+3. Edit Profile (imageKit(buat upload profile picture)) - geri (done, belum ada ubah password)
 4. Follow User - geri
 5. LiveChat using socket io - hadar
 6. Top Up Balance (payment gateway) - jovan
