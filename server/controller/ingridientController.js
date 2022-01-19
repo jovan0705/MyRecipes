@@ -7,6 +7,7 @@ class Controller {
             res.status(200).json(response);
         } catch (err) {
             console.log(err);
+            res.status(500).json(err);
         }
     }
 
@@ -22,6 +23,7 @@ class Controller {
             res.status(201).json({response});
         } catch (err) {
             console.log(err);
+            res.status(500).json(err);
         }
     }
 
@@ -35,6 +37,7 @@ class Controller {
             res.status(200).json({response});
         } catch (err) {
             console.log(err);
+            res.status(500).json(err);
         }
     }
 
@@ -61,6 +64,7 @@ class Controller {
             res.status(200).json({edited: response[1][0]});
         } catch (err) {
             console.log(err);
+            res.status(500).json(err);
         }
     }
 
@@ -82,6 +86,7 @@ class Controller {
             res.status(200).json(`Delete ${foundIngredient.name} from ingridient list`);
         } catch (err) {
             console.log(err);
+            res.status(500).json(err);
         }
     }
 }
