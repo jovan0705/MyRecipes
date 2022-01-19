@@ -12,7 +12,9 @@ app.use(cors())
 //middleware untuk imageupload
 const instanceMulter = require('./middlewares/multer')
 const imageKitUpload = require('./middlewares/imageKit')
+const router = require('./router')
 
+app.use(router)
 app.get('/', (req, res) => {
     res.send('image upload')
 })
