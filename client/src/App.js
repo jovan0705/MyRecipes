@@ -3,11 +3,13 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "./views/HomePage";
 import RecipesPage from "./views/RecipesPage";
 import Container from "./views/Container";
+import Login from "./views/Auth/Login"
 
 function App() {
   return (
     <div className="App">
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route path="/" element={<Container />}>
           <Route path="home" element={<HomePage />} />
           <Route path="recipes" element={<RecipesPage />} />
