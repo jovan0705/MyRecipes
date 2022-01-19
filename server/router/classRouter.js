@@ -1,8 +1,8 @@
 const classController = require('../controller/classController')
 const classRouter = require('express').Router()
 
-const instanceMulter = require('./middlewares/multer')
-const imageKitUpload = require('./middlewares/imageKit')
+const instanceMulter = require('../middlewares/multer')
+const imageKitUpload = require('../middlewares/imageKit')
 
 classRouter.get('/', classController.fetchClasses)
 classRouter.get('/:userId', classController.fetchClassesByUser)
