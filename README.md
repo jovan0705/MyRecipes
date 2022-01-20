@@ -53,9 +53,9 @@ Jovan - 7
 Hadar - 7
 Ihza - 8
 ### USER FEATURE
-1. Login (jwt, bcrypt(comparePassword), authorization, authentication) - geri
-2. Register (bcrypt(createPassword)) (ROLE NYA = admin dan user)- geri 
-3. Edit Profile (imageKit(buat upload profile picture)) - geri
+1. Login (jwt, bcrypt(comparePassword), authorization, authentication) - geri (done, login dengan username belum diimplementasikan, login dengan email sudah bisa)
+2. Register (bcrypt(createPassword)) (ROLE NYA = admin dan user)- geri (done)
+3. Edit Profile (imageKit(buat upload profile picture)) - geri (done, belum ada ubah password)
 4. Follow User - geri
 5. LiveChat using socket io - hadar
 6. Top Up Balance (payment gateway) - jovan
@@ -74,7 +74,7 @@ Ihza - 8
 
 ### ADMIN PAGE
 1. Login bareng sama User Feature, dibagi berdasarkan role aja
-2. Register admin beda page, tapi sama2 pakai bcrypt - geri
+2. Register admin beda page, tapi sama2 pakai bcrypt - geri (done)
 3. Fetch All Recipes - ihza
 4. Edit Recipes (bisa edit semua, imagekit) - ihza
 5. Delete Recipes (bisa delete semua) - ihza
