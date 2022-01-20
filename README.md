@@ -53,9 +53,9 @@ Jovan - 7
 Hadar - 7
 Ihza - 8
 ### USER FEATURE
-1. Login (jwt, bcrypt(comparePassword), authorization, authentication) - geri
-2. Register (bcrypt(createPassword)) (ROLE NYA = admin dan user)- geri 
-3. Edit Profile (imageKit(buat upload profile picture)) - geri
+1. Login (jwt, bcrypt(comparePassword), authorization, authentication) - geri (done, login dengan username belum diimplementasikan, login dengan email sudah bisa)
+2. Register (bcrypt(createPassword)) (ROLE NYA = admin dan user)- geri (done)
+3. Edit Profile (imageKit(buat upload profile picture)) - geri (done, belum ada ubah password)
 4. Follow User - geri
 5. LiveChat using socket io - hadar
 6. Top Up Balance (payment gateway) - jovan
@@ -63,30 +63,35 @@ Ihza - 8
 7. fetch classes on My Class Page - jovan
 
 ### RECIPE FEATURE
-1. Fetch All Recipe on Home Page - ihza
+1. Fetch All Recipe on Home Page - ihza (done)
 2. Fetch Favorited Recipe (berdasarkan Favoritenya User) My Favorite Page - ihza
 3. Fetch My Recipes (semua resep 1 user berdasarkan yang login) - ihza
-4. Fetch Recipe Detail on Recipe Detail Page - ihza
+4. Fetch Recipe Detail on Recipe Detail Page - ihza (done)
 5. Create Recipe (imagekit) - ihza
 6. Edit Recipe (hanya user yang buat yang boleh edit, imagekit) - ihza
 7. Delete Recipe (hanya user yang buat yang boleh delete) - ihza
 8. Rate Recipe (1 user hanya bisa rate 1 x recipe yang sama) - ihza
+9. Add Favorite
+10. Delete Favorite
 
 ### ADMIN PAGE
 1. Login bareng sama User Feature, dibagi berdasarkan role aja
-2. Register admin beda page, tapi sama2 pakai bcrypt - geri
+2. Register admin beda page, tapi sama2 pakai bcrypt - geri (done)
 3. Fetch All Recipes - ihza
 4. Edit Recipes (bisa edit semua, imagekit) - ihza
 5. Delete Recipes (bisa delete semua) - ihza
-6. Fetch all Ingridients - hadar
-7. Edit Ingridient - hadar
-8. Add Ingridient - hadar
-9. Fetch Classes - jovan
-10. Add Class (imagekit) - jovan
-11. Edit Class (imagekit) - jovan
-12. Delete Class - jovan
-13. Add Categories (imagekit) - hadar
+6. Fetch all Ingridients - hadar (done)
+7. Edit Ingridient - hadar (done)
+8. Add Ingridient - hadar (done)
+9. Fetch Classes - jovan (done)
+10. Add Class (imagekit) - jovan (done)
+11. Edit Class (imagekit) - jovan (done)
+12. Delete Class - jovan (done)
+13. Add Categories (imagekit) - hadar 
 14. Edit Categories (imagekit) - hadar
 15. Delete Categories - hadar
 
 ### TESTING
+
+### NOTE
+>Category ada image atau ngga ya ? di model cuma ada name aja

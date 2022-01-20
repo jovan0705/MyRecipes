@@ -1,11 +1,11 @@
 const classController = require('../controller/classController')
 const classRouter = require('express').Router()
 
-const instanceMulter = require('./middlewares/multer')
-const imageKitUpload = require('./middlewares/imageKit')
+const instanceMulter = require('../middlewares/multer')
+const imageKitUpload = require('../middlewares/imageKit')
 
 classRouter.get('/', classController.fetchClasses)
-classRouter.get('/:userId', classController.fetchClassesByUser)
+classRouter.get('/:userId', classController.fetchUserClasses)
 classRouter.post('/add', instanceMulter.single('imageFile'), imageKitUpload, classController.addClass)
 classRouter.put('/edit/:classId', instanceMulter.single('imageFile'), imageKitUpload, classController.editClass)
 classRouter.delete('/delete/:classId', classController.deleteClass)

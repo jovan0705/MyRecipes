@@ -6,12 +6,19 @@ const imageKitUpload = async (req, res, next) => {
     next();
   } else {
     try {
+      const fileType = req.file.mimetype.split("/")[0];
+      if (fileType !== "image") {
+        throw { name: "notImageFile" };
+      }
+      if (req.file.size > 300000) {
+        throw { name: "imageTooBig" };
+      }
+
       const sentData = req.file.buffer.toString("base64");
-      
+
       let form = new formData();
       form.append("file", sentData);
       form.append("fileName", req.file.originalname);
-
 
       const response = await imagekitAxios.post("/files/upload", form, {
         headers: form.getHeaders(),
@@ -22,7 +29,8 @@ const imageKitUpload = async (req, res, next) => {
       next();
     } catch (err) {
       console.log(err);
-      res.status(500).json(err);
+      next(err);
+      // res.status(500).json(err);
     }
   }
 };
