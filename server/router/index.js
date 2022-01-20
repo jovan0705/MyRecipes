@@ -3,6 +3,7 @@ const userRouter = require('./userRouter')
 const classRouter = require('./classRouter')
 const ingredients = require('./ingredientsRouter');
 const categories = require('./categoriesRouter');
+const recipeRouter = require('./recipeRouter')
 const userController = require('../controller/userController')
 const userAuthentication = require("../middlewares/authentication");
 const { errorHandler } = require('../middlewares/errorHandler');
@@ -19,6 +20,7 @@ router.use('/users', userRouter)
 router.use('/ingredients', ingredients);
 router.use('/categories', categories);
 router.use('/class', classRouter)
+router.use('/recipes', recipeRouter)
 
 router.use(errorHandler)
 

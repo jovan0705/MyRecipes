@@ -1,4 +1,4 @@
-const { Recipe, UserFavoritedRecipes } = require('../models')
+const { Recipe, UserFavoritedRecipe } = require('../models')
 
 const getRecipes = async (req, res, next) => {
     try {
@@ -13,7 +13,15 @@ const getUserFavouritedRecipes = async (req, res, next) => {
     try {
         // asumsi userId didapatkan dari req.user yang dimana terassign pada proses authentication
         const userId = req.user.id
-        const response = await UserFavoritedRecipes.findAll({where: {userId}, raw: true})
+        const response = await UserFavoritedRecipe.findAll({
+            where: {userId}, 
+            raw: true,
+        })
+        // const recipes = await Recipe.findAll({
+        //     where: {
+        //         id: response.some()
+        //     }
+        // })
         res.status(200).json(response)
     } catch (err) {
         next(err)

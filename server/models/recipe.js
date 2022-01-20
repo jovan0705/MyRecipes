@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Recipe.hasMany(models.UserFavoritedRecipe, {foreignKey: 'recipeId'})
     }
   }
   Recipe.init({
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     steps: {
-      type: DataTypes.TEXT,
+      type: DataTypes.ARRAY(DataTypes.TEXT),
       allowNull: false,
       validate: {
         notNull: true,
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     userId: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notNull: true,
@@ -48,7 +48,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     totalCalories: {
-      type: DataTypes.STRING
+      //satuannya kcal
+      type: DataTypes.INTEGER
     }
   }, {
     sequelize,
