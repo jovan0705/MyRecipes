@@ -20,14 +20,17 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="flex-1 flex justify-end border">
-          <div class="avatar">
-            <div class="rounded-full w-10 h-10 ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img
-                src="http://daisyui.com/tailwind-css-component-profile-1@94w.png"
-                alt="avatar"
-              />
+        <div className="flex-1 flex justify-end items-center">
+          <div className="flex flex-row items-center">
+            <div class="avatar mr-5">
+              <div class="rounded-full w-10 h-10 ring ring-primary ring-offset-base-100 ring-offset-2">
+                <img
+                  src="http://daisyui.com/tailwind-css-component-profile-1@94w.png"
+                  alt="avatar"
+                />
+              </div>
             </div>
+            <Dropdown />
           </div>
         </div>
       </div>
