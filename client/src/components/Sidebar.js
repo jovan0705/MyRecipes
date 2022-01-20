@@ -26,7 +26,9 @@ const Sidebar = () => {
         <SidebarIcon icon={<IoBookmark size="18" />} text="Bookmarks" />
         <SidebarIcon icon={<IoWallet size="18" />} text="Wallet" />
         <SidebarIcon icon={<IoChatbubbles size="18" />} text="Forum" />
-        <SidebarIcon icon={<IoPerson size="18" />} text="My Profile" />
+        <Link to="/userProfile">
+          <SidebarIcon icon={<IoPerson size="18" />} text="My Profile" />
+        </Link>
         <SidebarIcon icon={<IoPersonAddSharp size="18" />} text="Add Admin" />
       </div>
       <div className=" flex flex-col">

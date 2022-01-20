@@ -5,6 +5,7 @@ import RecipesPage from "./views/RecipesPage";
 import Container from "./views/Container";
 import Login from "./views/Auth/Login"
 import Register from "./views/Auth/Register";
+import UserProfile from "./views/UserProfile";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Container />}>
           <Route path="home" element={<HomePage />} />
           <Route path="recipes" element={<RecipesPage />} />
+          <Route path="UserProfile" element={<UserProfile />} />
         </Route>
       </Routes>
     </div>
