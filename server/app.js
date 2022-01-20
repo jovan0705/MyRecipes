@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const port = process.env.PORT || 3000
-const router = require('./routes')
 const { getRecipes, getUserFavouritedRecipes, getLoggedInUserRecipes, getRecipeDetail } = require('./controller/recipeController')
 
 app.use(express.urlencoded({extended: true}))
@@ -14,7 +13,7 @@ const instanceMulter = require('./middlewares/multer')
 const imageKitUpload = require('./middlewares/imageKit')
 const router = require('./router')
 
-app.use(router)
+
 app.get('/', (req, res) => {
     res.send('image upload')
 })
