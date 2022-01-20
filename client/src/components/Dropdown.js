@@ -1,6 +1,8 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import { IoPersonOutline, IoPerson } from "react-icons/io5";
+import DropdownIcon from "./DropdownIcon";
 
 function Dropdown() {
   return (
@@ -10,7 +12,7 @@ function Dropdown() {
           <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
             Welcome, Jordy
             <ChevronDownIcon
-              className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
+              className="w-5 h-5 ml-2 -mr-1 text-white hover:text-violet-100"
               aria-hidden="true"
             />
           </Menu.Button>
@@ -30,21 +32,15 @@ function Dropdown() {
                 {({ active }) => (
                   <button
                     className={`${
-                      active ? "bg-violet-500 text-white" : "text-gray-900"
+                      active ? "bg-primary text-white" : "text-gray-900"
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                   >
                     {active ? (
-                      <EditActiveIcon
-                        className="w-5 h-5 mr-2"
-                        aria-hidden="true"
-                      />
+                      <DropdownIcon icon={<IoPerson size="18" />} />
                     ) : (
-                      <EditInactiveIcon
-                        className="w-5 h-5 mr-2"
-                        aria-hidden="true"
-                      />
+                      <DropdownIcon icon={<IoPerson size="18" />} />
                     )}
-                    Edit
+                    My Profile
                   </button>
                 )}
               </Menu.Item>
@@ -52,7 +48,7 @@ function Dropdown() {
                 {({ active }) => (
                   <button
                     className={`${
-                      active ? "bg-violet-500 text-white" : "text-gray-900"
+                      active ? "bg-primary text-white" : "text-gray-900"
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                   >
                     {active ? (
@@ -76,7 +72,7 @@ function Dropdown() {
                 {({ active }) => (
                   <button
                     className={`${
-                      active ? "bg-violet-500 text-white" : "text-gray-900"
+                      active ? "bg-primary text-white" : "text-gray-900"
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                   >
                     {active ? (
@@ -98,7 +94,7 @@ function Dropdown() {
                 {({ active }) => (
                   <button
                     className={`${
-                      active ? "bg-violet-500 text-white" : "text-gray-900"
+                      active ? "bg-primary text-white" : "text-gray-900"
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                   >
                     {active ? (
@@ -122,7 +118,7 @@ function Dropdown() {
                 {({ active }) => (
                   <button
                     className={`${
-                      active ? "bg-violet-500 text-white" : "text-gray-900"
+                      active ? "bg-primary text-white" : "text-gray-900"
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                   >
                     {active ? (
@@ -149,6 +145,7 @@ function Dropdown() {
 }
 
 function EditInactiveIcon(props) {
+  console.log(props);
   return (
     <svg
       {...props}
@@ -158,8 +155,8 @@ function EditInactiveIcon(props) {
     >
       <path
         d="M4 13V16H7L16 7L13 4L4 13Z"
-        fill="#EDE9FE"
-        stroke="#A78BFA"
+        fill="#fff"
+        stroke="#ffe572"
         strokeWidth="2"
       />
     </svg>
@@ -176,8 +173,8 @@ function EditActiveIcon(props) {
     >
       <path
         d="M4 13V16H7L16 7L13 4L4 13Z"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
+        fill="#F9D72F"
+        stroke="#ffe572"
         strokeWidth="2"
       />
     </svg>
