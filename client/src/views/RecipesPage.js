@@ -16,7 +16,7 @@ const RecipesPage = () => {
 
   return (
     <div>
-      {recipes && <h1>{JSON.stringify(recipes)}</h1>}
+      {recipes && !loading && <h1>{JSON.stringify(recipes)}</h1>}
       {loading && <h1>Loading...</h1>}
       {error && <h1>Error...</h1>}
     </div>
