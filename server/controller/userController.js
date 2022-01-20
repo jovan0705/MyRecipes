@@ -76,7 +76,7 @@ const editProfile = async (req, res, next) => {
     const userId = req.params.id;
     const { name, description } = req.body;
     const profilePict = req.additionalData;
-
+    // kalau sempat tambahkan edit password juga
     const profileData = await User.update(
       {
         name,
