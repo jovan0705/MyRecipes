@@ -22,7 +22,9 @@ const Sidebar = () => {
         <Link to="/recipes">
           <SidebarIcon icon={<IoNewspaper size="18" />} text="Recipes" />
         </Link>
-        <SidebarIcon icon={<IoAdd size="18" />} text="Add Recipe" />
+        <Link to="/post">
+          <SidebarIcon icon={<IoAdd size="18" />} text="Post Recipe" />
+        </Link>
         <SidebarIcon icon={<IoBookmark size="18" />} text="Bookmarks" />
         <SidebarIcon icon={<IoWallet size="18" />} text="Wallet" />
         <SidebarIcon icon={<IoChatbubbles size="18" />} text="Forum" />

@@ -1,7 +1,6 @@
 import { IoSearch, IoChevronForwardCircleSharp } from "react-icons/io5";
 import CategoryCard from "../components/CategoryCard";
 import Dropdown from "../components/Dropdown";
-import RecipeCard from "../components/RecipeCard";
 
 const HomePage = () => {
   return (
@@ -71,8 +70,8 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-10">
-          <RecipeCard />
+        <div className="grid grid-cols-3 gap-10">
+          {/* Recipe card goes here */}
         </div>
       </div>
     </div>
