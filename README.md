@@ -81,10 +81,10 @@ Ihza - 8
 6. Fetch all Ingridients - hadar
 7. Edit Ingridient - hadar
 8. Add Ingridient - hadar
-9. Fetch Classes - jovan
-10. Add Class (imagekit) - jovan
-11. Edit Class (imagekit) - jovan
-12. Delete Class - jovan
+9. Fetch Classes - jovan (done)
+10. Add Class (imagekit) - jovan (done)
+11. Edit Class (imagekit) - jovan (done)
+12. Delete Class - jovan (done)
 13. Add Categories (imagekit) - hadar
 14. Edit Categories (imagekit) - hadar
 15. Delete Categories - hadar
