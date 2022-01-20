@@ -90,3 +90,6 @@ Ihza - 8
 15. Delete Categories - hadar
 
 ### TESTING
+
+### NOTE
+>Category ada image atau ngga ya ? di model cuma ada name aja

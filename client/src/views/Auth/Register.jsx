@@ -1,6 +1,6 @@
 import './styles/login.css'
 
-const Login = () => {
+const Register = () => {
     return (
         <>
         <section className="absolute w-full h-full">
@@ -12,16 +12,35 @@ const Login = () => {
                   <div className="rounded-t mb-0 px-6 py-6">
                   </div>
                   <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                    <div className="text-gray-500 text-center mb-3 font-bold">
-                        <h6 className="text-gray-600 text-xl font-bold">Welcome back</h6>
+                    <div className="text-gray-500 text-center mb-3">
+                        <h6 className="text-gray-600 text-xl font-bold mb-2">Welcome</h6>
+                        <h6 className="text-gray-400 text-md">Please fill in your personal data</h6>
                     </div>
                     <form className='py-5'>
                       <div className="relative w-full mb-7">
-                        <label className="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">Email / Username</label>
+                        <label className="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">Name</label>
                         <input
-                          type="email"
+                          type={'text'}
                           className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
-                          placeholder="Email or Username"
+                          placeholder="Name"
+                          style={{ transition: "all .15s ease" }}
+                        />
+                      </div>
+                      <div className="relative w-full mb-7">
+                        <label className="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">Username</label>
+                        <input
+                          type={'text'}
+                          className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
+                          placeholder="Username"
+                          style={{ transition: "all .15s ease" }}
+                        />
+                      </div>
+                      <div className="relative w-full mb-7">
+                        <label className="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">Email</label>
+                        <input
+                          type={'email'}
+                          className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
+                          placeholder="Email"
                           style={{ transition: "all .15s ease" }}
                         />
                       </div>
@@ -42,7 +61,7 @@ const Login = () => {
                           type="button"
                           style={{ transition: "all .15s ease" }}
                         >
-                          Sign In
+                          Register
                         </button>
                       </div>
                     </form>
@@ -57,4 +76,4 @@ const Login = () => {
 }
 
 
-export default Login
+export default Register

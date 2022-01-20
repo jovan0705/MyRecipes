@@ -1,9 +1,13 @@
-const classRouter = require('./classRouter')
-const userRouter = require('./userRouter')
 const router = require('express').Router()
+const userRouter = require('./userRouter')
+const classRouter = require('./classRouter')
+const ingredients = require('./ingredientsRouter');
+const categories = require('./categoriesRouter');
 
-// router.use(userRouter)
 router.use('/users', userRouter)
-router.use(classRouter)
+router.use('/ingredients', ingredients);
+router.use('/categories', categories);
+router.use('/class', classRouter)
+
 
 module.exports = router
