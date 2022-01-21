@@ -1,15 +1,19 @@
 const Jumbtron = () => {
   return (
     <div>
-      <div className="my-10 rounded-xl overflow-hidden shadow bg-primary flex p-10">
-        <div style={{ flex: 2 }}>
-          <h1 className="text-4xl mb-4 text-base-content text-bold">
+      <div className="rounded-xl overflow-hidden shadow bg-primary flex p-10 h-72">
+        <div
+          style={{ flex: 2 }}
+          className="flex justify-center items-center flex-col"
+        >
+          <h1 className="text-5xl mb-4 text-base-content font-bold">
             Add your own recipe
           </h1>
-          <h2 className="text-xl text-base-content">
+          <h2 className="text-2xl text-base-content mb-7">
             Upload your own home made recipe, and share it with other members of
             our community
           </h2>
+          <button class="btn btn-accent btn-lg">Add a Recipe Now</button>
         </div>
         <div className="flex-1 relative">
           <img

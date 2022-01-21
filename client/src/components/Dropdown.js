@@ -1,33 +1,63 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { IoPersonOutline, IoPerson } from "react-icons/io5";
+import {
+  IoPersonOutline,
+  IoPerson,
+  IoBookmark,
+  IoBookmarkOutline,
+  IoNewspaper,
+  IoNewspaperOutline,
+  IoVideocamOutline,
+  IoVideocam,
+} from "react-icons/io5";
 import DropdownIcon from "./DropdownIcon";
+import { Link } from "react-router-dom";
 
 function Dropdown() {
   return (
     <div className="text-right">
-      <Menu as="div" className="relative inline-block text-left z-10">
+      <Menu as="div" className="relative inline-block text-left z-10 shadow">
         <div>
-          <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+          <Menu.Button className="text-lg  inline-flex justify-center w-full px-4 py-4 font-medium bg-primary rounded-md hover:bg-opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 text-base-content">
             Welcome, Jordy
             <ChevronDownIcon
-              className="w-5 h-5 ml-2 -mr-1 text-white hover:text-violet-100"
+              className="w-7 h-7 ml-2 -mr-1 text-base-content "
               aria-hidden="true"
             />
           </Menu.Button>
         </div>
         <Transition
           as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
+          enter="transition ease-out duration-300"
+          enterFrom="transform opacity-0 scale-95 duration-300"
+          enterTo="transform opacity-100 scale-100 duration-300"
+          leave="transition ease-in duration-300"
+          leaveFrom="transform opacity-100 scale-100 duration-300"
+          leaveTo="transform opacity-0 scale-95 duration-300"
         >
           <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="px-1 py-1 ">
+            <div className="px-2 py-1 ">
+              <Link to="/userProfile">
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      className={`${
+                        active ? "bg-primary text-white" : "text-gray-900"
+                      } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      {active ? (
+                        <DropdownIcon icon={<IoPerson size="26" />} />
+                      ) : (
+                        <DropdownIcon icon={<IoPersonOutline size="26" />} />
+                      )}
+                      <span className="text-lg"> My Profile</span>
+                    </button>
+                  )}
+                </Menu.Item>
+              </Link>
+            </div>
+            <div className="px-2 py-1">
               <Menu.Item>
                 {({ active }) => (
                   <button
@@ -36,38 +66,17 @@ function Dropdown() {
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                   >
                     {active ? (
-                      <DropdownIcon icon={<IoPerson size="18" />} />
+                      <DropdownIcon icon={<IoBookmark size="26" />} />
                     ) : (
-                      <DropdownIcon icon={<IoPerson size="18" />} />
+                      <DropdownIcon icon={<IoBookmarkOutline size="26" />} />
                     )}
-                    My Profile
-                  </button>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-primary text-white" : "text-gray-900"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    {active ? (
-                      <DuplicateActiveIcon
-                        className="w-5 h-5 mr-2"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <DuplicateInactiveIcon
-                        className="w-5 h-5 mr-2"
-                        aria-hidden="true"
-                      />
-                    )}
-                    Duplicate
+                    <span className="text-lg">Bookmarks</span>
                   </button>
                 )}
               </Menu.Item>
             </div>
-            <div className="px-1 py-1">
+
+            <div className="px-2 py-1">
               <Menu.Item>
                 {({ active }) => (
                   <button
@@ -76,63 +85,11 @@ function Dropdown() {
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                   >
                     {active ? (
-                      <ArchiveActiveIcon
-                        className="w-5 h-5 mr-2"
-                        aria-hidden="true"
-                      />
+                      <DropdownIcon icon={<IoVideocam size="26" />} />
                     ) : (
-                      <ArchiveInactiveIcon
-                        className="w-5 h-5 mr-2"
-                        aria-hidden="true"
-                      />
+                      <DropdownIcon icon={<IoVideocamOutline size="26" />} />
                     )}
-                    Archive
-                  </button>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-primary text-white" : "text-gray-900"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    {active ? (
-                      <MoveActiveIcon
-                        className="w-5 h-5 mr-2"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <MoveInactiveIcon
-                        className="w-5 h-5 mr-2"
-                        aria-hidden="true"
-                      />
-                    )}
-                    Move
-                  </button>
-                )}
-              </Menu.Item>
-            </div>
-            <div className="px-1 py-1">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-primary text-white" : "text-gray-900"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    {active ? (
-                      <DeleteActiveIcon
-                        className="w-5 h-5 mr-2 text-violet-400"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <DeleteInactiveIcon
-                        className="w-5 h-5 mr-2 text-violet-400"
-                        aria-hidden="true"
-                      />
-                    )}
-                    Delete
+                    <span className="text-lg">My Classes</span>
                   </button>
                 )}
               </Menu.Item>
@@ -141,43 +98,6 @@ function Dropdown() {
         </Transition>
       </Menu>
     </div>
-  );
-}
-
-function EditInactiveIcon(props) {
-  console.log(props);
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 13V16H7L16 7L13 4L4 13Z"
-        fill="#fff"
-        stroke="#ffe572"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function EditActiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 13V16H7L16 7L13 4L4 13Z"
-        fill="#F9D72F"
-        stroke="#ffe572"
-        strokeWidth="2"
-      />
-    </svg>
   );
 }
 
