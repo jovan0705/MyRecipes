@@ -49,24 +49,6 @@ module.exports = {
         role: "user",
         createdAt: new Date(),
         updatedAt: new Date()
-      },
-      {
-        name: "user3",
-        username: "user3name",
-        email: "user3@gmail.com",
-        password: hashPassword("12345"),
-        role: "user",
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        name: "user4",
-        username: "user4name",
-        email: "user4@gmail.com",
-        password: hashPassword("12345"),
-        role: "user",
-        createdAt: new Date(),
-        updatedAt: new Date()
       }
      ])
   },

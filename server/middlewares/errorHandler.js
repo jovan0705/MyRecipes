@@ -1,9 +1,17 @@
 const errorHandler = (err, req, res, next) => {
   console.log(err);
   switch (err.name) {
-    case "HEHE":
-      res.status(200).json("hehe");
-      break;
+    case "BALANCE_NOT_ENOUGH":
+        res.status(400).json({message: 'Balance not Enough'})
+        break;
+    case "CLASS_ALREADY_REGISTERED":
+        res.status(400).json({message: 'Class already Registered'})
+        break;
+            
+    case "MY_CLASS_NOT_FOUND":
+        res.status(400).json({message: 'Class not Found'})
+        break;
+      
     case 'isRated':
         res.status(400).json({message: 'Item already rated'})
         break;
@@ -43,3 +51,4 @@ const errorHandler = (err, req, res, next) => {
 };
 
 module.exports = { errorHandler };
+

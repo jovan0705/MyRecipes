@@ -4,8 +4,11 @@ const {userAuthorization, adminRegisterAuthorization} = require("../middlewares/
 const instanceMulter = require("../middlewares/multer");
 const imageKitUpload = require("../middlewares/imageKit");
 
+
 router.post("/follows", userController.doFollows);
 router.post("/adminregister", adminRegisterAuthorization, userController.adminRegister);
+router.post('/topup', userController.topUpBalance)
+
 router.put(
   "/editprofile/:id",
   userAuthorization,

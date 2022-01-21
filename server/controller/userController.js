@@ -1,6 +1,8 @@
-const { User, UserFollow } = require("../models/index");
+
+const { User, UserFollow, BalanceHistory } = require("../models/index");
 const { decryptPassword, hashPassword } = require("../helpers/bcrypt");
 const { getToken } = require("../helpers/jwt");
+const midtrans = require("../helpers/midtrans");
 
 const userRegister = async (req, res, next) => {
   // console.log('do user register');
@@ -147,6 +149,28 @@ const doFollows = async (req, res, next) => {
     next(err);
   }
 };
+const topUpBalance = async (req, res, next) => {
+  try {
+    const {id} = req.user
+    const {amount} = req.body
+    const balanceHistory = await BalanceHistory.create({userId: id, amount})
+    const token = await midtrans(balanceHistory.id, amount, req.user.email)
+    res.status(200).json(token)
+  } catch (err) {
+    next(err)
+  }
+}
+
+const successTopUp = async (req, res, next) => {
+  try {
+    const {id} = req.user
+    const transaction = await BalanceHistory.findOne({where: {userId: id, isDone: false}})
+    await User.update({balance: transaction.amount}, {where: {id}})
+    res.status(200).json({message: `Success add Balance with Amount ${transaction.amount}`})
+  } catch (err) {
+    next(err)
+  }
+}
 
 module.exports = {
   userRegister,
@@ -154,4 +178,6 @@ module.exports = {
   doLogin,
   editProfile,
   doFollows,
+  topUpBalance, 
+  successTopUp
 };
