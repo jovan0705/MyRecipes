@@ -5,13 +5,13 @@ module.exports = {
     await queryInterface.bulkInsert('UserFavoritedRecipes', [
       {
         recipeId: 5,
-        userId: 11,
+        userId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         recipeId: 6,
-        userId: 11,
+        userId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
