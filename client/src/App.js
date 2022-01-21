@@ -9,6 +9,7 @@ import UserProfile from "./views/UserProfile";
 import PostRecipe from "./views/forms/PostRecipe";
 import ClassPage from "./views/ClassPage";
 import WalletPage from "./views/WalletPage";
+import CategoriesPage from "./views/CategoriesPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="post" element={<PostRecipe />} />
           <Route path="classes" element={<ClassPage />} />
           <Route path="wallet" element={<WalletPage />} />
+          <Route path="categories" element={<CategoriesPage />} />
         </Route>
       </Routes>
     </div>

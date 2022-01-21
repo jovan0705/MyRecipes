@@ -6,8 +6,6 @@ import {
   IoPerson,
   IoBookmark,
   IoBookmarkOutline,
-  IoNewspaper,
-  IoNewspaperOutline,
   IoVideocamOutline,
   IoVideocam,
 } from "react-icons/io5";
