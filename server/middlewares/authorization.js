@@ -6,23 +6,35 @@ const userAuthorization = async (req, res, next) => {
     const userId = req.user.id;
     const userRole = req.user.role;
 
-    const user = await User.findByPk(targetId)
-        if (!user) {
-            throw({name: 'notFound'})
-        }
+    const user = await User.findByPk(targetId);
+    if (!user) {
+      throw { name: "notFound" };
+    }
 
-        if (userRole !== 'admin') {
-            if (user.id !== userId) {
-                throw({name: 'unauthorized'})
-            }
-        }
+    if (userRole !== "admin") {
+      if (user.id !== userId) {
+        throw { name: "unauthorized" };
+      }
+    }
 
-        next()
+    next();
   } catch (err) {
-    console.log(err);
-    // res.status(500).json(err)
     next(err);
   }
 };
 
-module.exports = userAuthorization
+const adminRegisterAuthorization = async (req, res, next) => {
+  try {
+    const userRole = req.user.role;
+
+    if (userRole !== 'admin') {
+      throw { name: "unauthorized" }
+    }
+
+    next()
+  } catch (err) {
+    next(err)
+  }
+}
+
+module.exports = {userAuthorization, adminRegisterAuthorization};
