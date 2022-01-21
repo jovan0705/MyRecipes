@@ -1,6 +1,7 @@
 import { IoSearch, IoChevronForwardCircleSharp } from "react-icons/io5";
 import CategoryCard from "../components/CategoryCard";
 import Dropdown from "../components/Dropdown";
+import Jumbotron from "../components/Jumbtoron";
 import RecipeCard from '../components/RecipeCard'
 
 const HomePage = () => {
@@ -36,13 +37,8 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className="my-10 rounded-xl overflow-hidden h-72 shadow">
-        <img
-          src="https://cdn.dribbble.com/users/2417352/screenshots/16024017/media/7ed80e6fb9343313ba401e6188c22a01.jpg?compress=1&resize=1600x1200&vertical=top"
-          alt="Jumbotron"
-        />
-      </div>
-      <div className="my-10">
+      <Jumbotron />
+      <div>
         <div className="flex justify-between">
           <div className="heading">Recipe Categories</div>
           <div className="flex hover:scale-110 duration-200 cursor-pointer">
