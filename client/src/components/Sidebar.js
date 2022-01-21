@@ -1,13 +1,13 @@
 import {
   IoHome,
   IoWallet,
-  IoBookmark,
   IoChatbubbles,
   IoLogOut,
-  IoPerson,
   IoNewspaper,
   IoPersonAddSharp,
   IoAdd,
+  IoVideocam,
+  IoFastFood,
 } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import SidebarIcon from "./SidebarIcon";
@@ -25,8 +25,16 @@ const Sidebar = () => {
         <Link to="/post">
           <SidebarIcon icon={<IoAdd />} text="Post Recipe" />
         </Link>
-        <SidebarIcon icon={<IoWallet />} text="Wallet" />
+        <Link to="/wallet">
+          <SidebarIcon icon={<IoWallet />} text="Wallet" />
+        </Link>
         <SidebarIcon icon={<IoChatbubbles />} text="Forum" />
+        <Link to="/classes">
+          <SidebarIcon icon={<IoVideocam />} text="Classes" />
+        </Link>
+        <Link to="/categories">
+          <SidebarIcon icon={<IoFastFood />} text="Categories" />
+        </Link>
         <SidebarIcon icon={<IoPersonAddSharp />} text="Add Admin" />
       </div>
       <div className=" flex flex-col">

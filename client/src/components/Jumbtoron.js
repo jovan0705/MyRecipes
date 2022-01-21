@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Jumbtron = () => {
   return (
     <div>
@@ -13,7 +15,11 @@ const Jumbtron = () => {
             Upload your own home made recipe, and share it with other members of
             our community
           </h2>
-          <button class="btn btn-accent btn-lg">Add a Recipe Now</button>
+          <Link to="/post">
+            <button class="btn btn-accent btn-lg hover:scale-110 duration-200">
+              Add a Recipe Now
+            </button>
+          </Link>
         </div>
         <div className="flex-1 relative">
           <img

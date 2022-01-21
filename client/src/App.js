@@ -8,6 +8,7 @@ import Register from "./views/Auth/Register";
 import UserProfile from "./views/UserProfile";
 import PostRecipe from "./views/forms/PostRecipe";
 import ClassPage from "./views/ClassPage";
+import WalletPage from "./views/WalletPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="UserProfile" element={<UserProfile />} />
           <Route path="post" element={<PostRecipe />} />
           <Route path="classes" element={<ClassPage />} />
+          <Route path="wallet" element={<WalletPage />} />
         </Route>
       </Routes>
     </div>
