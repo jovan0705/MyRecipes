@@ -14,6 +14,7 @@ class Controller {
         try {
             const data = {
                 name: req.body.name,
+                imageUrl: req.additionalData
             }
             const response = await Category.create(data);
             res.status(201).json({response});
@@ -43,7 +44,8 @@ class Controller {
             }
 
             const data = {
-                name: req.body.name
+                name: req.body.name,
+                imageUrl: req.additionalData
             }
 
             const response = await Category.update(data, {

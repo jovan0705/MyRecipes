@@ -2,6 +2,7 @@ import { IoSearch, IoChevronForwardCircleSharp } from "react-icons/io5";
 import CategoryCard from "../components/CategoryCard";
 import Dropdown from "../components/Dropdown";
 import Jumbotron from "../components/Jumbtoron";
+import RecipeCard from '../components/RecipeCard'
 
 const HomePage = () => {
   return (
@@ -56,7 +57,7 @@ const HomePage = () => {
           <CategoryCard />
         </div>
       </div>
-      <div className="border border-blue-600">
+      <div className="my-10 p-2">
         <div className="flex justify-between">
           <div className="heading">Recipes</div>
           <div className="flex hover:scale-110 duration-200 cursor-pointer">
@@ -66,8 +67,13 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-10">
-          {/* Recipe card goes here */}
+        <div className="grid grid-cols-3 gap-10 p-3">
+          <RecipeCard/>
+          <RecipeCard/>
+          <RecipeCard/>
+          <RecipeCard/>
+          <RecipeCard/>
+          <RecipeCard/>
         </div>
       </div>
     </div>
