@@ -1,5 +1,6 @@
-const { User, BalanceHistory } = require("../models/index");
-const { decryptPassword } = require("../helpers/bcrypt");
+
+const { User, UserFollow, BalanceHistory } = require("../models/index");
+const { decryptPassword, hashPassword } = require("../helpers/bcrypt");
 const { getToken } = require("../helpers/jwt");
 const midtrans = require("../helpers/midtrans");
 
@@ -17,7 +18,6 @@ const userRegister = async (req, res, next) => {
     });
     res.status(201).json({ id: newUser.id, email: newUser.email });
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };
@@ -35,7 +35,6 @@ const adminRegister = async (req, res, next) => {
     });
     res.status(201).json({ id: newUser.id, email: newUser.email });
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };
@@ -65,8 +64,6 @@ const doLogin = async (req, res, next) => {
     const accessToken = getToken(payload);
     res.status(200).json({ accessToken });
   } catch (err) {
-    console.log(err);
-    // res.status(500).json(err);
     next(err);
   }
 };
@@ -74,37 +71,84 @@ const doLogin = async (req, res, next) => {
 const editProfile = async (req, res, next) => {
   try {
     const userId = req.params.id;
-    const { name, description } = req.body;
+    let { name, description, password } = req.body;
     const profilePict = req.additionalData;
-    // kalau sempat tambahkan edit password juga
-    const profileData = await User.update(
-      {
-        name,
-        description,
-        profilePict,
-      },
-      {
-        where: { id: userId },
-        returning: true,
+    let changePassword = false;
+
+    if (password) {
+      if (password.length > 1) {
+        password = hashPassword(password);
+        changePassword = true;
       }
-    );
+    }
+
+    let profileData;
+    if (changePassword === true) {
+      profileData = await User.update(
+        {
+          name,
+          description,
+          profilePict,
+          password,
+        },
+        {
+          where: { id: userId },
+          returning: true,
+        }
+      );
+    } else {
+      profileData = await User.update(
+        {
+          name,
+          description,
+          profilePict,
+        },
+        {
+          where: { id: userId },
+          returning: true,
+        }
+      );
+    }
 
     const result = profileData[1][0];
 
-    res
-      .status(200)
-      .json({
-        id: result.id,
-        name: result.name,
-        description: result.description,
-        profilePict: result.profilePict,
-      });
+    res.status(200).json({
+      id: result.id,
+      name: result.name,
+      description: result.description,
+      profilePict: result.profilePict,
+    });
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };
 
+const doFollows = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const { targetId } = req.body;
+    // console.log(userId, targetId, '<----');
+    if (userId === +targetId) {
+      throw { name: "followsIdError" };
+    }
+    const isDuplicate = await UserFollow.findOne({
+      where: {
+        followerId: userId,
+        followingId: targetId,
+      },
+    });
+    if (isDuplicate) {
+      throw { name: "followsDuplicate" };
+    }
+    const followsData = await UserFollow.create({
+      followerId: userId,
+      followingId: targetId,
+    });
+    res.status(201).json(followsData);
+  } catch (err) {
+    next(err);
+  }
+};
 const topUpBalance = async (req, res, next) => {
   try {
     const {id} = req.user
@@ -128,4 +172,12 @@ const successTopUp = async (req, res, next) => {
   }
 }
 
-module.exports = { userRegister, adminRegister, doLogin, editProfile, topUpBalance };
+module.exports = {
+  userRegister,
+  adminRegister,
+  doLogin,
+  editProfile,
+  doFollows,
+  topUpBalance, 
+  successTopUp
+};
