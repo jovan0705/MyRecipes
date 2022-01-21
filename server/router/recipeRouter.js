@@ -31,7 +31,7 @@ router.post(
 // edit recipe
 router.put("/", instanceMulter.single("imageFile"), imageKitUpload, editRecipe);
 // delete recipe
-router.delete("/:id", userAuthorization, deleteRecipe);
+router.delete("/:id", deleteRecipe);
 // create rating
 router.post('/:id/rate', createUserRating)
 module.exports = router;
