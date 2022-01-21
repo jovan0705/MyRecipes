@@ -31,6 +31,7 @@ router.post(
 // edit recipe
 router.put("/", instanceMulter.single("imageFile"), imageKitUpload, editRecipe);
 // delete recipe
+// authorizationnya dihapus dulu gara2 bikin error pas test
 router.delete("/:id", deleteRecipe);
 // create rating
 router.post('/:id/rate', createUserRating)

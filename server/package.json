@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon app & --env development",
-    "test": "NODE_ENV=test & jest --watchAll --detectOpenHandles --forceExit --detectOpenHandles --runInBand"
+    "dev": "SET NODE_ENV=development&&nodemon app",
+    "test": "SET NODE_ENV=test&&jest --watchAll --detectOpenHandles --forceExit --detectOpenHandles --runInBand"
   },
   "keywords": [],
   "author": "",

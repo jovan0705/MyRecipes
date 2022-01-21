@@ -12,7 +12,6 @@ app.use(cors())
 
 app.use(router);
 
-
 // fetch all recipes 
 app.get('/recipes', getRecipes)
 // fetch all user favourited recipes (untested)
