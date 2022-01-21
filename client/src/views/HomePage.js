@@ -3,6 +3,7 @@ import CategoryCard from "../components/CategoryCard";
 import Jumbotron from "../components/Jumbtoron";
 import RecipeCard from "../components/RecipeCard";
 import TopNavbar from "../components/TopNavbar";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -34,10 +35,16 @@ const HomePage = () => {
         <div className="flex justify-between">
           <div className="heading">Recipes</div>
           <div className="flex hover:scale-110 duration-200 cursor-pointer">
-            <div className="mr-2 text-primary font-bold">View All</div>
-            <div className="text-primary ">
-              <IoChevronForwardCircleSharp size={20} />
-            </div>
+            <Link to="/recipes">
+              <div className="flex hover:scale-110 duration-200 cursor-pointer">
+                <div className="mr-4 text-primary font-bold text-2xl">
+                  View All
+                </div>
+                <div className="text-primary text-3xl">
+                  <IoChevronForwardCircleSharp />
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
         <div className="grid grid-cols-3 gap-10 p-3">
