@@ -4,7 +4,16 @@ const errorHandler = (err, req, res, next) => {
     case "HEHE":
       res.status(200).json("hehe");
       break;
-
+    case 'isRated':
+        res.status(400).json({message: 'Item already rated'})
+        break;
+    case 'badRequest':
+        res.status(400).json({message: 'Bad Request'})
+        break;
+    case 'notFound':
+        res.status(404).json({message: 'Request Not Found'})
+        break;
+      
     case "imageTooBig":
       res.status(400).json("Error: Image file maximum size is 300kb");
       break;
