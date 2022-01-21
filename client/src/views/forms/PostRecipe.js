@@ -98,7 +98,7 @@ const AddRecipe = () => {
         {/* End of first row */}
 
         {/* Indegrients */}
-        <div className="form-control flex-1 mb-6">
+        <div className="form-control flex-1 mb-6 z-0">
           <label className="label">
             <span className="label-text text-lg text-base-content">
               Indegrients
