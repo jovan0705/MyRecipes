@@ -20,10 +20,22 @@ const userAuthorization = async (req, res, next) => {
 
         next()
   } catch (err) {
-    console.log(err);
-    // res.status(500).json(err)
     next(err);
   }
 };
 
-module.exports = userAuthorization
+const adminRegisterAuthorization = async (req, res, next) => {
+  try {
+    const userRole = req.user.role;
+
+    if (userRole !== 'admin') {
+      throw { name: "unauthorized" }
+    }
+
+    next()
+  } catch (err) {
+    next(err)
+  }
+}
+
+module.exports = {userAuthorization, adminRegisterAuthorization};

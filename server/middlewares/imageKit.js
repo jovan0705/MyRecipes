@@ -28,7 +28,7 @@ const imageKitUpload = async (req, res, next) => {
 
       next();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       next(err);
       // res.status(500).json(err);
     }
