@@ -16,7 +16,7 @@ const {
 // fetch all recipes
 router.get("/", getRecipes);
 // fetch all user favourited recipes (untested)
-router.get("/favourite", getUserFavouritedRecipes);
+router.get("/favourites", getUserFavouritedRecipes);
 // fetch all logged in user recipes
 router.get("/own", getLoggedInUserRecipes);
 // fetch recipe detail

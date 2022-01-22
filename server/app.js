@@ -21,8 +21,8 @@ app.get('/recipes/own', getLoggedInUserRecipes)
 // fetch recipe detail
 app.get('/recipes/:id', getRecipeDetail)
 
-app.listen(port, () => {
-    console.log(`app listening to http://localhost:${port}`)
-})
+// app.listen(port, () => {
+//     console.log(`app listening to http://localhost:${port}`)
+// })
 
 module.exports = app
