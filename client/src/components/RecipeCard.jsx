@@ -4,11 +4,16 @@ import {
   IoBookmark,
   IoHeart,
 } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const RecipeCard = () => {
+    const navigate = useNavigate()
+    const toDetail = () => {
+        navigate('/detail')
+    }
   return (
     <>
-      <div className="w-auto h-auto border shadow-md flex gap-2 rounded-md text-gray-400 hover:shadow-xl duration-200 ease-in hover:cursor-pointer">
+      <div className="w-auto h-auto border shadow-md flex gap-2 rounded-md text-gray-400 hover:shadow-xl duration-200 ease-in hover:cursor-pointer" onClick={toDetail}>
         <div className="w-1/2 h-52 image overflow-hidden">
           <img
             className="h-full w-full mx-auto rounded-md"
