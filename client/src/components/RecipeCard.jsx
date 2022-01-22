@@ -5,6 +5,7 @@ import {
   IoHeart,
 } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import Rating from "./Rating";
 
 const RecipeCard = () => {
     const navigate = useNavigate()
@@ -31,32 +32,7 @@ const RecipeCard = () => {
               <h3 className="font-bold text-xl">Beef Burger</h3>
             </div>
             <div className="rating rating-sm">
-              <input
-                type="radio"
-                name="rating-2"
-                className="mask mask-star-2 bg-warning "
-              />
-              <input
-                type="radio"
-                name="rating-2"
-                checked="checked"
-                className="mask mask-star-2 bg-warning "
-              />
-              <input
-                type="radio"
-                name="rating-2"
-                className="mask mask-star-2 bg-warning "
-              />
-              <input
-                type="radio"
-                name="rating-2"
-                className="mask mask-star-2 bg-warning "
-              />
-              <input
-                type="radio"
-                name="rating-2"
-                className="mask mask-star-2 bg-warning "
-              />
+              <Rating/>
             </div>
           </div>
           <div className="">
