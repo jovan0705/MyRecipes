@@ -1,9 +1,11 @@
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
 import CategoryCard from "../components/CategoryCard";
+import CategoryCardLoading from "../components/CategoryCardLoading";
 import Jumbotron from "../components/Jumbtoron";
 import RecipeCard from "../components/RecipeCard";
 import TopNavbar from "../components/TopNavbar";
 import { Link } from "react-router-dom";
+import RecipeCardLoading from "../components/RecipesCardLoading";
 
 const HomePage = () => {
   return (
@@ -23,12 +25,12 @@ const HomePage = () => {
           </div>
         </div>
         <div className="grid grid-cols-6 gap-10">
-          <CategoryCard />
-          <CategoryCard />
-          <CategoryCard />
-          <CategoryCard />
-          <CategoryCard />
-          <CategoryCard />
+          <CategoryCardLoading />
+          <CategoryCardLoading />
+          <CategoryCardLoading />
+          <CategoryCardLoading />
+          <CategoryCardLoading />
+          <CategoryCardLoading />
         </div>
       </div>
       <div className="my-10 p-2">
@@ -48,9 +50,9 @@ const HomePage = () => {
           </div>
         </div>
         <div className="grid grid-cols-3 gap-10 p-3">
-          <RecipeCard />
-          <RecipeCard />
-          <RecipeCard />
+          <RecipeCardLoading />
+          <RecipeCardLoading />
+          <RecipeCardLoading />
         </div>
       </div>
     </div>
