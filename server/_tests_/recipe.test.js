@@ -1,19 +1,26 @@
 const request = require("supertest");
 const app = require("../app");
 const { Recipe, User } = require("../models");
-const { hashPassword } = require("../helpers/bcrypt");
+const { hashPassword, decryptPassword } = require("../helpers/bcrypt");
+
+let adminToken = "";
 
 beforeAll((done) => {
   User.create({
     name: "admin1",
     username: "admin1name",
     email: "admin1@gmail.com",
-    password: hashPassword("12345"),
+    password: "12345",
     role: "admin",
     createdAt: new Date(),
     updatedAt: new Date(),
   })
-    .then(_ => {
+    .then(async (_) => {
+      const response = await request(app)
+        .post("/login")
+        .send({ email: "admin1@gmail.com", password: "12345" });
+      adminToken = response.body.accessToken;
+
       Recipe.create({
         name: "10-minute couscous salad",
         steps: [
@@ -32,30 +39,31 @@ beforeAll((done) => {
 });
 
 afterAll((done) => {
-    User.destroy({
-      truncate: true,
-      restartIdentity: true,
-      cascade: true,
+  User.destroy({
+    truncate: true,
+    restartIdentity: true,
+    cascade: true,
+  })
+    .then(() => {
+      Recipe.destroy({
+        truncate: true,
+        restartIdentity: true,
+        cascade: true,
+      });
     })
-      .then(() => {
-        Recipe.destroy({
-          truncate: true,
-          restartIdentity: true,
-          cascade: true
-        })
-      })
-      .then(() => {
-        done();
-      })
-      .catch(() => {
-        done(err)
-      })
-  });
+    .then(() => {
+      done();
+    })
+    .catch(() => {
+      done(err);
+    });
+});
 
 describe("GET /recipes", () => {
   test("GET /news return array of objects", (done) => {
     request(app)
       .get("/recipes")
+      .set("access_token", adminToken)
       .then((response) => {
         const result = response.body;
         expect(response.status).toEqual(200);

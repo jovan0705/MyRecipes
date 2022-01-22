@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const userController = require("../controller/userController");
-const {userAuthorization, adminRegisterAuthorization} = require("../middlewares/authorization");
+const {editProfileAuthorization, adminRegisterAuthorization} = require("../middlewares/authorization");
 const instanceMulter = require("../middlewares/multer");
 const imageKitUpload = require("../middlewares/imageKit");
 
@@ -11,7 +11,7 @@ router.post('/topup', userController.topUpBalance)
 
 router.put(
   "/editprofile/:id",
-  userAuthorization,
+  editProfileAuthorization,
   instanceMulter.single("imageFile"),
   imageKitUpload,
   userController.editProfile
