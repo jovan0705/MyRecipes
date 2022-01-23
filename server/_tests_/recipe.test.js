@@ -1,8 +1,13 @@
 const request = require("supertest");
 const app = require("../app");
 const { Recipe, User, UserFavoritedRecipe } = require("../models");
-
+const FormData = require('form-data')
+const fs = require('fs');
+const { default: axios } = require("axios");
+const testImage = fs.readFileSync('./_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png')
 const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbjFAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQyODIzMTg4fQ.7wo2alP5YW_vTLzVyMrjQd1Tu4-jiuCUHtF-ki8ydnw"
+const testImageUrl = 'https://toppng.com/uploads/preview/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png'
+
 
 beforeAll((done) => {
   Recipe.create({
@@ -124,3 +129,67 @@ describe("GET /recipes/:id", () => {
   });
 });
 
+// describe("POST /recipes", () => {
+//   const sampleInput = {
+//     name: "10-minute couscous salad",
+//     steps: 
+//       "Tip the couscous into a large bowl and pour over the stock. Cover, then leave for 10 mins until fluffy and all the stock has been absorbed. Meanwhile, slice the onions and pepper, and dice the cucumber. Add these to the couscous, fork through the pesto, crumble in the feta, then sprinkle over pine nuts to serve.",
+    
+//     totalCalories: 500,
+//     imageFile: testImage
+//   }
+//   const form = new FormData ()
+//   form.append('name', sampleInput.name)
+//   form.append('steps', sampleInput.steps)
+//   form.append('totalCalories', sampleInput.totalCalories)
+//   form.append('imageFile', sampleInput.imageFile)
+//   // console.log(form, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+//   test("POST /recipes return object posted", (done) => {
+//     request(app)
+//       .post('/recipes')
+//       .type('xml')
+//       .set("access_token", token)
+//       .set("testing", true)
+//       .send(sampleInput)
+//       // .then((req, res, next) => {
+//       //   jest.mock('axios')
+//       //   const response = await axios.post('https://upload.imagekit.io/api/v1/', {
+//       //     headers: form.getHeaders(),
+//       //     body: req.form,
+//       //   }).mockResolvedValue(testImageUrl)
+//       //   req.additionalData = response
+//       //   next()
+//       // })
+//       .then((response) => {
+//         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",response, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+//         const result = response.body
+
+//         expect(response.status).toEqual(201)
+//         expect(result).toBeInstanceOf(Object);
+//         done()
+//       })
+//       .catch(err => done(err))
+//   })
+// })
+
+describe("DELETE /recipes/:id", () => {
+  test("DELETE /recipes/:id should return object with message 'Deleted Successfully'", (done) => {
+    request(app)
+    .delete('/recipes/1')
+    .set("access_token", token)
+    .then((response) => {
+      const result = response.body
+      
+      expect(response.status).toEqual(200)
+      expect(result).toBeInstanceOf(Object)
+      expect(result).toHaveProperty("message")
+      expect(result.message).toEqual('Deleted Successfully')
+      done()
+    })
+    .catch(err => done(err))
+  })
+})
+
+// describe put recipe
+// describe post rating
+// error juga belum di testing
