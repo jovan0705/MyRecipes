@@ -2,6 +2,7 @@ const { User, UserFollow, BalanceHistory } = require("../models/index");
 const { decryptPassword, hashPassword } = require("../helpers/bcrypt");
 const { getToken } = require("../helpers/jwt");
 const midtrans = require("../helpers/midtrans");
+const { Op } = require("sequelize");
 
 const userRegister = async (req, res, next) => {
   // console.log('do user register');
@@ -40,13 +41,20 @@ const adminRegister = async (req, res, next) => {
 
 const doLogin = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { emailOrUsername, password } = req.body;
 
-    if (!email || !password) {
+    if (!emailOrUsername || !password) {
       throw { name: "badRequest" };
     }
 
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ 
+      where: { 
+        [Op.or]: [
+          { email: emailOrUsername },
+          { username: emailOrUsername }
+        ]
+      } 
+    });
     if (!user) {
       throw { name: "wrongLogin" };
     }

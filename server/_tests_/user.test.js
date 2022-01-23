@@ -43,22 +43,22 @@ beforeAll(async () => {
 
   const response = await request(app)
     .post("/login")
-    .send({ email: "admin1@gmail.com", password: "12345" });
+    .send({ emailOrUsername: "admin1@gmail.com", password: "12345" });
   adminToken = response.body.accessToken;
 
   const userLogin1 = await request(app)
     .post("/login")
-    .send({ email: "userTest1@gmail.com", password: "12345" });
+    .send({ emailOrUsername: "userTest1@gmail.com", password: "12345" });
   userToken1 = userLogin1.body.accessToken;
 
   const userLogin2 = await request(app)
     .post("/login")
-    .send({ email: "userTest2@gmail.com", password: "12345" });
+    .send({ emailOrUsername: "userTest2@gmail.com", password: "12345" });
   userToken2 = userLogin2.body.accessToken;
 
   const userLogin3 = await request(app)
     .post("/login")
-    .send({ email: "userTest3@gmail.com", password: "12345" });
+    .send({ emailOrUsername: "userTest3@gmail.com", password: "12345" });
   userToken3 = userLogin3.body.accessToken;
 });
 
@@ -235,7 +235,7 @@ describe("POST /login", () => {
   test("[success - 200] - success login should be return an object with status code 200", (done) => {
     request(app)
       .post("/login")
-      .send({ email: "admin1@gmail.com", password: "12345" })
+      .send({ emailOrUsername: "admin1@gmail.com", password: "12345" })
       .then((response) => {
         const result = response.body;
         expect(response.status).toBe(200);
@@ -251,7 +251,7 @@ describe("POST /login", () => {
   test("[failed - 400] - login with wrong password should be return an object with status code 400", (done) => {
     request(app)
       .post("/login")
-      .send({ email: "admin1@gmail.com", password: "54321" })
+      .send({ emailOrUsername: "admin1@gmail.com", password: "54321" })
       .then((response) => {
         const result = response.body;
         expect(response.status).toBe(400);
@@ -270,7 +270,7 @@ describe("POST /login", () => {
   test("[failed - 400] - login with unregistered email should be return an object with status code 400", (done) => {
     request(app)
       .post("/login")
-      .send({ email: "admin0@gmail.com", password: "12345" })
+      .send({ emailOrUsername: "admin0@gmail.com", password: "12345" })
       .then((response) => {
         const result = response.body;
         expect(response.status).toBe(400);

@@ -18,7 +18,7 @@ beforeAll((done) => {
     .then(async (_) => {
       const response = await request(app)
         .post("/login")
-        .send({ email: "admin1@gmail.com", password: "12345" });
+        .send({ emailOrUsername: "admin1@gmail.com", password: "12345" });
       adminToken = response.body.accessToken;
 
       Recipe.create({
