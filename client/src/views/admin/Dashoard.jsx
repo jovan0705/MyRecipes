@@ -1,10 +1,11 @@
+import { Outlet } from "react-router-dom"
 import CategoriesAdmin from "./CategoriesAdmin"
 
 const Dashboard = () => {
     return (
         <>
         <div>
-            <CategoriesAdmin/>
+            <Outlet/>
         </div>
         </>
     )
