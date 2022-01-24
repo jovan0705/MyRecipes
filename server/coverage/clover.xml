@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1643009940946" clover="3.2.0">
-  <project timestamp="1643009940946" name="All files">
-    <metrics statements="592" coveredstatements="353" conditionals="108" coveredconditionals="48" methods="79" coveredmethods="48" elements="779" coveredelements="449" complexity="0" loc="592" ncloc="592" packages="7" files="36" classes="36"/>
+<coverage generated="1643031098087" clover="3.2.0">
+  <project timestamp="1643031098087" name="All files">
+    <metrics statements="591" coveredstatements="352" conditionals="108" coveredconditionals="48" methods="79" coveredmethods="48" elements="778" coveredelements="448" complexity="0" loc="591" ncloc="591" packages="7" files="36" classes="36"/>
     <package name="server">
       <metrics statements="16" coveredstatements="16" conditionals="2" coveredconditionals="2" methods="0" coveredmethods="0"/>
       <file name="app.js" path="C:\Hacktiv8\fase3\MyRecipes\server\app.js">
@@ -384,7 +384,7 @@
       </file>
     </package>
     <package name="server.middlewares">
-      <metrics statements="92" coveredstatements="64" conditionals="30" coveredconditionals="18" methods="5" coveredmethods="5"/>
+      <metrics statements="91" coveredstatements="63" conditionals="30" coveredconditionals="18" methods="5" coveredmethods="5"/>
       <file name="authentication.js" path="C:\Hacktiv8\fase3\MyRecipes\server\middlewares\authentication.js">
         <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="2" type="stmt"/>
@@ -402,27 +402,26 @@
         <line num="29" count="2" type="stmt"/>
       </file>
       <file name="authorization.js" path="C:\Hacktiv8\fase3\MyRecipes\server\middlewares\authorization.js">
-        <metrics statements="20" coveredstatements="20" conditionals="6" coveredconditionals="6" methods="2" coveredmethods="2"/>
+        <metrics statements="19" coveredstatements="19" conditionals="6" coveredconditionals="6" methods="2" coveredmethods="2"/>
         <line num="1" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
         <line num="4" count="4" type="stmt"/>
         <line num="5" count="4" type="stmt"/>
         <line num="6" count="4" type="stmt"/>
         <line num="7" count="4" type="stmt"/>
-        <line num="17" count="4" type="stmt"/>
-        <line num="19" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="20" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="25" count="3" type="stmt"/>
-        <line num="27" count="1" type="stmt"/>
-        <line num="31" count="2" type="stmt"/>
+        <line num="18" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="24" count="3" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
         <line num="32" count="3" type="stmt"/>
-        <line num="33" count="3" type="stmt"/>
-        <line num="35" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="36" count="1" type="stmt"/>
-        <line num="39" count="2" type="stmt"/>
-        <line num="41" count="1" type="stmt"/>
-        <line num="45" count="2" type="stmt"/>
+        <line num="34" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="44" count="2" type="stmt"/>
       </file>
       <file name="errorHandler.js" path="C:\Hacktiv8\fase3\MyRecipes\server\middlewares\errorHandler.js">
         <metrics statements="36" coveredstatements="22" conditionals="16" coveredconditionals="9" methods="1" coveredmethods="1"/>

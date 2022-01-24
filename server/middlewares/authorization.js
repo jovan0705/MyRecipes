@@ -14,7 +14,6 @@ const editProfileAuthorization = async (req, res, next) => {
     //   throw { name: "notFound" };
     // }
 
-    console.log(targetId, userId, "<------------");
 
     if (userRole !== "admin") {
       if (+targetId !== userId) {

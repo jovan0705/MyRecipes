@@ -10,6 +10,8 @@ let userToken3 = "";
 let userToken4 = "";
 let wrongToken = "okyldkrgrndr";
 
+// const image1 = require("./image1.png");
+
 beforeAll(async () => {
   await User.create({
     name: "admin1",
@@ -513,7 +515,7 @@ describe("PUT /users/editprofile/:id", () => {
       });
   });
 
-  test("[failed - 400] - edit non exixsting profile should be return an object with status code 404", (done) => {
+  test("[failed - 400] - edit non existing profile should be return an object with status code 404", (done) => {
     request(app)
       .put("/users/editprofile/20")
       .send({
@@ -535,6 +537,7 @@ describe("PUT /users/editprofile/:id", () => {
   });
 
   //test untuk edit imagekit belum dibuat
+  
 });
 
 describe("GET /users/:id", () => {
@@ -589,4 +592,27 @@ describe("GET /users/:id", () => {
         done(err);
       });
   });
+});
+
+test("[success - 200] - success edit profile image should be return an object with status code 201", (done) => {
+  request(app)
+    .put("/users/editprofile/2")
+    .set("access_token", userToken1)
+    .attach("imageFile", "./image1.png")
+    .then((response) => {
+      const result = response.body;
+      console.log(result, '<----------image');
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(expect.any(Object));
+      expect(response.body).toHaveProperty("id", 2);
+      // expect(response.body).toHaveProperty("name", "user1Edited2");
+      // expect(response.body).toHaveProperty(
+      //   "description",
+      //   "This is bio 2 for user1"
+      // );
+      done();
+    })
+    .catch((err) => {
+      done(err);
+    });
 });
