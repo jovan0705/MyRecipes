@@ -56,12 +56,16 @@ const createRecipe = async (req, res, next) => {
   try {
     // asumsi struktur tipe data step adalah array dan totalCalories sudah tertotal pas mengirimkan data input ke server
     const { name, steps, totalCalories } = req.body;
-    if (!name || !steps || !totalCalories) throw { name: "badRequest" };
+    if (!name) throw { name: "emptyName" };
+    if (!steps) throw { name: "emptySteps" };
+    if (!totalCalories) throw { name: "emptyTotalCalories" };
     const newSteps = steps.split(",").map((step) => {
       return step;
     });
     const userId = req.user.id;
     const imageUrl = req.additionalData;
+
+    if (!imageUrl) throw { name: "emptyImage" };
 
     const response = await Recipe.create({
       name,

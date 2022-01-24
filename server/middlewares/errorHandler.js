@@ -15,11 +15,17 @@ const errorHandler = (err, req, res, next) => {
     case "isRated":
       res.status(400).json({ message: "Item already rated" });
       break;
+
     case "badRequest":
       res.status(400).json({ message: "Bad Request" });
       break;
+
     case "notFound":
       res.status(404).json({ message: "Request Not Found" });
+      break;
+
+    case "userNotFound":
+      res.status(404).json({ message: "You are unauthorized" });
       break;
 
     case "imageTooBig":
@@ -67,6 +73,22 @@ const errorHandler = (err, req, res, next) => {
     case "JsonWebTokenError": {
       res.status(400).json({ message: 'Invalid Access Token' })
     }
+    case "emptyName":
+      res.status(400).json({ message: "Name required" });
+      break;
+
+    case "emptySteps":
+      res.status(400).json({ message: "Steps required" });
+      break;
+
+    case "emptyTotalCalories":
+      res.status(400).json({ message: "Total Calories required" });
+      break;
+
+    case "emptyImage":
+      res.status(400).json({ message: "Please insert an image" });
+      break;
+
     default:
       res.status(500).json(err);
       break;

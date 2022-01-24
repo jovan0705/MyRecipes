@@ -1,16 +1,18 @@
+// Reacct
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchRecipes } from "../store/actionCreators";
+
+// Store
+import { fetchRecipes } from "../store/actionCreators/recipesCreator";
+
+// Components
 import RecipeCard from "../components/RecipeCard";
 import RecipeCardLoading from "../components/RecipesCardLoading";
+import InternalServerError from "../components/InternalServerError";
 
 const RecipesPage = () => {
   const dispatch = useDispatch();
-  const {
-    recipes,
-    recipesLoading: loading,
-    recipesError: error,
-  } = useSelector((store) => store);
+  const { recipeReducer } = useSelector((store) => store);
 
   useEffect(() => {
     dispatch(fetchRecipes());
@@ -18,10 +20,6 @@ const RecipesPage = () => {
 
   return (
     <div className="min-h-screen py-10">
-      {/* {recipes && !loading && <h1>{JSON.stringify(recipes)}</h1>}
-      {loading && <h1>Loading...</h1>}
-      {error && <h1>Error...</h1>} */}
-
       <h1 className="heading text-center">Recipes</h1>
       <div>
         <div class="form-control">
@@ -35,17 +33,38 @@ const RecipesPage = () => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-10 p-3">
-        <RecipeCardLoading />
-        <RecipeCardLoading />
-        <RecipeCardLoading />
-        <RecipeCardLoading />
-        <RecipeCardLoading />
-        <RecipeCardLoading />
-        <RecipeCardLoading />
-        <RecipeCardLoading />
-        <RecipeCardLoading />
-      </div>
+
+      {!recipeReducer.recipesLoading && recipeReducer.recipes && (
+        <div className="grid grid-cols-3 gap-10 p-3">
+          {recipeReducer.recipes.map(
+            ({ id, imageUrl, name, totalCalories, userId }) => {
+              return (
+                <RecipeCard
+                  key={id}
+                  id={id}
+                  imageUrl={imageUrl}
+                  name={name}
+                  totalCalories={totalCalories}
+                  userId={userId}
+                />
+              );
+            }
+          )}
+        </div>
+      )}
+
+      {recipeReducer.recipesLoading && (
+        <div className="grid grid-cols-3 gap-10 p-3">
+          <RecipeCardLoading />
+          <RecipeCardLoading />
+          <RecipeCardLoading />
+          <RecipeCardLoading />
+          <RecipeCardLoading />
+          <RecipeCardLoading />
+        </div>
+      )}
+
+      {recipeReducer.recipesError && <InternalServerError />}
 
       <div className="btn-group flex justify-center mt-20 mb-10">
         <button className="btn">Previous</button>

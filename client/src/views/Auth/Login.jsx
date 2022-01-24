@@ -1,7 +1,44 @@
 import "./styles/login.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { login } from '../../store/actionCreators/userActon'
+import { successAlert } from '../../helpers/alerts'
 
 const Login = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const [loginForm, setLoginForm] = useState({
+    emailOrUsername: '',
+    password: ''
+  })
+
+  const handleInput = (event) => {
+    const value = event.target.value
+    const name = event.target.name
+    setLoginForm({
+        ...loginForm,
+        [name]: value
+    })
+  }
+
+  const loginHandleBtn = (event) => {
+    event.preventDefault()
+    dispatch(login(loginForm))
+    .then( async (data) => {
+      localStorage.setItem('access_token', data.accessToken)
+      successAlert('Login Success')
+      navigate('/home')
+    })
+    .catch( async err => {
+      console.log(err)
+    })
+
+  }
+
+
   return (
     <>
       <section className="absolute w-full h-full">
@@ -17,7 +54,7 @@ const Login = () => {
                       Welcome back
                     </h6>
                   </div>
-                  <form className="py-5">
+                  <form className="py-5" onSubmit={(event) => loginHandleBtn(event)}>
                     <div className="relative w-full mb-7">
                       <label
                         className="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -26,10 +63,12 @@ const Login = () => {
                         Email / Username
                       </label>
                       <input
-                        type="email"
+                        type="text"
                         className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                         placeholder="Email or Username"
+                        name="emailOrUsername"
                         style={{ transition: "all .15s ease" }}
+                        onChange={(event) => handleInput(event)}
                       />
                     </div>
 
@@ -44,7 +83,9 @@ const Login = () => {
                         type="password"
                         className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                         placeholder="Password"
+                        name="password"
                         style={{ transition: "all .15s ease" }}
+                        onChange={(event) => handleInput(event)}
                       />
                     </div>
 
@@ -60,8 +101,9 @@ const Login = () => {
                     <div className="text-center mt-6">
                       <button
                         className="bg-primary text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
-                        type="button"
+                        type="submit"
                         style={{ transition: "all .15s ease" }}
+
                       >
                         Sign In
                       </button>
