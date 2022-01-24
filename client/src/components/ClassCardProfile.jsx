@@ -1,4 +1,4 @@
-const ClassCard = () => {
+const ClassCardProfile = () => {
     return (
         <>
             <div className="my-4 bg-white p-3 border shadow-lg rounded-lg">
@@ -12,4 +12,4 @@ const ClassCard = () => {
     )
 }
 
-export default ClassCard
+export default ClassCardProfile
