@@ -15,6 +15,9 @@ import RecipeDetail from './views/RecipeDetail'
 import Dashboard from "./views/admin/Dashoard";
 import CategoriesAdmin from "./views/admin/CategoriesAdmin";
 import IngredientAdmin from "./views/admin/IngredientAdmin";
+import { io } from "socket.io-client";
+
+const socket = io.connect("http://localhost:3000")
 
 function App() {
   return (
