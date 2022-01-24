@@ -1,7 +1,45 @@
 import "./styles/login.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { registerUser } from '../../store/actionCreators/userActon'
+import { successAlert } from '../../helpers/alerts'
 
 const Register = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const [registerForm, setRegisterForm] = useState({
+    name: '',
+    username: '',
+    email: '',
+    password: ''
+  })
+
+  const handleInput = (event) => {
+    const value = event.target.value
+    const name = event.target.name
+    setRegisterForm({
+        ...registerForm,
+        [name]: value
+    })
+  }
+
+  const registerHandleBtn = (event) => {
+    event.preventDefault()
+    dispatch(registerUser(registerForm))
+    .then( async (data) => {
+      console.log(data)
+      successAlert('Register Success')
+      navigate('/login')
+    })
+    .catch( async err => {
+      console.log(err)
+    })
+
+  }
+
   return (
     <>
       <section className="absolute w-full h-full">
@@ -20,7 +58,7 @@ const Register = () => {
                       Please fill in your personal data
                     </h6>
                   </div>
-                  <form className="py-5">
+                  <form className="py-5" onSubmit={(event) => registerHandleBtn(event)}>
                     <div className="relative w-full mb-7">
                       <label
                         className="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -32,7 +70,9 @@ const Register = () => {
                         type={"text"}
                         className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                         placeholder="Name"
+                        name="name"
                         style={{ transition: "all .15s ease" }}
+                        onChange={(event) => handleInput(event)}
                       />
                     </div>
                     <div className="relative w-full mb-7">
@@ -46,7 +86,9 @@ const Register = () => {
                         type={"text"}
                         className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                         placeholder="Username"
+                        name="username"
                         style={{ transition: "all .15s ease" }}
+                        onChange={(event) => handleInput(event)}
                       />
                     </div>
                     <div className="relative w-full mb-7">
@@ -60,7 +102,9 @@ const Register = () => {
                         type={"email"}
                         className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                         placeholder="Email"
+                        name="email"
                         style={{ transition: "all .15s ease" }}
+                        onChange={(event) => handleInput(event)}
                       />
                     </div>
 
@@ -75,7 +119,9 @@ const Register = () => {
                         type="password"
                         className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                         placeholder="Password"
+                        name="password"
                         style={{ transition: "all .15s ease" }}
+                        onChange={(event) => handleInput(event)}
                       />
                     </div>
 
@@ -91,7 +137,7 @@ const Register = () => {
                     <div className="text-center mt-6">
                       <button
                         className="bg-primary text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
-                        type="button"
+                        type="submit"
                         style={{ transition: "all .15s ease" }}
                       >
                         Register
