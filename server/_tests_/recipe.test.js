@@ -4,6 +4,7 @@ const { Recipe, User, UserFavoritedRecipe } = require("../models");
 const FormData = require('form-data')
 const fs = require('fs');
 const { default: axios } = require("axios");
+const { response } = require("express");
 const testImage = fs.readFileSync('./_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png')
 const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbjFAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQyODIzMTg4fQ.7wo2alP5YW_vTLzVyMrjQd1Tu4-jiuCUHtF-ki8ydnw"
 const testImageUrl = 'https://toppng.com/uploads/preview/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png'
@@ -33,6 +34,10 @@ beforeAll((done) => {
     .then((_) => done())
     .catch((err) => done(err));
 });
+
+beforeEach(() => {
+  jest.restoreAllMocks()
+})
 
 afterAll((done) => {
   Recipe.destroy({
@@ -115,7 +120,7 @@ describe("GET /recipes/own", () => {
 });
 
 describe("GET /recipes/:id", () => {
-  test("GET /recipes/:id return object", (done) => {
+  test("GET /recipes/:id should return object", (done) => {
     request(app)
       .get("/recipes/1")
       .set("access_token", token)
@@ -127,6 +132,22 @@ describe("GET /recipes/:id", () => {
       })
       .catch(err => done(err) )
   });
+
+  test("should return not found when requested id not found", (done) => {
+    jest.spyOn(Recipe, 'findAll').mockRejectedValue('Error')
+    request(app)
+    .get("/recipes/1")
+    .set("access_token", token)
+    .then((response) => {
+      const result = response.body
+      console.log(result, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+
+      expect(response.status).toBe(500)
+      expect(result).toBe('Error')
+      done()
+    })
+    .catch(err => done(err))
+  })
 });
 
 // describe("POST /recipes", () => {
