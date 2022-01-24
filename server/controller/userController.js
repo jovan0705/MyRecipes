@@ -157,6 +157,7 @@ const doFollows = async (req, res, next) => {
     next(err);
   }
 };
+
 const topUpBalance = async (req, res, next) => {
   try {
     const { id } = req.user;

@@ -285,6 +285,25 @@ describe("POST /login", () => {
         done(err);
       });
   });
+
+  test("[failed - 400] - login without entering email or username should be return an object with status code 400", (done) => {
+    request(app)
+      .post("/login")
+      .send({  password: "12345" })
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(400);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty(
+          "message",
+          "Bad Request"
+        );
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
 });
 
 describe("POST /users/adminregister", () => {
@@ -325,6 +344,26 @@ describe("POST /users/adminregister", () => {
         expect(response.status).toEqual(400);
         expect(result).toBeInstanceOf(Object);
         expect(response.body).toHaveProperty("message", "You are unauthorized");
+        done();
+      });
+  });
+
+  test("[failed - 400] - register with empty string for name should be return an object with status code 400", (done) => {
+    request(app)
+      .post("/users/adminregister")
+      .set("access_token", adminToken)
+      .send({
+        name: "",
+        username: "user2",
+        email: "user2@gmail.com",
+        password: "12345",
+        role: "user",
+      })
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toEqual(400);
+        expect(result).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("message", "Name must not empty");
         done();
       });
   });
@@ -398,6 +437,25 @@ describe("PUT /users/editprofile/:id", () => {
         expect(response.body).toHaveProperty("id", 2);
         expect(response.body).toHaveProperty("name", "user1Edited");
         expect(response.body).toHaveProperty("description", "This is bio for user1");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test("[success - 200] - success edit profile without changing password should be return an object with status code 201", (done) => {
+    request(app)
+      .put("/users/editprofile/2")
+      .send({ name: "user1Edited2", description: "This is bio 2 for user1" })
+      .set("access_token", userToken1)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty("id", 2);
+        expect(response.body).toHaveProperty("name", "user1Edited2");
+        expect(response.body).toHaveProperty("description", "This is bio 2 for user1");
         done();
       })
       .catch((err) => {
