@@ -10,8 +10,6 @@ let userToken3 = "";
 let userToken4 = "";
 let wrongToken = "okyldkrgrndr";
 
-// const image1 = require("./image1.png");
-
 beforeAll(async () => {
   await User.create({
     name: "admin1",
@@ -592,27 +590,4 @@ describe("GET /users/:id", () => {
         done(err);
       });
   });
-});
-
-test("[success - 200] - success edit profile image should be return an object with status code 201", (done) => {
-  request(app)
-    .put("/users/editprofile/2")
-    .set("access_token", userToken1)
-    .attach("imageFile", "./image1.png")
-    .then((response) => {
-      const result = response.body;
-      console.log(result, '<----------image');
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual(expect.any(Object));
-      expect(response.body).toHaveProperty("id", 2);
-      // expect(response.body).toHaveProperty("name", "user1Edited2");
-      // expect(response.body).toHaveProperty(
-      //   "description",
-      //   "This is bio 2 for user1"
-      // );
-      done();
-    })
-    .catch((err) => {
-      done(err);
-    });
 });
