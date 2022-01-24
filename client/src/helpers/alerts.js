@@ -20,3 +20,13 @@ export const successAlert = (message) => {
     background: "#edc707",
   });
 };
+
+export const errorAlert = (message) => {
+  return Swal.fire({
+    position: "center",
+    icon: "error",
+    title: message,
+    showConfirmButton: false,
+    timer: 1500,
+  });
+};
