@@ -1,13 +1,13 @@
-const CategoryList = () => {
+const CategoryList = ({categoryItem}) => {
     return (
         <>
         <tr className="text-center">
-            <td>1</td>
+            <td>{categoryItem.id}</td>
             <td>
-                <div>Burger</div>
+                <div>{categoryItem.name}</div>
             </td>
             <td className="flex justify-center">
-                <img className="rounded-full w-14" src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg" alt="" />
+                <img className="rounded-full w-14 h-14" src={categoryItem.imageUrl} alt="" />
             </td>
             <td className="space-x-3">
                 <button className="btn btn-outline btn-secondary text-xs">Delete</button>
