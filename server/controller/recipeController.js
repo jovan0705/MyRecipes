@@ -5,7 +5,7 @@ const getRecipes = async (req, res, next) => {
     // untuk sementara belum ada paginasi
 
     const response = await Recipe.findAll();
-    if (!response) throw err;
+    if (!response) throw {name: 'notFound'};
     res.status(200).json(response);
   } catch (err) {
     next(err);
@@ -20,7 +20,7 @@ const getUserFavouritedRecipes = async (req, res, next) => {
       where: { userId },
       include: Recipe,
     });
-    if (!response) throw err;
+    if (!response) throw {name: 'notFound'};
     const payload = response.map((recipe) => {
       return recipe.Recipe;
     });
@@ -34,7 +34,7 @@ const getLoggedInUserRecipes = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const response = await Recipe.findAll({ where: { userId } });
-    if (!response) throw err;
+    if (!response) throw {name: 'notFound'};
     res.status(200).json({ userCreatedRecipes: response });
   } catch (err) {
     next(err);
@@ -56,12 +56,16 @@ const createRecipe = async (req, res, next) => {
   try {
     // asumsi struktur tipe data step adalah array dan totalCalories sudah tertotal pas mengirimkan data input ke server
     const { name, steps, totalCalories } = req.body;
-    if (!name || !steps || !totalCalories) throw { name: "badRequest" };
+    if (!name) throw { name: "emptyName" };
+    if (!steps) throw { name: "emptySteps" };
+    if (!totalCalories) throw { name: "emptyTotalCalories" };
     const newSteps = steps.split(",").map((step) => {
       return step;
     });
     const userId = req.user.id;
     const imageUrl = req.additionalData;
+
+    if (!imageUrl) throw { name: "emptyImage" };
 
     const response = await Recipe.create({
       name,
@@ -85,12 +89,16 @@ const editRecipe = async (req, res, next) => {
     const newSteps = steps.split(",").map((step) => {
       return step;
     });
+    const id = req.params.id
     const userId = req.user.id;
     const imageUrl = req.additionalData;
 
+    const found = await Recipe.findByPk(id)
+    if(!found) throw {name: 'notFound'}
+
     const response = await Recipe.update(
       { name, steps: newSteps, totalCalories, imageUrl },
-      { where: { userId } }
+      { where: { id ,userId } }
     );
     if (!response) throw err;
 
