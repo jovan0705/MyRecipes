@@ -102,7 +102,6 @@ describe('Ingredients', () => {
             done()
         })
         .catch((err) => {
-            console.log(err, 'ERROR');
             done(err)
         })
     })
@@ -132,7 +131,6 @@ describe('Ingredients', () => {
         .set("access_token", adminToken)
         .then((response) => {
             const result = response.body;
-            console.log(result, 'RESPONSE >>>>');
             expect(response.status).toBe(200);
             expect(result).toHaveProperty("message", "Delete Riceee from ingridient list");
             done()
@@ -204,7 +202,6 @@ describe('Ingredients', () => {
         .set("access_token", adminToken)
         .then((response) => {
             const result = response.body;
-            console.log(result, 'RESPONSE >>>>');
             expect(response.status).toBe(400);
             expect(result).toHaveProperty("message", "Bad Request");
             done()
