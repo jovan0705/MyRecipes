@@ -13,6 +13,8 @@ import CategoriesPage from "./views/CategoriesPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import RecipeDetail from './views/RecipeDetail'
 import Dashboard from "./views/admin/Dashoard";
+import CategoriesAdmin from "./views/admin/CategoriesAdmin";
+import IngredientAdmin from "./views/admin/IngredientAdmin";
 
 function App() {
   return (
@@ -35,8 +37,12 @@ function App() {
           <Route path="classes" element={<ClassPage />} />
           <Route path="wallet" element={<WalletPage />} />
           <Route path="categories" element={<CategoriesPage />} />
-          <Route path="detail" element={<RecipeDetail />} />a
-          <Route path="admin" element={<Dashboard />} />a
+          <Route path="detail" element={<RecipeDetail />} />
+          <Route path="admin" element={<Dashboard />} >
+            <Route path="" element={<CategoriesAdmin />} />
+            <Route path="categories" element={<CategoriesAdmin />} />
+            <Route path="ingredient" element={<IngredientAdmin />} />
+          </Route>
         </Route>
       </Routes>
     </div>
