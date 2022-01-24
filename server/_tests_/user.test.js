@@ -542,7 +542,7 @@ describe("PUT /users/editprofile/:id", () => {
   });
 
   //test untuk image kit
-  test("[success - 200] - success add image when edit profile should be return an object with status code 201", (done) => {
+  test("[success - 200] - success add image when edit profile should be return an object with status code 200", (done) => {
     request(app)
       .put("/users/editprofile/2")
       .set("access_token", userToken1)
