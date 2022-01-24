@@ -12,8 +12,8 @@ import PostRecipe from "./views/forms/PostRecipe";
 import ClassPage from "./views/ClassPage";
 import WalletPage from "./views/WalletPage";
 import CategoriesPage from "./views/CategoriesPage";
-import ProtectedRoute from "./routes/ProtectedRoute";
-import RecipeDetail from "./views/RecipeDetail";
+import {ProtectedRoute, ProtectedLogin} from "./routes/ProtectedRoute";
+import RecipeDetail from './views/RecipeDetail'
 import Dashboard from "./views/admin/Dashoard";
 import CategoriesAdmin from "./views/admin/CategoriesAdmin";
 import IngredientAdmin from "./views/admin/IngredientAdmin";
@@ -28,8 +28,8 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<ProtectedLogin> <Login /> </ProtectedLogin>} />
+        <Route path="/register" element={<ProtectedLogin> <Register /> </ProtectedLogin> } />
         <Route
           path="/"
           element={
@@ -38,6 +38,7 @@ function App() {
             </ProtectedRoute>
           }
         >
+          <Route path="" element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="recipes" element={<RecipesPage />} />
           <Route path="detail/:id" element={<RecipeDetail />} />

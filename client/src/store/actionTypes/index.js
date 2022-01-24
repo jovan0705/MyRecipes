@@ -23,3 +23,7 @@ export const SET_CLASSES_LOADING = "class/loading";
 export const SET_INGREDIENTS = "ingredients/set";
 export const SET_INGREDIENTS_ERROR = "ingredients/error";
 export const SET_INGREDIENTS_LOADING = "ingredients/loading";
+//User
+export const FETCH_USER = "user/fetch"
+export const SET_USER_ERROR = "user/error";
+export const SET_USER_LOADING = "user/loading";
