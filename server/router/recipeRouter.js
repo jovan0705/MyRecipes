@@ -29,7 +29,7 @@ router.post(
   createRecipe
 );
 // edit recipe
-router.put("/", instanceMulter.single("imageFile"), imageKitUpload, editRecipe);
+router.put("/:id", instanceMulter.single("imageFile"), imageKitUpload, editRecipe);
 // delete recipe
 // authorizationnya dihapus dulu gara2 bikin error pas test
 router.delete("/:id", deleteRecipe);

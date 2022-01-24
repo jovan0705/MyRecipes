@@ -1,9 +1,10 @@
 const formData = require("form-data");
 const imagekitAxios = require("../apis/imagekitAxios");
-const axios = require('axios')
+const axios = require("axios");
 
 const imageKitUpload = async (req, res, next) => {
   if (req.file === undefined) {
+    console.log("MASUK KESINI REQ.FILENYA")
     next();
   } else {
     try {
@@ -22,7 +23,12 @@ const imageKitUpload = async (req, res, next) => {
       form.append("fileName", req.file.originalname);
 
       if(req.headers.testing) {
-        req.additionalData = 'https://toppng.com/uploads/preview/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png'
+        const response = await axios.post('https://upload.imagekit.io/api/v1/files/upload', {
+          headers: form.getHeaders(),
+          data: form
+        })
+        req.additionalData = response.data.url
+        console.log('MASUK -----> ', response.data.url)
         next()
       } else {
         const response = await imagekitAxios.post("/files/upload", form, {
