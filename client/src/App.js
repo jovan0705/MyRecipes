@@ -15,6 +15,8 @@ import RecipeDetail from './views/RecipeDetail'
 import Dashboard from "./views/admin/Dashoard";
 import CategoriesAdmin from "./views/admin/CategoriesAdmin";
 import IngredientAdmin from "./views/admin/IngredientAdmin";
+import Feed from "./views/Feed";
+import ForumPage from "./views/ForumPage";
 import { io } from "socket.io-client";
 
 const socket = io.connect("http://localhost:3000")
@@ -40,6 +42,8 @@ function App() {
           <Route path="classes" element={<ClassPage />} />
           <Route path="wallet" element={<WalletPage />} />
           <Route path="categories" element={<CategoriesPage />} />
+          <Route path="feeds" element={<Feed />} />
+          <Route path="forum" element={<ForumPage />} />
           <Route path="detail" element={<RecipeDetail />} />
           <Route path="admin" element={<Dashboard />} >
             <Route path="" element={<CategoriesAdmin />} />

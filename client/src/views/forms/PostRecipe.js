@@ -53,8 +53,8 @@ const AddRecipe = () => {
   };
 
   return (
-    <div className="h-screen border flex justify-center items-center">
-      <div className="flex w-11/12 border h-11/12 p-10">
+    <div className="min-h-screen border flex justify-center items-center">
+      <div className="flex w-11/12 border h-11/12">
         <div className="flex-1 border-r-2"> Test</div>
         <form style={{ flex: 2 }}>
           {/* First Row */}

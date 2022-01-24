@@ -17,7 +17,7 @@ const RecipesPage = () => {
   }, []);
 
   return (
-    <div className="h-screen pt-10 pb-10">
+    <div className="min-h-screen py-10">
       {/* {recipes && !loading && <h1>{JSON.stringify(recipes)}</h1>}
       {loading && <h1>Loading...</h1>}
       {error && <h1>Error...</h1>} */}
@@ -47,7 +47,7 @@ const RecipesPage = () => {
         <RecipeCardLoading />
       </div>
 
-      <div className="btn-group flex justify-center my-20">
+      <div className="btn-group flex justify-center mt-20 mb-10">
         <button className="btn">Previous</button>
         <button className="btn">1</button>
         <button className="btn btn-active">2</button>
