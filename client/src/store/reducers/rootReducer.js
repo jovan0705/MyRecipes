@@ -1,36 +1,12 @@
-import {
-  SET_RECIPES,
-  SET_RECIPES_ERROR,
-  SET_RECIPES_LOADING,
-} from "../actionTypes";
+import { combineReducers } from 'redux'
+import recipeReducer from './recipeReducer'
+import categoryReducer from './categoryReducer'
+import classReducer from './classReducer'
 
-const initialState = {
-  recipes: [],
-  recipesError: null,
-  recipesLoading: true,
-};
+const rootReducer = combineReducers({
+  recipeReducer,
+  categoryReducer,
+  classReducer
+})
 
-export const rootReducer = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case SET_RECIPES:
-      return {
-        ...state,
-        recipes: payload,
-      };
-
-    case SET_RECIPES_ERROR:
-      return {
-        ...state,
-        recipesError: payload,
-      };
-
-    case SET_RECIPES_LOADING:
-      return {
-        ...state,
-        recipesLoading: payload,
-      };
-
-    default:
-      return state;
-  }
-};
+export default rootReducer
