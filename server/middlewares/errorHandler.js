@@ -22,6 +22,10 @@ const errorHandler = (err, req, res, next) => {
       res.status(404).json({ message: "Request Not Found" });
       break;
 
+    case "userNotFound":
+      res.status(404).json({ message: "You are unauthorized" });
+      break;
+
     case "imageTooBig":
       res.status(400).json({ message: "Image file maximum size is 300kb" });
       break;
