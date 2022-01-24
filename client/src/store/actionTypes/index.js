@@ -12,3 +12,8 @@ export const SET_CATEGORIES_LOADING = "categories/loading";
 export const SET_CLASSES = "class/set";
 export const SET_CLASSES_ERROR = "class/error";
 export const SET_CLASSES_LOADING = "class/loading";
+
+//User
+export const FETCH_USER = "user/fetch"
+export const SET_USER_ERROR = "user/error";
+export const SET_USER_LOADING = "user/loading";

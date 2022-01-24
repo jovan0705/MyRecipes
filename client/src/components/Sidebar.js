@@ -12,8 +12,16 @@ import {
 import { IoIosImages } from "react-icons/io";
 import { Link } from "react-router-dom";
 import SidebarIcon from "./SidebarIcon";
+import { useNavigate } from 'react-router-dom'
 
 const Sidebar = () => {
+  const navigate = useNavigate()
+
+  const logout = (event) => {
+    event.preventDefault()
+    localStorage.removeItem('access_token')
+    navigate('/login')
+  }
   return (
     <div className="fixed top-0 left-0 h-screen w-1/12 flex flex-col justify-around bg-primary-focus rounded-r-3xl">
       <div className=" flex flex-col">
@@ -43,8 +51,8 @@ const Sidebar = () => {
         </Link>
         {/* <SidebarIcon icon={<IoPersonAddSharp />} text="Add Admin" /> */}
       </div>
-      <div className=" flex flex-col">
-        <SidebarIcon icon={<IoLogOut />} text="Logout" />
+      <div className=" flex flex-col"  onClick={(event) => logout(event)}>
+        <SidebarIcon icon={<IoLogOut />} text="Logout"/>
       </div>
     </div>
   );
