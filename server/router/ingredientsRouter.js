@@ -3,8 +3,8 @@ const Controller = require('../controller/ingridientController');
 
 router.get('/', Controller.getIngredients);
 router.post('/', Controller.addIngredient);
-router.get('/:ingridientId', Controller.findIngredientById);
-router.put('/:ingridientId', Controller.editIngredient);
-router.delete('/:ingridientId', Controller.deleteIngredient);
+router.get('/:ingredientId', Controller.findIngredientById);
+router.put('/:ingredientId', Controller.editIngredient);
+router.delete('/:ingredientId', Controller.deleteIngredient);
 
 module.exports = router;

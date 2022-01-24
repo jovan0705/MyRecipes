@@ -6,8 +6,7 @@ class Controller {
             const response = await Ingredient.findAll();
             res.status(200).json(response);
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            next(err);
         }
     }
 
@@ -22,8 +21,7 @@ class Controller {
 
             res.status(201).json({response});
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            next(err);
         }
     }
 
@@ -32,12 +30,13 @@ class Controller {
             const { ingredientId } = req.params;
 
             const response = await Ingredient.findByPk(ingredientId);
-            
+            if(!response) {
+                throw {name: 'notFound'}
+            }
 
             res.status(200).json({response});
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            next(err);
         }
     }
 
@@ -49,11 +48,6 @@ class Controller {
                 calorie: req.body.calorie
             };
 
-            const foundIngredient = await Ingredient.findByPk(ingredientId);
-            if(!foundIngredient) {
-                throw {name: 'BadRequest'};
-            };
-
             const response = await Ingredient.update(data, {
                 where: {
                     id: ingredientId
@@ -63,8 +57,7 @@ class Controller {
 
             res.status(200).json({edited: response[1][0]});
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            next(err);
         }
     }
 
@@ -74,7 +67,7 @@ class Controller {
 
             const foundIngredient = await Ingredient.findByPk(ingredientId);
             if(!foundIngredient) {
-                throw {name: 'BadRequest'};
+                throw {name: 'badRequest'};
             };
 
             await Ingredient.destroy({
@@ -83,10 +76,9 @@ class Controller {
                 }
             });
 
-            res.status(200).json(`Delete ${foundIngredient.name} from ingridient list`);
+            res.status(200).json({message: `Delete ${foundIngredient.name} from ingridient list`});
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            next(err);
         }
     }
 }
