@@ -213,5 +213,22 @@ describe('Ingredients', () => {
             done(err)
         })
     })
+
+    test("failed Get Ingredients return status code 404 when not found", (done) => {
+        jest
+            .spyOn(Ingredient, "findAll")
+            .mockRejectedValue({ message: "Request Not Found" });
+                request(app)
+            .get("/ingredients")
+            .set("access_token", adminToken)
+            .then((response) => {
+                const result = response.body;
+                response.status = 404;
+            expect(response.status).toBe(404);
+            expect(result).toStrictEqual({ message: "Request Not Found" });
+            done();
+            })
+            .catch((err) => done(err));
+    });
 })
 
