@@ -10,6 +10,9 @@ import PostRecipe from "./views/forms/PostRecipe";
 import ClassPage from "./views/ClassPage";
 import WalletPage from "./views/WalletPage";
 import CategoriesPage from "./views/CategoriesPage";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import RecipeDetail from './views/RecipeDetail'
+import Dashboard from "./views/admin/Dashoard";
 import { io } from "socket.io-client";
 
 const socket = io.connect("http://localhost:3000")
@@ -20,7 +23,14 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/" element={<Container />}>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Container />
+            </ProtectedRoute>
+          }
+        >
           <Route path="home" element={<HomePage />} />
           <Route path="recipes" element={<RecipesPage />} />
           <Route path="UserProfile" element={<UserProfile />} />
@@ -28,6 +38,8 @@ function App() {
           <Route path="classes" element={<ClassPage />} />
           <Route path="wallet" element={<WalletPage />} />
           <Route path="categories" element={<CategoriesPage />} />
+          <Route path="detail" element={<RecipeDetail />} />a
+          <Route path="admin" element={<Dashboard />} />a
         </Route>
       </Routes>
     </div>
