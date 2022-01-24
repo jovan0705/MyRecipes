@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchRecipes } from "../store/actionCreators";
 import RecipeCard from "../components/RecipeCard";
+import RecipeCardLoading from "../components/RecipesCardLoading";
 
 const RecipesPage = () => {
   const dispatch = useDispatch();
@@ -23,15 +24,15 @@ const RecipesPage = () => {
 
       <h1 className="heading text-center">Recipes</h1>
       <div className="grid grid-cols-3 gap-10 p-3">
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
+        <RecipeCardLoading />
+        <RecipeCardLoading />
+        <RecipeCardLoading />
+        <RecipeCardLoading />
+        <RecipeCardLoading />
+        <RecipeCardLoading />
+        <RecipeCardLoading />
+        <RecipeCardLoading />
+        <RecipeCardLoading />
       </div>
 
       <div className="btn-group flex justify-center mt-20">
