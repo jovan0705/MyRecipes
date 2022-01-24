@@ -3,7 +3,7 @@ import BalanceCard from "../components/BalanceCard";
 
 const WalletPage = () => {
   return (
-    <div className="h-screen">
+    <div className="h-screen flex justify-center items-center">
       <BalanceCard />
     </div>
   );

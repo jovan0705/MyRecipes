@@ -4,8 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "dev": "SET NODE_ENV=development&&nodemon ./bin/www",
     "test": "SET NODE_ENV=test&&jest --watchAll --detectOpenHandles --forceExit --detectOpenHandles --runInBand"
+=======
+    "dev": "SET NODE_ENV=development&&nodemon app",
+    "test": "SET NODE_ENV=test&&jest --watchAll --detectOpenHandles --forceExit --detectOpenHandles --runInBand",
+    "start": "nodemon app.js"
+>>>>>>> 32b2b449f16ee10c6fb6c94bdcf16e7a6e4a63fd
   },
   "keywords": [],
   "author": "",
@@ -22,6 +28,7 @@
     "multer": "^1.4.4",
     "pg": "^8.7.1",
     "sequelize": "^6.13.0",
+    "socket.io": "^4.4.1",
     "supertest": "^6.2.1"
   },
   "devDependencies": {

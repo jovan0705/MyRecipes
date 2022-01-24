@@ -1,31 +1,33 @@
 const request = require("supertest");
 const app = require("../app");
-const { Recipe, User, UserFavoritedRecipe } = require("../models");
-const FormData = require('form-data')
-const fs = require('fs');
-const { default: axios } = require("axios");
-const { response } = require("express");
-const testImage = fs.readFileSync('./_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png')
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbjFAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQyODIzMTg4fQ.7wo2alP5YW_vTLzVyMrjQd1Tu4-jiuCUHtF-ki8ydnw"
-const testImageUrl = 'https://toppng.com/uploads/preview/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png'
+const { Recipe, User, UserFavouritedRecipes } = require("../models");
+const { hashPassword, decryptPassword } = require("../helpers/bcrypt");
 
+let adminToken = "";
 
 beforeAll((done) => {
-  Recipe.create({
-    name: "10-minute couscous salad",
-    steps: [
-      "Tip the couscous into a large bowl and pour over the stock. Cover, then leave for 10 mins until fluffy and all the stock has been absorbed. Meanwhile, slice the onions and pepper, and dice the cucumber. Add these to the couscous, fork through the pesto, crumble in the feta, then sprinkle over pine nuts to serve.",
-    ],
-    imageUrl:
-      "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/couscous-9ab75f0.jpg?quality=90&webp=true&resize=300,272",
-    userId: 1,
-    totalCalories: 327,
+  User.create({
+    name: "admin1",
+    username: "admin1name",
+    email: "admin1@gmail.com",
+    password: "12345",
+    role: "admin",
     createdAt: new Date(),
     updatedAt: new Date(),
   })
-    .then((_) => {
-      UserFavoritedRecipe.create({
-        recipeId: 1,
+    .then(async (_) => {
+      const response = await request(app)
+        .post("/login")
+        .send({ emailOrUsername: "admin1@gmail.com", password: "12345" });
+      adminToken = response.body.accessToken;
+
+      Recipe.create({
+        name: "10-minute couscous salad",
+        steps: [
+          "Tip the couscous into a large bowl and pour over the stock. Cover, then leave for 10 mins until fluffy and all the stock has been absorbed. Meanwhile, slice the onions and pepper, and dice the cucumber. Add these to the couscous, fork through the pesto, crumble in the feta, then sprinkle over pine nuts to serve.",
+        ],
+        imageUrl:
+          "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/couscous-9ab75f0.jpg?quality=90&webp=true&resize=300,272",
         userId: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -40,13 +42,20 @@ beforeEach(() => {
 })
 
 afterAll((done) => {
-  Recipe.destroy({
+  User.destroy({
     truncate: true,
     restartIdentity: true,
     cascade: true,
   })
     .then(() => {
-      UserFavoritedRecipe.destroy({
+      Recipe.destroy({
+        truncate: true,
+        restartIdentity: true,
+        cascade: true,
+      });
+    })
+    .then(() => {
+      UserFavouritedRecipes.destroy({
         truncate: true,
         restartIdentity: true,
         cascade: true,
@@ -64,7 +73,7 @@ describe("GET /recipes", () => {
   test("GET /recipes return array of objects", (done) => {
     request(app)
       .get("/recipes")
-      .set("access_token", token)
+      .set("access_token", adminToken)
       .then((response) => {
         const result = response.body;
         expect(response.status).toEqual(200);
@@ -79,7 +88,7 @@ describe("GET /recipes/favourites", () => {
   test("GET /recipes/favourites return array of objects", (done) => {
     request(app)
       .get("/recipes/favourites")
-      .set("access_token", token)
+      .set("access_token", adminToken)
       .then((response) => {
         const result = response.body;
         const sampleResponse = {
@@ -123,7 +132,7 @@ describe("GET /recipes/:id", () => {
   test("GET /recipes/:id should return object", (done) => {
     request(app)
       .get("/recipes/1")
-      .set("access_token", token)
+      .set("access_token", adminToken)
       .then((response) => {
         const result = response.body;
         expect(response.status).toEqual(200);
@@ -137,7 +146,7 @@ describe("GET /recipes/:id", () => {
     jest.spyOn(Recipe, 'findAll').mockRejectedValue({message: 'Request Not Found'})
     request(app)
     .get("/recipes/1")
-    .set("access_token", token)
+    .set("access_token", adminToken)
     .then((response) => {
       const result = response.body
       response.status = 404
@@ -197,7 +206,7 @@ describe("DELETE /recipes/:id", () => {
   test("DELETE /recipes/:id should return object with message 'Deleted Successfully'", (done) => {
     request(app)
     .delete('/recipes/1')
-    .set("access_token", token)
+    .set("access_token", adminToken)
     .then((response) => {
       const result = response.body
       

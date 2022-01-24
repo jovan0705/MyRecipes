@@ -1,4 +1,4 @@
-import ClassCard from '../components/ClassCard'
+import ClassCardProfile from '../components/ClassCardProfile'
 import ProfileCard from '../components/ProfileCard'
 import ProfileDetail from '../components/ProfileDetail'
 import RecipeCard from '../components/RecipeCard'
@@ -11,7 +11,7 @@ const UserProfile = () => {
                     {/* <!-- Left Side --> */}
                     <div className="w-full md:w-3/12 md:mx-2">
                         <ProfileCard />
-                        <ClassCard/>
+                        <ClassCardProfile/>
                     </div>
                     {/* <!-- Left Side end--> */}
                     {/* <!-- Right Side --> */}
