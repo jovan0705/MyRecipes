@@ -7,37 +7,42 @@ import {
 import { useNavigate } from "react-router-dom";
 import Rating from "./Rating";
 
-const RecipeCard = () => {
-    const navigate = useNavigate()
-    const toDetail = () => {
-        navigate('/detail')
-    }
+const RecipeCard = ({ id, imageUrl, name, totalCalories, userId }) => {
+  const navigate = useNavigate();
+  const toDetail = () => {
+    navigate(`/detail/${id}`);
+  };
   return (
     <>
-      <div className="w-auto h-auto border shadow-md flex gap-2 rounded-md text-gray-400 hover:shadow-xl duration-200 ease-in hover:cursor-pointer" onClick={toDetail}>
+      <div className="w-auto h-auto border shadow-md flex gap-2 rounded-md text-gray-400 hover:shadow-xl duration-200 ease-in ">
         <div className="w-1/2 h-52 image overflow-hidden">
           <img
-            className="h-full w-full mx-auto rounded-md"
-            src="https://images.squarespace-cdn.com/content/v1/5fda67f173ed1f33f0c9a3bc/1608153624258-5Q8LTVG7Y8PY8RSC9T13/MapleBaconBeerBurger.jpg?format=1000w"
-            alt=""
+            className="h-full w-full mx-auto rounded-md hover:cursor-pointer"
+            src={imageUrl}
+            alt={name}
+            onClick={toDetail}
           />
         </div>
         <div className="w-1/2 py-2 flex flex-col justify-between">
           <div className="space-y-2">
             <div className="flex gap-2 py-2 flex-wrap">
-              <div class="badge badge-secondary badge-outline">Cake</div>
-              <div class="badge badge-accent badge-outline">Burger</div>
+              <div className="badge badge-secondary badge-outline">
+                Category
+              </div>
+              <div className="badge badge-accent badge-outline">
+                {totalCalories} cal
+              </div>
             </div>
             <div className="">
-              <h3 className="font-bold text-xl">Beef Burger</h3>
+              <h3 className="font-bold text-xl">{name}</h3>
             </div>
             <div className="rating rating-sm">
-              <Rating/>
+              <Rating />
             </div>
           </div>
           <div className="">
             <p className="text-xs">
-              Posted by <span className="font-bold">Jane Doe</span>
+              Posted by <span className="font-bold">{userId}</span>
             </p>
           </div>
           <div className="flex flex-row-reverse gap-3 py-2 px-5">

@@ -1,13 +1,33 @@
+// Icon
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
+
+// Components
 import CategoryCard from "../components/CategoryCard";
 import CategoryCardLoading from "../components/CategoryCardLoading";
 import Jumbotron from "../components/Jumbtoron";
 import RecipeCard from "../components/RecipeCard";
 import TopNavbar from "../components/TopNavbar";
-import { Link } from "react-router-dom";
 import RecipeCardLoading from "../components/RecipesCardLoading";
+import InternalServerError from "../components/InternalServerError";
+
+// React Utilites
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+// Store
+import { fetchRecipes } from "../store/actionCreators/recipesCreator";
+import { fetchCategories } from "../store/actionCreators/categoriesCreator";
 
 const HomePage = () => {
+  const dispatch = useDispatch();
+  const { recipeReducer, categoryReducer } = useSelector((store) => store);
+
+  useEffect(() => {
+    dispatch(fetchRecipes()); // LIMIT BY 3
+    dispatch(fetchCategories()); // LIMIT BY 6
+  }, []);
+
   return (
     <div className="py-10">
       <TopNavbar />
@@ -24,13 +44,34 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-6 gap-10">
-          <CategoryCardLoading />
-          <CategoryCardLoading />
-          <CategoryCardLoading />
-          <CategoryCardLoading />
-          <CategoryCardLoading />
-          <CategoryCardLoading />
+        <div>
+          {categoryReducer.categoriesLoading && (
+            <div className="grid grid-cols-6 gap-10">
+              <CategoryCardLoading />
+              <CategoryCardLoading />
+              <CategoryCardLoading />
+              <CategoryCardLoading />
+              <CategoryCardLoading />
+              <CategoryCardLoading />
+            </div>
+          )}
+          {categoryReducer.categories &&
+            !categoryReducer.categoriesLoading &&
+            !categoryReducer.categoriesError && (
+              <div className="grid grid-cols-6 gap-10">
+                {categoryReducer.categories.map(({ id, imageUrl, name }) => {
+                  return (
+                    <CategoryCard
+                      key={id}
+                      id={id}
+                      imageUrl={imageUrl}
+                      name={name}
+                    />
+                  );
+                })}
+              </div>
+            )}
+          {categoryReducer.categoriesError && <InternalServerError />}
         </div>
       </div>
       <div className="my-10 p-2">
@@ -49,11 +90,38 @@ const HomePage = () => {
             </Link>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-10 p-3">
-          <RecipeCardLoading />
-          <RecipeCardLoading />
-          <RecipeCardLoading />
+        <div>
+          {recipeReducer.recipesLoading && (
+            <div className="grid grid-cols-3 gap-10 p-3">
+              <RecipeCardLoading />
+              <RecipeCardLoading />
+              <RecipeCardLoading />
+            </div>
+          )}
         </div>
+        <div>
+          {recipeReducer.recipes &&
+            !recipeReducer.recipesLoading &&
+            !recipeReducer.recipesError && (
+              <div className="grid grid-cols-3 gap-10 p-3">
+                {recipeReducer.recipes.map(
+                  ({ id, imageUrl, name, totalCalories, userId }) => {
+                    return (
+                      <RecipeCard
+                        key={id}
+                        id={id}
+                        imageUrl={imageUrl}
+                        name={name}
+                        totalCalories={totalCalories}
+                        userId={userId}
+                      />
+                    );
+                  }
+                )}
+              </div>
+            )}
+        </div>
+        {recipeReducer.recipesError && <InternalServerError />}
       </div>
     </div>
   );
