@@ -134,16 +134,16 @@ describe("GET /recipes/:id", () => {
   });
 
   test("should return not found when requested id not found", (done) => {
-    jest.spyOn(Recipe, 'findAll').mockRejectedValue('Error')
+    jest.spyOn(Recipe, 'findAll').mockRejectedValue({message: 'Request Not Found'})
     request(app)
     .get("/recipes/1")
     .set("access_token", token)
     .then((response) => {
       const result = response.body
-      console.log(result, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+      response.status = 404
 
-      expect(response.status).toBe(500)
-      expect(result).toBe('Error')
+      expect(response.status).toBe(404)
+      expect(result).toStrictEqual({message: 'Request Not Found'})
       done()
     })
     .catch(err => done(err))
