@@ -1,8 +1,8 @@
-
 const { User, UserFollow, BalanceHistory } = require("../models/index");
 const { decryptPassword, hashPassword } = require("../helpers/bcrypt");
 const { getToken } = require("../helpers/jwt");
 const midtrans = require("../helpers/midtrans");
+const { Op } = require("sequelize");
 
 const userRegister = async (req, res, next) => {
   // console.log('do user register');
@@ -41,12 +41,20 @@ const adminRegister = async (req, res, next) => {
 
 const doLogin = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
-    if (!email || !password) {
+    const { emailOrUsername, password } = req.body;
+
+    if (!emailOrUsername || !password) {
       throw { name: "badRequest" };
     }
 
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ 
+      where: { 
+        [Op.or]: [
+          { email: emailOrUsername },
+          { username: emailOrUsername }
+        ]
+      } 
+    });
     if (!user) {
       throw { name: "wrongLogin" };
     }
@@ -151,26 +159,32 @@ const doFollows = async (req, res, next) => {
 };
 const topUpBalance = async (req, res, next) => {
   try {
-    const {id} = req.user
-    const {amount} = req.body
-    const balanceHistory = await BalanceHistory.create({userId: id, amount})
-    const token = await midtrans(balanceHistory.id, amount, req.user.email)
-    res.status(200).json(token)
+    const { id } = req.user;
+    const { amount } = req.body;
+    const balanceHistory = await BalanceHistory.create({ userId: id, amount });
+    const token = await midtrans(balanceHistory.id, amount, req.user.email);
+    res.status(200).json(token);
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
 
 const successTopUp = async (req, res, next) => {
   try {
-    const {id} = req.user
-    const transaction = await BalanceHistory.findOne({where: {userId: id, isDone: false}})
-    await User.update({balance: transaction.amount}, {where: {id}})
-    res.status(200).json({message: `Success add Balance with Amount ${transaction.amount}`})
+    const { id } = req.user;
+    const transaction = await BalanceHistory.findOne({
+      where: { userId: id, isDone: false },
+    });
+    await User.update({ balance: transaction.amount }, { where: { id } });
+    res
+      .status(200)
+      .json({
+        message: `Success add Balance with Amount ${transaction.amount}`,
+      });
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
 
 module.exports = {
   userRegister,
@@ -178,6 +192,6 @@ module.exports = {
   doLogin,
   editProfile,
   doFollows,
-  topUpBalance, 
-  successTopUp
+  topUpBalance,
+  successTopUp,
 };

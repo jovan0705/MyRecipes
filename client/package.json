@@ -20,6 +20,7 @@
     "react-scripts": "5.0.0",
     "react-select": "^5.2.2",
     "redux-thunk": "^2.4.1",
+    "socket.io-client": "^4.4.1",
     "sweetalert2": "^11.3.6",
     "web-vitals": "^2.1.3"
   },

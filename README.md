@@ -53,7 +53,7 @@ Jovan - 7
 Hadar - 7
 Ihza - 8
 ### USER FEATURE
-1. Login (jwt, bcrypt(comparePassword), authorization, authentication) - geri (done, login dengan username belum diimplementasikan, login dengan email sudah bisa)
+1. Login (jwt, bcrypt(comparePassword), authorization, authentication) - geri (done, bisa login dengan email atau username)
 2. Register (bcrypt(createPassword)) (ROLE NYA = admin dan user)- geri (done)
 3. Edit Profile (imageKit(buat upload profile picture)) - geri (done)
 4. Follow User - geri (done)
