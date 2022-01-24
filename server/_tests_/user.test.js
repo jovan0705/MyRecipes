@@ -7,6 +7,8 @@ let adminToken = "";
 let userToken1 = "";
 let userToken2 = "";
 let userToken3 = "";
+let userToken4 = "";
+let wrongToken = "okyldkrgrndr";
 
 beforeAll(async () => {
   await User.create({
@@ -41,6 +43,14 @@ beforeAll(async () => {
     role: "user",
   });
 
+  await User.create({
+    name: "userTest4",
+    username: "userTest4name",
+    email: "userTest4@gmail.com",
+    password: "12345",
+    role: "user",
+  });
+
   const response = await request(app)
     .post("/login")
     .send({ emailOrUsername: "admin1@gmail.com", password: "12345" });
@@ -60,6 +70,13 @@ beforeAll(async () => {
     .post("/login")
     .send({ emailOrUsername: "userTest3@gmail.com", password: "12345" });
   userToken3 = userLogin3.body.accessToken;
+
+  const userLogin4 = await request(app)
+    .post("/login")
+    .send({ emailOrUsername: "userTest4@gmail.com", password: "12345" });
+  userToken4 = userLogin4.body.accessToken;
+
+  await User.destroy({where: {id: 5}})
 });
 
 afterAll((done) => {
@@ -73,7 +90,7 @@ afterAll((done) => {
         truncate: true,
         restartIdentity: true,
         cascade: true,
-      })
+      });
     })
     .then(() => {
       done();
@@ -98,7 +115,7 @@ describe("POST /userregister", () => {
         const result = response.body;
         expect(response.status).toEqual(201);
         expect(result).toBeInstanceOf(Object);
-        expect(response.body).toHaveProperty("id", 5);
+        expect(response.body).toHaveProperty("id", 6);
         expect(response.body).toHaveProperty("email", "user1@gmail.com");
         done();
       });
@@ -285,6 +302,22 @@ describe("POST /login", () => {
         done(err);
       });
   });
+
+  test("[failed - 400] - login without entering email or username should be return an object with status code 400", (done) => {
+    request(app)
+      .post("/login")
+      .send({ password: "12345" })
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(400);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty("message", "Bad Request");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
 });
 
 describe("POST /users/adminregister", () => {
@@ -303,7 +336,7 @@ describe("POST /users/adminregister", () => {
         const result = response.body;
         expect(response.status).toEqual(201);
         expect(result).toBeInstanceOf(Object);
-        expect(response.body).toHaveProperty("id", 8);
+        expect(response.body).toHaveProperty("id", 9);
         expect(response.body).toHaveProperty("email", "admin2@gmail.com");
         done();
       });
@@ -328,8 +361,27 @@ describe("POST /users/adminregister", () => {
         done();
       });
   });
-});
 
+  test("[failed - 400] - register with empty string for name should be return an object with status code 400", (done) => {
+    request(app)
+      .post("/users/adminregister")
+      .set("access_token", adminToken)
+      .send({
+        name: "",
+        username: "user2",
+        email: "user2@gmail.com",
+        password: "12345",
+        role: "user",
+      })
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toEqual(400);
+        expect(result).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("message", "Name must not empty");
+        done();
+      });
+  });
+});
 
 describe("POST /users/follows", () => {
   test("[success - 201] - success following should be return an object with status code 201", (done) => {
@@ -359,7 +411,10 @@ describe("POST /users/follows", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(response.body).toEqual(expect.any(Object));
-        expect(response.body).toHaveProperty("message", "FollowerId and followingId cannot be the same");
+        expect(response.body).toHaveProperty(
+          "message",
+          "FollowerId and followingId cannot be the same"
+        );
         done();
       })
       .catch((err) => {
@@ -376,20 +431,27 @@ describe("POST /users/follows", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(response.body).toEqual(expect.any(Object));
-        expect(response.body).toHaveProperty("message", "User already following the target user");
+        expect(response.body).toHaveProperty(
+          "message",
+          "User already following the target user"
+        );
         done();
       })
       .catch((err) => {
         done(err);
       });
   });
-})
+});
 
 describe("PUT /users/editprofile/:id", () => {
   test("[success - 200] - success edit profile should be return an object with status code 201", (done) => {
     request(app)
       .put("/users/editprofile/2")
-      .send({ name: "user1Edited", description: "This is bio for user1", password: "54321" })
+      .send({
+        name: "user1Edited",
+        description: "This is bio for user1",
+        password: "54321",
+      })
       .set("access_token", userToken1)
       .then((response) => {
         const result = response.body;
@@ -397,7 +459,32 @@ describe("PUT /users/editprofile/:id", () => {
         expect(response.body).toEqual(expect.any(Object));
         expect(response.body).toHaveProperty("id", 2);
         expect(response.body).toHaveProperty("name", "user1Edited");
-        expect(response.body).toHaveProperty("description", "This is bio for user1");
+        expect(response.body).toHaveProperty(
+          "description",
+          "This is bio for user1"
+        );
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test("[success - 200] - success edit profile without changing password should be return an object with status code 201", (done) => {
+    request(app)
+      .put("/users/editprofile/2")
+      .send({ name: "user1Edited2", description: "This is bio 2 for user1" })
+      .set("access_token", userToken1)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty("id", 2);
+        expect(response.body).toHaveProperty("name", "user1Edited2");
+        expect(response.body).toHaveProperty(
+          "description",
+          "This is bio 2 for user1"
+        );
         done();
       })
       .catch((err) => {
@@ -408,7 +495,11 @@ describe("PUT /users/editprofile/:id", () => {
   test("[failed - 400] - edit other user profile should be return an object with status code 400", (done) => {
     request(app)
       .put("/users/editprofile/3")
-      .send({ name: "user1Edited", description: "This is bio for user1", password: "54321" })
+      .send({
+        name: "user1Edited",
+        description: "This is bio for user1",
+        password: "54321",
+      })
       .set("access_token", userToken1)
       .then((response) => {
         const result = response.body;
@@ -422,11 +513,15 @@ describe("PUT /users/editprofile/:id", () => {
       });
   });
 
-  test("[failed - 400] - edit non exixsting profile should be return an object with status code 404", (done) => {
+  test("[failed - 400] - edit non existing profile should be return an object with status code 404", (done) => {
     request(app)
       .put("/users/editprofile/20")
-      .send({ name: "user1Edited", description: "This is bio for user1", password: "54321" })
-      .set("access_token", userToken1)
+      .send({
+        name: "user1Edited",
+        description: "This is bio for user1",
+        password: "54321",
+      })
+      .set("access_token", adminToken)
       .then((response) => {
         const result = response.body;
         expect(response.status).toBe(404);
@@ -440,4 +535,59 @@ describe("PUT /users/editprofile/:id", () => {
   });
 
   //test untuk edit imagekit belum dibuat
-})
+  
+});
+
+describe("GET /users/:id", () => {
+  test("[success - 200] - success get user profile by Id should be return an object with status code 200", (done) => {
+    request(app)
+      .get("/users/3")
+      .set("access_token", userToken1)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty("id", 3);
+        expect(response.body).toHaveProperty("name", "userTest2");
+        expect(response.body).toHaveProperty("username", "userTest2name");
+        expect(response.body).toHaveProperty("email", "userTest2@gmail.com");
+        expect(response.body).toHaveProperty("role", "user");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test("[failed - 404] - request Id of non existing user should be return an object with status code 404", (done) => {
+    request(app)
+      .get("/users/10")
+      .set("access_token", userToken1)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty("message", "Request Not Found");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test("[failed - 404] - request Id with wrong token should be return an object with status code 404", (done) => {
+    request(app)
+      .get("/users/2")
+      .set("access_token", userToken4)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty("message", "You are unauthorized");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});

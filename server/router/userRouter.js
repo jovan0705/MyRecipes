@@ -9,6 +9,8 @@ router.post("/follows", userController.doFollows);
 router.post("/adminregister", adminRegisterAuthorization, userController.adminRegister);
 router.post('/topup', userController.topUpBalance)
 
+router.get("/:id", userController.detailUserbyId)
+
 router.put(
   "/editprofile/:id",
   editProfileAuthorization,
