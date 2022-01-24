@@ -9,7 +9,7 @@ import RecipeCardLoading from "../components/RecipesCardLoading";
 
 const HomePage = () => {
   return (
-    <div className="pt-10 pb-10">
+    <div className="py-10">
       <TopNavbar />
       <div className="mb-20">
         <Jumbotron />

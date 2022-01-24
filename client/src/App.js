@@ -11,6 +11,7 @@ import ClassPage from "./views/ClassPage";
 import WalletPage from "./views/WalletPage";
 import CategoriesPage from "./views/CategoriesPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import Feed from "./views/Feed";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="classes" element={<ClassPage />} />
           <Route path="wallet" element={<WalletPage />} />
           <Route path="categories" element={<CategoriesPage />} />
+          <Route path="feeds" element={<Feed />} />
         </Route>
       </Routes>
     </div>
