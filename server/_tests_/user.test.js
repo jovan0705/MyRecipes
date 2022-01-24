@@ -541,7 +541,7 @@ describe("PUT /users/editprofile/:id", () => {
       });
   });
 
-  //test untuk edit imagekit belum dibuat
+  //test untuk image kit
   test("[success - 200] - success add image when edit profile should be return an object with status code 201", (done) => {
     request(app)
       .put("/users/editprofile/2")
