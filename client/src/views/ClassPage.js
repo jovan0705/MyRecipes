@@ -4,7 +4,7 @@ import lottieJson from "../animation/lottie/recipe-class.json";
 
 const ClassPage = () => {
   return (
-    <div>
+    <div className="pt-10 pb-10">
       <h1 className="heading text-center">MyRecipe Class</h1>
       <div>
         <Lottie
