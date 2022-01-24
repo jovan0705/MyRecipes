@@ -66,6 +66,13 @@ const errorHandler = (err, req, res, next) => {
       res.status(400).json({ message: err.errors[0].message });
       break;
 
+    case "SequelizeDatabaseError": {
+      res.status(400).json({ message: 'Date cannot be Null' });
+      break;
+    }
+    case "JsonWebTokenError": {
+      res.status(400).json({ message: 'Invalid Access Token' })
+    }
     case "emptyName":
       res.status(400).json({ message: "Name required" });
       break;
