@@ -484,7 +484,7 @@ describe("PUT /users/editprofile/:id", () => {
     request(app)
       .put("/users/editprofile/20")
       .send({ name: "user1Edited", description: "This is bio for user1", password: "54321" })
-      .set("access_token", userToken1)
+      .set("access_token", adminToken)
       .then((response) => {
         const result = response.body;
         expect(response.status).toBe(404);

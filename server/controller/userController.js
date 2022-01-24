@@ -47,13 +47,10 @@ const doLogin = async (req, res, next) => {
       throw { name: "badRequest" };
     }
 
-    const user = await User.findOne({ 
-      where: { 
-        [Op.or]: [
-          { email: emailOrUsername },
-          { username: emailOrUsername }
-        ]
-      } 
+    const user = await User.findOne({
+      where: {
+        [Op.or]: [{ email: emailOrUsername }, { username: emailOrUsername }],
+      },
     });
     if (!user) {
       throw { name: "wrongLogin" };
@@ -82,6 +79,11 @@ const editProfile = async (req, res, next) => {
     let { name, description, password } = req.body;
     const profilePict = req.additionalData;
     let changePassword = false;
+
+    const user = await User.findByPk(userId);
+    if (!user) {
+      throw { name: "notFound" };
+    }
 
     if (password) {
       if (password.length > 1) {
@@ -177,11 +179,26 @@ const successTopUp = async (req, res, next) => {
       where: { userId: id, isDone: false },
     });
     await User.update({ balance: transaction.amount }, { where: { id } });
-    res
-      .status(200)
-      .json({
-        message: `Success add Balance with Amount ${transaction.amount}`,
-      });
+    res.status(200).json({
+      message: `Success add Balance with Amount ${transaction.amount}`,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const detailUserbyId = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+
+    const user = await User.findByPk(userId, {
+      attributes: { exclude: ["password"] },
+    });
+    if (!user) {
+      throw { name: "notFound" };
+    }
+
+    res.status(200).json(user);
   } catch (err) {
     next(err);
   }
@@ -195,4 +212,5 @@ module.exports = {
   doFollows,
   topUpBalance,
   successTopUp,
+  detailUserbyId,
 };
