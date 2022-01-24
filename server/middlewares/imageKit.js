@@ -1,11 +1,6 @@
 const formData = require("form-data");
 const imagekitAxios = require("../apis/imagekitAxios");
-<<<<<<< HEAD
-const axios = require("axios");
-
-=======
 const axios = require('axios')
->>>>>>> development
 const imageKitUpload = async (req, res, next) => {
   if (req.file === undefined) {
     console.log("MASUK KESINI REQ.FILENYA")
@@ -26,25 +21,6 @@ const imageKitUpload = async (req, res, next) => {
       form.append("file", sentData);
       form.append("fileName", req.file.originalname);
 
-<<<<<<< HEAD
-      if(req.headers.testing) {
-        const response = await axios.post('https://upload.imagekit.io/api/v1/files/upload', {
-          headers: form.getHeaders(),
-          data: form
-        })
-        req.additionalData = response.data.url
-        console.log('MASUK -----> ', response.data.url)
-        next()
-      } else {
-        const response = await imagekitAxios.post("/files/upload", form, {
-          headers: form.getHeaders(),
-        });
-  
-        req.additionalData = response.data.url;
-  
-        next();
-      }
-=======
       const privateKey = 'private_tuI0W9YXaMB5UZWACMAX68tpkMI=:'
       const endcodedPrivateKey = Buffer.from(privateKey).toString('base64');
       const response = await axios.post("https://upload.imagekit.io/api/v1/files/upload", form, {
@@ -57,7 +33,6 @@ const imageKitUpload = async (req, res, next) => {
       req.additionalData = response.data.url;
 
       next();
->>>>>>> development
     } catch (err) {
       // console.log(err);
       next(err);
