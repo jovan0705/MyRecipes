@@ -26,7 +26,7 @@ const RecipesPage = () => {
       <div>
         <div class="form-control">
           <label class="label">
-            <span class="label-text">Name</span>
+            <span class="label-text">Accent</span>
           </label>
           <input
             type="text"

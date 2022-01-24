@@ -12,6 +12,7 @@ import WalletPage from "./views/WalletPage";
 import CategoriesPage from "./views/CategoriesPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Feed from "./views/Feed";
+import ForumPage from "./views/ForumPage";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="wallet" element={<WalletPage />} />
           <Route path="categories" element={<CategoriesPage />} />
           <Route path="feeds" element={<Feed />} />
+          <Route path="forum" element={<ForumPage />} />
         </Route>
       </Routes>
     </div>
