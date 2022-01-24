@@ -16,7 +16,7 @@ const Jumbtron = () => {
             our community
           </h2>
           <Link to="/post">
-            <button class="btn btn-accent btn-lg hover:scale-110 duration-200">
+            <button className="btn btn-accent btn-lg hover:scale-110 duration-200">
               Add a Recipe Now
             </button>
           </Link>

@@ -1,12 +1,12 @@
-const ClassCard = () => {
+const ClassCard = ({ id, name, image }) => {
   return (
-    <div class="card card-side card-bordered border-primary shadow col-span-1">
-      <figure>
-        <img src="https://picsum.photos/id/1005/400/250" />
-      </figure>
-      <div class="card-body">
+    <div className="border border-primary flex col-span-1 rounded-xl overflow-hidden">
+      <div className="flex-1 rounded-xl">
+        <img src={image} />
+      </div>
+      <div class="flex-1 flex flex-col p-5">
         <h2 class="card-title">
-          Horizontal
+          {name}
           <div class="badge mx-2">NEW</div>
         </h2>
         <p>
@@ -15,7 +15,7 @@ const ClassCard = () => {
           sapiente.
         </p>
         <div class="card-actions">
-          <button class="btn btn-primary">Get Started</button>
+          <button class="btn btn-primary">Buy This Class</button>
           <button class="btn btn-ghost">More info</button>
         </div>
       </div>

@@ -15,9 +15,11 @@ const errorHandler = (err, req, res, next) => {
     case "isRated":
       res.status(400).json({ message: "Item already rated" });
       break;
+
     case "badRequest":
       res.status(400).json({ message: "Bad Request" });
       break;
+
     case "notFound":
       res.status(404).json({ message: "Request Not Found" });
       break;
@@ -62,6 +64,22 @@ const errorHandler = (err, req, res, next) => {
 
     case "SequelizeUniqueConstraintError":
       res.status(400).json({ message: err.errors[0].message });
+      break;
+
+    case "emptyName":
+      res.status(400).json({ message: "Name required" });
+      break;
+
+    case "emptySteps":
+      res.status(400).json({ message: "Steps required" });
+      break;
+
+    case "emptyTotalCalories":
+      res.status(400).json({ message: "Total Calories required" });
+      break;
+
+    case "emptyImage":
+      res.status(400).json({ message: "Please insert an image" });
       break;
 
     default:

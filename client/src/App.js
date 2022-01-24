@@ -1,5 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+
+// Pages
 import HomePage from "./views/HomePage";
 import RecipesPage from "./views/RecipesPage";
 import Container from "./views/Container";
@@ -17,7 +19,8 @@ import CategoriesAdmin from "./views/admin/CategoriesAdmin";
 import IngredientAdmin from "./views/admin/IngredientAdmin";
 import Feed from "./views/Feed";
 import ForumPage from "./views/ForumPage";
-import { io } from "socket.io-client";
+import ForumChat from "./components/ForumChat";
+// import { io } from "socket.io-client";
 
 // const socket = io.connect("http://localhost:3000")
 
@@ -38,15 +41,18 @@ function App() {
           <Route path="" element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="recipes" element={<RecipesPage />} />
+          <Route path="detail/:id" element={<RecipeDetail />} />
           <Route path="UserProfile" element={<UserProfile />} />
           <Route path="post" element={<PostRecipe />} />
           <Route path="classes" element={<ClassPage />} />
           <Route path="wallet" element={<WalletPage />} />
           <Route path="categories" element={<CategoriesPage />} />
           <Route path="feeds" element={<Feed />} />
-          <Route path="forum" element={<ForumPage />} />
+          <Route path="forum" element={<ForumPage />}>
+            <Route path=":region" element={<ForumChat />} />
+          </Route>
           <Route path="detail" element={<RecipeDetail />} />
-          <Route path="admin" element={<Dashboard />} >
+          <Route path="admin" element={<Dashboard />}>
             <Route path="" element={<CategoriesAdmin />} />
             <Route path="categories" element={<CategoriesAdmin />} />
             <Route path="ingredient" element={<IngredientAdmin />} />
