@@ -45,7 +45,7 @@ const getRecipeDetail = async (req, res, next) => {
   try {
     const { id } = req.params;
     const response = await Recipe.findByPk(id);
-    if (!response) throw err;
+    if (!response) throw {name: 'notFound'};
     res.status(200).json(response);
   } catch (err) {
     next(err);
@@ -74,7 +74,7 @@ const createRecipe = async (req, res, next) => {
       userId,
       imageUrl,
     });
-    if (!response) throw err;
+    if (!response) throw {name: 'errorCreateRecipe'};
 
     res.status(201).json(response);
   } catch (err) {
@@ -100,7 +100,7 @@ const editRecipe = async (req, res, next) => {
       { name, steps: newSteps, totalCalories, imageUrl },
       { where: { id ,userId } }
     );
-    if (!response) throw err;
+    if (!response) throw {name: 'errorUpdateRecipe'};
 
     res.status(200).json({ message: "Edit Successful" });
   } catch (err) {
@@ -114,7 +114,7 @@ const deleteRecipe = async (req, res, next) => {
     const found = await Recipe.findByPk(id);
     if (!found) throw { name: "notFound" };
     const response = await Recipe.destroy({ where: { id } });
-    if (!response) throw err;
+    if (!response) throw {name: 'errorDeleteRecipe'};
     res.status(200).json({ message: "Deleted Successfully" });
   } catch (err) {
     next(err);
