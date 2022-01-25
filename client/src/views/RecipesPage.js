@@ -66,16 +66,6 @@ const RecipesPage = () => {
       )}
 
       {recipeReducer.recipesError && <InternalServerError />}
-
-      <div className="btn-group flex justify-center mt-20 mb-10">
-        <button className="btn">Previous</button>
-        <button className="btn">1</button>
-        <button className="btn btn-active">2</button>
-        <button className="btn">3</button>
-        <button className="btn">4</button>
-        <button className="btn">Next</button>
-      </div>
-      <div></div>
     </div>
   );
 };

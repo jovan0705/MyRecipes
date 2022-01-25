@@ -1,4 +1,4 @@
-import { FETCH_USER, SET_USER_ERROR, SET_USER_LOADING } from "../actionTypes";
+import { SET_USER, SET_USER_ERROR, SET_USER_LOADING } from "../actionTypes";
 
 const initialState = {
   user: [],
@@ -8,8 +8,7 @@ const initialState = {
 
 const userReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    //! Recipes
-    case FETCH_USER:
+    case SET_USER:
       return {
         ...state,
         user: payload,

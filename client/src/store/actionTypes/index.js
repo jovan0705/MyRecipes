@@ -33,7 +33,7 @@ export const SET_INGREDIENTS_LOADING = "ingredients/loading";
 export const ADD_INGREDIENT = "ingredient/addIngredient";
 
 //User
-export const FETCH_USER = "user/fetch";
+export const SET_USER = "user/fetch";
 export const SET_USER_ERROR = "user/error";
 export const SET_USER_LOADING = "user/loading";
 
