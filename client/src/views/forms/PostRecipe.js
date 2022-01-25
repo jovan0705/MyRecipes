@@ -7,8 +7,11 @@ import { fetchCategories } from "../../store/actionCreators/categoriesCreator";
 import { fetchIngredients } from "../../store/actionCreators/ingredientsCreator";
 import { rename } from "../../helpers/uploadFileName";
 import { postRecipe } from "../../store/actionCreators/recipesCreator";
+import { useNavigate } from "react-router-dom";
+import { successAlert } from "../../helpers/alerts";
 
 const AddRecipe = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { categoryReducer, ingredientsReducer, recipeReducer } = useSelector(
     (store) => store
@@ -102,7 +105,14 @@ const AddRecipe = () => {
     fd.append("steps", inputData.steps);
     fd.append("totalCalories", inputData.totalCalories);
 
-    dispatch(postRecipe(fd));
+    dispatch(postRecipe(fd))
+      .then(() => {
+        successAlert("Post created successfully");
+        navigate("/myrecipes");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
