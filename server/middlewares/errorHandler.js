@@ -88,12 +88,24 @@ const errorHandler = (err, req, res, next) => {
     case "emptyImage":
       res.status(400).json({ message: "Please insert an image" });
       break;
+
+    case "ALREADY_FAVORITED": 
+      res.status(400).json({ message: "Recipe already Favorited" })
+      break;
+
+    case "NOT_FAVORITED": 
+      res.status(400).json({ message: "Recipe not Favorited" })
+      break;
+      
     case "errorCreateRecipe":
       res.status(500).json({message: "Internal Server Error: error creating recipe"})
+      break;
     case "errorUpdateRecipe":
       res.status(500).json({message: 'Internal Server Error: error updating recipe'})
+      break;
     case "errorDeleteRecipe":
       res.status(500).json({message: 'Internal Server Error: error deleting recipe'})
+      break;
     default:
       res.status(500).json(err);
       break;
