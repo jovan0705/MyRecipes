@@ -116,6 +116,7 @@ const HomePage = () => {
                       totalCalories,
                       userId,
                       Category,
+                      User,
                     }) => {
                       return (
                         <RecipeCard
@@ -126,6 +127,7 @@ const HomePage = () => {
                           totalCalories={totalCalories}
                           userId={userId}
                           category={Category.name}
+                          user={User.name}
                         />
                       );
                     }
