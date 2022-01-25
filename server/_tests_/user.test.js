@@ -2,9 +2,8 @@ const request = require("supertest");
 const app = require("../app");
 const { Recipe, User, UserFollow, BalanceHistory } = require("../models");
 const { hashPassword, decryptPassword } = require("../helpers/bcrypt");
-const axios = require('axios')
+const axios = require("axios");
 
-jest.mock("axios")
 
 let adminToken = "";
 let userToken1 = "";
@@ -84,9 +83,8 @@ beforeAll(async () => {
     .send({ emailOrUsername: "userTest4@gmail.com", password: "12345" });
   userToken4 = userLogin4.body.accessToken;
 
+  await User.destroy({ where: { id: 5 } });
 
-
-  await User.destroy({ where: { id: 5 } })
 });
 
 afterAll((done) => {
@@ -461,7 +459,11 @@ describe("POST /users/follows", () => {
 });
 
 describe("PUT /users/editprofile/:id", () => {
-  test("[success - 200] - success edit profile should be return an object with status code 201", (done) => {
+  beforeAll(() => {
+    axios.post.mockResolvedValue({ data: { url: "http://inigambar" } });
+  });
+
+  test("[success - 200] - success edit profile should be return an object with status code 200", (done) => {
     request(app)
       .put("/users/editprofile/2")
       .send({
@@ -553,6 +555,72 @@ describe("PUT /users/editprofile/:id", () => {
 
   //test untuk edit imagekit belum dibuat
 
+  //test untuk image kit
+  test("[success - 200] - success add image when edit profile should be return an object with status code 200", (done) => {
+    request(app)
+      .put("/users/editprofile/2")
+      .set("access_token", userToken1)
+      .attach(
+        "imageFile",
+        "_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
+      )
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty("id", 2);
+        expect(response.body).toHaveProperty("name", "user1Edited2");
+        expect(response.body).toHaveProperty(
+          "description",
+          "This is bio 2 for user1"
+        );
+        expect(response.body).toHaveProperty("profilePict", "http://inigambar");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test("[failed - 400] - inserting non image filetype when edit profile should be return an object with status code 400", (done) => {
+    request(app)
+      .put("/users/editprofile/2")
+      .set("access_token", userToken1)
+      .attach("imageFile", "_tests_/testImage/false-image.txt")
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(400);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty(
+          "message",
+          "Image uploaded must be image file type"
+        );
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test("[failed - 400] - inserting image file with size > 300kb when edit profile should be return an object with status code 400", (done) => {
+    request(app)
+      .put("/users/editprofile/2")
+      .set("access_token", userToken1)
+      .attach("imageFile", "_tests_/testImage/bigImage.jpg")
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(400);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty(
+          "message",
+          "Image file maximum size is 300kb"
+        );
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
 });
 
 describe("GET /users/:id", () => {

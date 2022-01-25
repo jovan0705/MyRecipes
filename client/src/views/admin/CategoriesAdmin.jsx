@@ -1,9 +1,24 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import CategoryList from "../../components/admin/CategoryList"
 import AddCategoryModal from "../forms/AddCategoryModal"
+import { fetchCategories } from '../../store/actionCreators/categoriesCreator'
+import { useDispatch, useSelector } from "react-redux"
+import CategoryCardLoading from '../../components/CategoryCardLoading.js'
 
 const CategoriesAdmin = () => {
     const [showModal, setShowModal] = useState(false)
+    const { categories, categoriesError, categoriesLoading } = useSelector((store) => store.categoryReducer)
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+        dispatch(fetchCategories())
+    }, [])
+
+    if(categoriesLoading) {
+        return (
+            <CategoryCardLoading/>
+        )
+    }
 
     return (
         <>
@@ -22,7 +37,12 @@ const CategoriesAdmin = () => {
                 </tr>
                 </thead>
                 <tbody className="">
-                    <CategoryList/>
+                    {categories.map(el => {
+                        return (
+                            <CategoryList categoryItem={el} key={el.id}/>
+                        )
+                    })}
+                    
                 </tbody>
             </table>
         </div>
