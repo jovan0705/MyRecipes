@@ -8,18 +8,48 @@ import {
 import { useNavigate } from "react-router-dom";
 import Rating from "./Rating";
 import { successAlert } from "../helpers/alerts";
+import {
+  likeRecipe,
+  unlikeRecipe,
+} from "../store/actionCreators/recipesCreator";
+import { useDispatch } from "react-redux";
 
-const RecipeCard = ({ id, imageUrl, name, totalCalories, userId }) => {
+const RecipeCard = ({
+  id,
+  imageUrl,
+  name,
+  totalCalories,
+  userId,
+  category,
+}) => {
   const [liked, setLiked] = useState(false);
   // const [bookmarked, setBookmarked] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const toDetail = (id) => {
     navigate(`/detail/${id}`);
   };
 
-  const handleLikeButton = (status) => {
-    status ? successAlert(`Like ${name}`) : successAlert(`Unlike ${name}`);
-    setLiked(status);
+  const handleLikeButton = (id) => {
+    setLiked(true);
+    dispatch(likeRecipe(id))
+      .then(() => {
+        successAlert(`Like ${name}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleUnlikeButton = (id) => {
+    setLiked(false);
+    dispatch(unlikeRecipe(id))
+      .then(() => {
+        successAlert(`Unlike ${name}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // const handleBookmarkButton = (status) => {
@@ -43,7 +73,7 @@ const RecipeCard = ({ id, imageUrl, name, totalCalories, userId }) => {
           <div className="space-y-2">
             <div className="flex gap-2 py-2 flex-wrap">
               <div className="badge badge-secondary badge-outline">
-                Category
+                {category}
               </div>
               <div className="badge badge-accent badge-outline">
                 {totalCalories} cal
@@ -94,8 +124,8 @@ const RecipeCard = ({ id, imageUrl, name, totalCalories, userId }) => {
                 </button>
                 <button
                   className="text-xl hidden text-red-600 group-hover:block tooltip"
-                  data-tip="Like"
-                  onClick={() => handleLikeButton(true)}
+                  data-tip="Favourite"
+                  onClick={() => handleLikeButton(id)}
                 >
                   <IoHeart />
                 </button>
@@ -105,8 +135,8 @@ const RecipeCard = ({ id, imageUrl, name, totalCalories, userId }) => {
               <div>
                 <button
                   className="text-xl block text-red-600 tooltip"
-                  data-tip="Unlike"
-                  onClick={() => handleLikeButton(false)}
+                  data-tip="Remove from favourite"
+                  onClick={() => handleUnlikeButton(id)}
                 >
                   <IoHeart />
                 </button>

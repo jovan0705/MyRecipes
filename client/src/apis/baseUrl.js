@@ -3,6 +3,9 @@ const url = "http://localhost:5000";
 
 export const baseUrl = axios.create({
   baseURL: url,
+  headers: {
+    access_token: localStorage.access_token,
+  },
 });
 
 export const uploadFile = axios.create({
