@@ -1,10 +1,14 @@
 import {
-  FETCH_USER,
+  SET_USER,
   SET_USER_LOADING,
   SET_USER_ERROR,
 } from "../actionTypes/index";
 import { baseUrl } from "../../apis/baseUrl";
 import { successAlert, errorAlert } from "../../helpers/alerts";
+
+const setUser = (payload) => {
+  return { type: SET_USER, payload };
+};
 
 const setUserError = (payload) => {
   return { type: SET_USER_ERROR, payload };
@@ -12,6 +16,21 @@ const setUserError = (payload) => {
 
 const setUserLoading = (payload) => {
   return { type: SET_USER_LOADING, payload };
+};
+
+export const fetchUserProfile = () => {
+  return async (dispatch) => {
+    try {
+      const { data: user } = await baseUrl.get("/users/profile", {
+        headers: { access_token: localStorage.access_token },
+      });
+      dispatch(setUser(user));
+    } catch (err) {
+      console.log(err);
+    } finally {
+      console.log("masukk");
+    }
+  };
 };
 
 export const login = (loginData) => {
@@ -44,6 +63,22 @@ export const registerUser = (registerData) => {
       throw new Error(err.response.data.message);
     } finally {
       dispatch(setUserLoading(false));
+    }
+  };
+};
+
+export const doTopUp = (amount) => {
+  const payload = { amount };
+  return async () => {
+    try {
+      const { data } = await baseUrl.post("/users/topup", payload, {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      });
+      return data;
+    } catch (err) {
+      console.log(err);
     }
   };
 };

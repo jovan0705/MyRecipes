@@ -59,16 +59,18 @@ const HomePage = () => {
             !categoryReducer.categoriesLoading &&
             !categoryReducer.categoriesError && (
               <div className="grid grid-cols-6 gap-10">
-                {categoryReducer.categories.map(({ id, imageUrl, name }) => {
-                  return (
-                    <CategoryCard
-                      key={id}
-                      id={id}
-                      imageUrl={imageUrl}
-                      name={name}
-                    />
-                  );
-                })}
+                {categoryReducer.categories
+                  .slice(0, 6)
+                  .map(({ id, imageUrl, name }) => {
+                    return (
+                      <CategoryCard
+                        key={id}
+                        id={id}
+                        imageUrl={imageUrl}
+                        name={name}
+                      />
+                    );
+                  })}
               </div>
             )}
           {categoryReducer.categoriesError && <InternalServerError />}
@@ -104,21 +106,30 @@ const HomePage = () => {
             !recipeReducer.recipesLoading &&
             !recipeReducer.recipesError && (
               <div className="grid grid-cols-3 gap-10 p-3">
-                {recipeReducer.recipes.map(
-                  ({ id, imageUrl, name, totalCalories, userId, Category }) => {
-                    return (
-                      <RecipeCard
-                        key={id}
-                        id={id}
-                        imageUrl={imageUrl}
-                        name={name}
-                        totalCalories={totalCalories}
-                        userId={userId}
-                        category={Category.name}
-                      />
-                    );
-                  }
-                )}
+                {recipeReducer.recipes
+                  .slice(0, 3)
+                  .map(
+                    ({
+                      id,
+                      imageUrl,
+                      name,
+                      totalCalories,
+                      userId,
+                      Category,
+                    }) => {
+                      return (
+                        <RecipeCard
+                          key={id}
+                          id={id}
+                          imageUrl={imageUrl}
+                          name={name}
+                          totalCalories={totalCalories}
+                          userId={userId}
+                          category={Category.name}
+                        />
+                      );
+                    }
+                  )}
               </div>
             )}
         </div>
