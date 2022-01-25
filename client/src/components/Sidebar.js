@@ -12,16 +12,30 @@ import {
 import { IoIosImages } from "react-icons/io";
 import { Link } from "react-router-dom";
 import SidebarIcon from "./SidebarIcon";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { successAlert } from "../helpers/alerts";
 
 const Sidebar = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const logout = (event) => {
-    event.preventDefault()
-    localStorage.removeItem('access_token')
-    navigate('/login')
-  }
+    Swal.fire({
+      title: "Leaving Already",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        event.preventDefault();
+        localStorage.removeItem("access_token");
+        navigate("/login");
+        successAlert("You have been logged out");
+      }
+    });
+  };
   return (
     <div className="fixed top-0 left-0 h-screen w-1/12 flex flex-col justify-around bg-primary-focus rounded-r-3xl">
       <div className=" flex flex-col">
@@ -51,8 +65,8 @@ const Sidebar = () => {
         </Link>
         {/* <SidebarIcon icon={<IoPersonAddSharp />} text="Add Admin" /> */}
       </div>
-      <div className=" flex flex-col"  onClick={(event) => logout(event)}>
-        <SidebarIcon icon={<IoLogOut />} text="Logout"/>
+      <div className=" flex flex-col" onClick={(event) => logout(event)}>
+        <SidebarIcon icon={<IoLogOut />} text="Logout" />
       </div>
     </div>
   );
