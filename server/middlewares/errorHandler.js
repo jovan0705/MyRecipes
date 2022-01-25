@@ -67,7 +67,7 @@ const errorHandler = (err, req, res, next) => {
       break;
 
     case "SequelizeDatabaseError": {
-      res.status(400).json({ message: 'Date cannot be Null' });
+      res.status(400).json({ message: err.errors});
       break;
     }
     case "JsonWebTokenError": {
@@ -87,6 +87,30 @@ const errorHandler = (err, req, res, next) => {
 
     case "emptyImage":
       res.status(400).json({ message: "Please insert an image" });
+      break;
+
+    case "ALREADY_FAVORITED": 
+      res.status(400).json({ message: "Recipe already Favorited" })
+      break;
+
+    case "NOT_FAVORITED": 
+      res.status(400).json({ message: "Recipe not Favorited" })
+      break;
+      
+    case "emptyCategoryId":
+      res.status(400).json({ message: "Please enter an category" });
+      break;
+
+    case "errorCreateRecipe":
+      res.status(500).json({message: "Internal Server Error: error creating recipe"})
+      break;
+
+    case "errorUpdateRecipe":
+      res.status(500).json({message: 'Internal Server Error: error updating recipe'})
+      break;   
+
+    case "errorDeleteRecipe":
+      res.status(500).json({message: 'Internal Server Error: error deleting recipe'})
       break;
 
     default:

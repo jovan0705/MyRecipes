@@ -27,7 +27,11 @@ export const fetchIngredients = () => {
     dispatch(setIngredientsLoading(true));
     dispatch(setIngredientsError(null));
     try {
-      const { data: ingredients } = await baseUrl.get("/ingredients");
+      const { data: ingredients } = await baseUrl.get("/ingredients", {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      });
       dispatch(setIngredients(ingredients));
     } catch (err) {
       dispatch(setIngredientsError(err.message));

@@ -4,6 +4,7 @@ const { Recipe, User, UserFollow, BalanceHistory } = require("../models");
 const { hashPassword, decryptPassword } = require("../helpers/bcrypt");
 const axios = require("axios");
 
+jest.mock("axios");
 
 let adminToken = "";
 let userToken1 = "";
@@ -553,8 +554,6 @@ describe("PUT /users/editprofile/:id", () => {
       });
   });
 
-  //test untuk edit imagekit belum dibuat
-
   //test untuk image kit
   test("[success - 200] - success add image when edit profile should be return an object with status code 200", (done) => {
     request(app)
@@ -716,6 +715,45 @@ describe("POST /successTopUp", () => {
         expect(response.status).toBe(200);
         expect(response.body).toEqual(expect.any(Object));
         expect(response.body).toHaveProperty("message", "Success add Balance with Amount 50000");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+})
+
+describe("GET /users/profile", () => {
+  test("[success - 200] - success get user profile should be return an object with status code 200", (done) => {
+    request(app)
+      .get("/users/profile")
+      .set("access_token", userToken3)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty("id", 4);
+        expect(response.body).toHaveProperty("name", "userTest3");
+        expect(response.body).toHaveProperty("username", "userTest3name");
+        expect(response.body).toHaveProperty("email", "userTest3@gmail.com");
+        expect(response.body).toHaveProperty("role", "user");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test("[failed - 404] - get user profile with non existing account should be return an object with status code 404", (done) => {
+    request(app)
+      .get("/users/profile")
+      .set("access_token", userToken4)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty("message", "You are unauthorized");
+        
         done();
       })
       .catch((err) => {

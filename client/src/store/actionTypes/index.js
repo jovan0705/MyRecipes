@@ -4,6 +4,11 @@ export const SET_RECIPES_ERROR = "recipes/error";
 export const SET_RECIPES_LOADING = "recipes/loading";
 export const SET_RECIPE_POST_STATUS = "recipes/postStatus";
 
+// User Recipes
+export const SET_USER_RECIPES = "userRecipes/set";
+export const SET_USER_RECIPES_ERROR = "userRecipes/error";
+export const SET_USER_RECIPES_LOADING = "userRecipes/loading";
+
 // Recipe Detail
 export const SET_RECIPE_DETAIL = "recipeDetail/set";
 export const SET_RECIPE_DETAIL_ERROR = "recipeDetail/error";
@@ -25,8 +30,14 @@ export const SET_INGREDIENTS = "ingredients/set";
 export const INGREDIENTS_DETAIL = "ingredients/setDetail";
 export const SET_INGREDIENTS_ERROR = "ingredients/error";
 export const SET_INGREDIENTS_LOADING = "ingredients/loading";
+export const ADD_INGREDIENT = "ingredient/addIngredient";
 
 //User
-export const FETCH_USER = "user/fetch"
+export const FETCH_USER = "user/fetch";
 export const SET_USER_ERROR = "user/error";
 export const SET_USER_LOADING = "user/loading";
+
+//Likes
+export const SET_FAVOURITES = "likes/fetch";
+export const SET_FAVOURITES_ERROR = "likes/error";
+export const SET_FAVOURITES_LOADING = "likes/loading";

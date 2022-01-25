@@ -34,14 +34,14 @@ const ClassPage = () => {
         />
       </div>
       {classReducer.classes && (
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid grid-cols-2 gap-20">
           {classReducer.classes.map(({ id, name, image }) => {
             return <ClassCard key={id} id={id} name={name} image={image} />;
           })}
         </div>
       )}
       {classReducer.classesLoading && (
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid grid-cols-2 gap-20">
           <ClassCardLoading />
           <ClassCardLoading />
           <ClassCardLoading />

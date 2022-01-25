@@ -18,32 +18,35 @@ My Recipes Repository
 
 ## PAGES (sementara client coba buat data dummy aja)
 ### - USER PAGE
-1. Login Page 
-2. Register Page
-3. Profile Page
-4. Open Chat Page
-5. Following/Followers Page / pop up
-6. Classes Page
-7. My Class Page
-8. Top Up Balance Page
+1. Login Page - v
+2. Register Page - v
+3. Profile Page - 
+4. Open Chat Page - 
+5. Following/Followers Page 
+6. Classes Page - v
+7. Class Detail 
+8. My Class Page
+9. Top Up Balance Page + balance page - v
 
 ### - RECIPE PAGE
-1. Home Page
+1. Home Page - v
 2. Favourite Page
-3. Recipe Detail Page
-4. Add / Edit Recipe Page
+3. Recipe Detail Page + Review Page - v
+4. Add / Edit Recipe Page - (add sudah edit belum)
 5. My Recipes 
-6. Review Page
+6. Categories Page - v
 
 ### - ADMIN PAGE
-1. Login Page (jadi 1 sama user)
-2. Register Page (register admin di dalem setelah admin sudah login)
+1. Login Page (jadi 1 sama user) - v
+2. Register Page (register admin di dalem setelah admin sudah login) - v
 3. Profile Page
 4. Home Page
-5. Ingridients Page
-6. Classes Page
+5. Ingridients Page - v
+6. Classes Page 
 7. Edit Recipe Page
 8. Add/Edit Class Page
+9. Add Ingredients Page - v
+10. Edit Ingredients Page
 
 ## FEATURES
 EMAIL = myrecipeh8@gmail.com
@@ -53,43 +56,43 @@ Jovan - 7
 Hadar - 7
 Ihza - 8
 ### USER FEATURE
-1. Login (jwt, bcrypt(comparePassword), authorization, authentication) - geri (done, bisa login dengan email atau username)
-2. Register (bcrypt(createPassword)) (ROLE NYA = admin dan user)- geri (done)
-3. Edit Profile (imageKit(buat upload profile picture)) - geri (done)
-4. Follow User - geri (done)
-5. LiveChat using socket io - hadar
-6. Top Up Balance (payment gateway) - jovan
-6. Register Classes, payment with balance - jovan
-7. fetch classes on My Class Page - jovan
+1. Login (jwt, bcrypt(comparePassword), authorization, authentication) - geri (done, bisa login dengan email atau username) - v
+2. Register (bcrypt(createPassword)) (ROLE NYA = admin dan user)- geri (done) - v
+3. Edit Profile (imageKit(buat upload profile picture)) - geri (done) - v
+4. Follow User - geri (done) - v
+5. LiveChat using socket io - hadar (server side done)
+6. Top Up Balance (payment gateway) - jovan - v
+6. Register Classes, payment with balance - jovan - v
+7. fetch classes on My Class Page - jovan - v
 
 ### RECIPE FEATURE
-1. Fetch All Recipe on Home Page - ihza (done)
-2. Fetch Favorited Recipe (berdasarkan Favoritenya User) My Favorite Page - ihza
-3. Fetch My Recipes (semua resep 1 user berdasarkan yang login) - ihza
-4. Fetch Recipe Detail on Recipe Detail Page - ihza (done)
-5. Create Recipe (imagekit) - ihza
-6. Edit Recipe (hanya user yang buat yang boleh edit, imagekit) - ihza
-7. Delete Recipe (hanya user yang buat yang boleh delete) - ihza
-8. Rate Recipe (1 user hanya bisa rate 1 x recipe yang sama) - ihza
-9. Add Favorite
-10. Delete Favorite
+1. Fetch All Recipe on Home Page - ihza (done) - v
+2. Fetch Favorited Recipe (berdasarkan Favoritenya User) My Favorite Page - ihza - v
+3. Fetch My Recipes (semua resep 1 user berdasarkan yang login) - ihza - v
+4. Fetch Recipe Detail on Recipe Detail Page - ihza (done) - v
+5. Create Recipe (imagekit) - ihza - v
+6. Edit Recipe (hanya user yang buat yang boleh edit, imagekit) - ihza - v
+7. Delete Recipe (hanya user yang buat yang boleh delete) - ihza - v
+8. Rate Recipe (1 user hanya bisa rate 1 x recipe yang sama) - ihza - v
+9. Add Favorite - jovan
+10. Delete Favorite - jovan
 
 ### ADMIN PAGE
-1. Login bareng sama User Feature, dibagi berdasarkan role aja
-2. Register admin beda page, tapi sama2 pakai bcrypt - geri (done)
-3. Fetch All Recipes - ihza
-4. Edit Recipes (bisa edit semua, imagekit) - ihza
-5. Delete Recipes (bisa delete semua) - ihza
-6. Fetch all Ingridients - hadar (done)
-7. Edit Ingridient - hadar (done)
-8. Add Ingridient - hadar (done)
-9. Fetch Classes - jovan (done)
-10. Add Class (imagekit) - jovan (done)
-11. Edit Class (imagekit) - jovan (done)
-12. Delete Class - jovan (done)
-13. Add Categories (imagekit) - hadar 
-14. Edit Categories (imagekit) - hadar
-15. Delete Categories - hadar
+1. Login bareng sama User Feature, dibagi berdasarkan role aja - v
+2. Register admin beda page, tapi sama2 pakai bcrypt - geri (done) - v
+3. Fetch All Recipes - ihza - v
+4. Edit Recipes (bisa edit semua, imagekit) - ihza - v
+5. Delete Recipes (bisa delete semua) - ihza - v
+6. Fetch all Ingridients - hadar (done) - v
+7. Edit Ingridient - hadar (done) - v
+8. Add Ingridient - hadar (done) - v
+9. Fetch Classes - jovan (done) - v
+10. Add Class (imagekit) - jovan (done) - v
+11. Edit Class (imagekit) - jovan (done) -v 
+12. Delete Class - jovan (done) - v
+13. Add Categories (imagekit) - hadar - v 
+14. Edit Categories (imagekit) - hadar - v
+15. Delete Categories - hadar - v
 
 ### TESTING
 

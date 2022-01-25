@@ -12,8 +12,8 @@ import PostRecipe from "./views/forms/PostRecipe";
 import ClassPage from "./views/ClassPage";
 import WalletPage from "./views/WalletPage";
 import CategoriesPage from "./views/CategoriesPage";
-import {ProtectedRoute, ProtectedLogin} from "./routes/ProtectedRoute";
-import RecipeDetail from './views/RecipeDetail'
+import { ProtectedRoute, ProtectedLogin } from "./routes/ProtectedRoute";
+import RecipeDetail from "./views/RecipeDetail";
 import Dashboard from "./views/admin/Dashoard";
 import CategoriesAdmin from "./views/admin/CategoriesAdmin";
 import IngredientAdmin from "./views/admin/IngredientAdmin";
@@ -23,6 +23,8 @@ import ForumChat from "./components/ForumChat";
 import EditCategoryModal from "./views/forms/EditCategoryModal";
 import EditIngredientModal from "./views/forms/EditIngredientModal";
 import RecipeAdmin from "./views/admin/recipeAdmin";
+import MyRecipesPage from "./views/MyRecipesPage";
+import FavouritePage from "./views/FavouritePage";
 // import { io } from "socket.io-client";
 
 // const socket = io.connect("http://localhost:3000")
@@ -31,8 +33,24 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/login" element={<ProtectedLogin> <Login /> </ProtectedLogin>} />
-        <Route path="/register" element={<ProtectedLogin> <Register /> </ProtectedLogin> } />
+        <Route
+          path="/login"
+          element={
+            <ProtectedLogin>
+              {" "}
+              <Login />{" "}
+            </ProtectedLogin>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <ProtectedLogin>
+              {" "}
+              <Register />{" "}
+            </ProtectedLogin>
+          }
+        />
         <Route
           path="/"
           element={
@@ -51,10 +69,12 @@ function App() {
           <Route path="wallet" element={<WalletPage />} />
           <Route path="categories" element={<CategoriesPage />} />
           <Route path="feeds" element={<Feed />} />
+          <Route path="favourite" element={<FavouritePage />} />
           <Route path="forum" element={<ForumPage />}>
             <Route path=":region" element={<ForumChat />} />
           </Route>
           <Route path="detail" element={<RecipeDetail />} />
+          <Route path="myrecipes" element={<MyRecipesPage />} />
           <Route path="admin" element={<Dashboard />}>
             <Route path="" element={<RecipeAdmin />} />
             <Route path="categories" element={<CategoriesAdmin />} />

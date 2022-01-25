@@ -27,7 +27,11 @@ export const fetchCategories = () => {
     dispatch(setCategoriesLoading(true));
     dispatch(setCategoriesError(null));
     try {
-      const { data: categories } = await baseUrl.get("/categories");
+      const { data: categories } = await baseUrl.get("/categories", {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      });
       dispatch(setCategories(categories.response));
     } catch (err) {
       dispatch(setCategoriesError(err.message));

@@ -22,7 +22,11 @@ export const fetchRecipe = (id) => {
     dispatch(setRecipeLoading(true));
     dispatch(setRecipeError(null));
     try {
-      const { data: recipe } = await baseUrl.get(`/recipes/${id}`);
+      const { data: recipe } = await baseUrl.get(`/recipes/${id}`, {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      });
       dispatch(setRecipe(recipe));
     } catch (err) {
       dispatch(setRecipeError(err.message));
