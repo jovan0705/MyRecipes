@@ -8,6 +8,8 @@ import {
   IoBookmarkOutline,
   IoVideocamOutline,
   IoVideocam,
+  IoHeart,
+  IoHeartOutline,
 } from "react-icons/io5";
 import DropdownIcon from "./DropdownIcon";
 import { Link } from "react-router-dom";
@@ -56,6 +58,26 @@ function Dropdown() {
               </Link>
             </div>
             <div className="px-2 py-1">
+              <Link to="/likes">
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      className={`${
+                        active ? "bg-primary text-white" : "text-gray-900"
+                      } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      {active ? (
+                        <DropdownIcon icon={<IoHeart size="26" />} />
+                      ) : (
+                        <DropdownIcon icon={<IoHeartOutline size="26" />} />
+                      )}
+                      <span className="text-lg">Likes</span>
+                    </button>
+                  )}
+                </Menu.Item>
+              </Link>
+            </div>
+            <div className="px-2 py-1">
               <Menu.Item>
                 {({ active }) => (
                   <button
@@ -64,11 +86,11 @@ function Dropdown() {
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                   >
                     {active ? (
-                      <DropdownIcon icon={<IoBookmark size="26" />} />
+                      <DropdownIcon icon={<IoVideocam size="26" />} />
                     ) : (
-                      <DropdownIcon icon={<IoBookmarkOutline size="26" />} />
+                      <DropdownIcon icon={<IoVideocamOutline size="26" />} />
                     )}
-                    <span className="text-lg">Bookmarks</span>
+                    <span className="text-lg">My Classes</span>
                   </button>
                 )}
               </Menu.Item>
@@ -86,7 +108,7 @@ function Dropdown() {
                     ) : (
                       <DropdownIcon icon={<IoVideocamOutline size="26" />} />
                     )}
-                    <span className="text-lg">My Classes</span>
+                    <span className="text-lg">My Recipes</span>
                   </button>
                 )}
               </Menu.Item>

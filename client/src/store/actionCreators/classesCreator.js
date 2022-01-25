@@ -20,7 +20,11 @@ const setClassesLoading = (payload) => {
 export const fetchClasses = () => {
   return async (dispatch) => {
     try {
-      const { data: classes } = await baseUrl.get("/class");
+      const { data: classes } = await baseUrl.get("/class", {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      });
       dispatch(setClasses(classes));
     } catch (err) {
       dispatch(setClassesError(err.message));

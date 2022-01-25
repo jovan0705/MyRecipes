@@ -1,44 +1,43 @@
 import "./styles/login.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { registerUser } from '../../store/actionCreators/userActon'
-import { successAlert } from '../../helpers/alerts'
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { registerUser } from "../../store/actionCreators/userActon";
+import { successAlert } from "../../helpers/alerts";
 
 const Register = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userReducer } = useSelector((store) => store);
 
   const [registerForm, setRegisterForm] = useState({
-    name: '',
-    username: '',
-    email: '',
-    password: ''
-  })
+    name: "",
+    username: "",
+    email: "",
+    password: "",
+  });
 
   const handleInput = (event) => {
-    const value = event.target.value
-    const name = event.target.name
+    const value = event.target.value;
+    const name = event.target.name;
     setRegisterForm({
-        ...registerForm,
-        [name]: value
-    })
-  }
+      ...registerForm,
+      [name]: value,
+    });
+  };
 
   const registerHandleBtn = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     dispatch(registerUser(registerForm))
-    .then( async (data) => {
-      console.log(data)
-      successAlert('Register Success')
-      navigate('/login')
-    })
-    .catch( async err => {
-      console.log(err)
-    })
-
-  }
+      .then((data) => {
+        successAlert("User registered successfully");
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -58,7 +57,10 @@ const Register = () => {
                       Please fill in your personal data
                     </h6>
                   </div>
-                  <form className="py-5" onSubmit={(event) => registerHandleBtn(event)}>
+                  <form
+                    className="py-5"
+                    onSubmit={(event) => registerHandleBtn(event)}
+                  >
                     <div className="relative w-full mb-7">
                       <label
                         className="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -73,6 +75,7 @@ const Register = () => {
                         name="name"
                         style={{ transition: "all .15s ease" }}
                         onChange={(event) => handleInput(event)}
+                        required
                       />
                     </div>
                     <div className="relative w-full mb-7">
@@ -105,6 +108,7 @@ const Register = () => {
                         name="email"
                         style={{ transition: "all .15s ease" }}
                         onChange={(event) => handleInput(event)}
+                        required
                       />
                     </div>
 
@@ -122,6 +126,7 @@ const Register = () => {
                         name="password"
                         style={{ transition: "all .15s ease" }}
                         onChange={(event) => handleInput(event)}
+                        required
                       />
                     </div>
 
@@ -135,13 +140,23 @@ const Register = () => {
                     </div>
 
                     <div className="text-center mt-6">
-                      <button
-                        className="bg-primary text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
-                        type="submit"
-                        style={{ transition: "all .15s ease" }}
-                      >
-                        Register
-                      </button>
+                      {userReducer.userLoading && (
+                        <button
+                          className="btn btn-primary loading bg-primary text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full loading"
+                          style={{ transition: "all .15s ease" }}
+                        >
+                          Registering...
+                        </button>
+                      )}
+                      {!userReducer.userLoading && (
+                        <button
+                          className="bg-primary text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+                          type="submit"
+                          style={{ transition: "all .15s ease" }}
+                        >
+                          Register
+                        </button>
+                      )}
                     </div>
                   </form>
                 </div>
