@@ -1,7 +1,9 @@
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from 'react-router-dom'
 import { successAlert } from '../../helpers/alerts.js'
 import { deleteIngredient } from '../../store/actionCreators/ingredientsCreator.js'
+import EditIngredientModal from '../../views/forms/EditIngredientModal.jsx'
 
 const IngredientListAdmin = ({ingredientItem}) => {
     const navigate = useNavigate()
@@ -18,6 +20,11 @@ const IngredientListAdmin = ({ingredientItem}) => {
             console.log(err)
         })
     }
+
+    const toUpdateModal = (event, id) => {
+        event.preventDefault()
+        navigate(`/admin/ingredient/${id}`)
+    }
     return (
         <>
         <tr className="text-center">
@@ -30,9 +37,10 @@ const IngredientListAdmin = ({ingredientItem}) => {
             </td>
             <td className="space-x-3">
                 <button className="btn btn-outline btn-secondary text-xs" onClick={(event) => deleteHandler(event, ingredientItem.id)}>Delete</button>
-                <button className="btn btn-outline btn-primary text-xs">Update</button>
+                <button className="btn btn-outline btn-primary text-xs" onClick={(event) => toUpdateModal (event, ingredientItem.id)}>Update</button>
             </td>
         </tr>
+        {/* {showModal && <EditIngredientModal/>} */}
         </>
 
     )

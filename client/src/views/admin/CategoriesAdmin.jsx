@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react"
 import CategoryList from "../../components/admin/CategoryList"
 import AddCategoryModal from "../forms/AddCategoryModal"
+import EditCategoryModal from "../forms/EditCategoryModal"
 import { fetchCategories } from '../../store/actionCreators/categoriesCreator'
 import { useDispatch, useSelector } from "react-redux"
 import CategoryCardLoading from '../../components/CategoryCardLoading.js'
 
 const CategoriesAdmin = () => {
     const [showModal, setShowModal] = useState(false)
+    const [showUpdateModal, setShowUpdateModal] = useState(false)
     const { categories, categoriesError, categoriesLoading } = useSelector((store) => store.categoryReducer)
     const dispatch = useDispatch()
     
@@ -39,7 +41,7 @@ const CategoriesAdmin = () => {
                 <tbody className="">
                     {categories.map(el => {
                         return (
-                            <CategoryList categoryItem={el} key={el.id}/>
+                            <CategoryList categoryItem={el} editForm={setShowUpdateModal} key={el.id}/>
                         )
                     })}
                     
@@ -47,6 +49,7 @@ const CategoriesAdmin = () => {
             </table>
         </div>
         {showModal && <AddCategoryModal closeModal={setShowModal}/>}
+        {showUpdateModal && <EditCategoryModal closeModal={setShowUpdateModal}/>}
         </>
     )
 }

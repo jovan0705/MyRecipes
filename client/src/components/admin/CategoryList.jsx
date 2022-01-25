@@ -1,9 +1,10 @@
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { successAlert } from '../../helpers/alerts.js'
 import { deleteCategory } from '../../store/actionCreators/categoriesCreator'
 
-const CategoryList = ({categoryItem}) => {
+const CategoryList = ({categoryItem, editForm}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -12,11 +13,17 @@ const CategoryList = ({categoryItem}) => {
         dispatch(deleteCategory(id))
         .then(data => {
             successAlert(data.message)
-            navigate('/admin/ingredient')
+            navigate('/admin/categories')
         })
         .catch(err => {
             console.log(err)
         })
+    }
+
+    const toUpdatePage = (event, id) => {
+        event.preventDefault()
+        editForm(false)
+        navigate(`/admin/categories/${id}`)
     }
 
 
@@ -32,7 +39,7 @@ const CategoryList = ({categoryItem}) => {
             </td>
             <td className="space-x-3">
                 <button className="btn btn-outline btn-secondary text-xs" onClick={(event) => deleteHandler(event, categoryItem.id)}>Delete</button>
-                <button className="btn btn-outline btn-primary text-xs">Update</button>
+                <button className="btn btn-outline btn-primary text-xs" onClick={(event) => toUpdatePage(event, categoryItem.id)}>Update</button>
             </td>
         </tr>
         </>

@@ -20,6 +20,9 @@ import IngredientAdmin from "./views/admin/IngredientAdmin";
 import Feed from "./views/Feed";
 import ForumPage from "./views/ForumPage";
 import ForumChat from "./components/ForumChat";
+import EditCategoryModal from "./views/forms/EditCategoryModal";
+import EditIngredientModal from "./views/forms/EditIngredientModal";
+import RecipeAdmin from "./views/admin/recipeAdmin";
 import MyRecipesPage from "./views/MyRecipesPage";
 import FavouritePage from "./views/FavouritePage";
 // import { io } from "socket.io-client";
@@ -73,9 +76,11 @@ function App() {
           <Route path="detail" element={<RecipeDetail />} />
           <Route path="myrecipes" element={<MyRecipesPage />} />
           <Route path="admin" element={<Dashboard />}>
-            <Route path="" element={<CategoriesAdmin />} />
+            <Route path="" element={<RecipeAdmin />} />
             <Route path="categories" element={<CategoriesAdmin />} />
+            <Route path="categories/:id" element={<EditCategoryModal />} />
             <Route path="ingredient" element={<IngredientAdmin />} />
+            <Route path="ingredient/:id" element={<EditIngredientModal />} />
           </Route>
         </Route>
       </Routes>

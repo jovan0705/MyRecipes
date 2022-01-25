@@ -16,6 +16,7 @@ export const SET_RECIPE_DETAIL_LOADING = "recipeDetail/loading";
 
 // Categories
 export const SET_CATEGORIES = "categories/set";
+export const CATEGORY_DETAIL = "categories/setDetail";
 export const SET_CATEGORIES_ERROR = "categories/error";
 export const SET_CATEGORIES_LOADING = "categories/loading";
 
@@ -26,6 +27,7 @@ export const SET_CLASSES_LOADING = "class/loading";
 
 // Ingredients
 export const SET_INGREDIENTS = "ingredients/set";
+export const INGREDIENTS_DETAIL = "ingredients/setDetail";
 export const SET_INGREDIENTS_ERROR = "ingredients/error";
 export const SET_INGREDIENTS_LOADING = "ingredients/loading";
 export const ADD_INGREDIENT = "ingredient/addIngredient";

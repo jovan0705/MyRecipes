@@ -2,10 +2,12 @@ import {
   SET_CATEGORIES,
   SET_CATEGORIES_ERROR,
   SET_CATEGORIES_LOADING,
+  CATEGORY_DETAIL
 } from "../actionTypes";
 
 const initialState = {
   categories: [],
+  categoriesDetail: {},
   categoriesError: null,
   categoriesLoading: true,
 };
@@ -17,6 +19,12 @@ const categoryReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         categories: payload,
+      };
+
+    case CATEGORY_DETAIL:
+      return {
+        ...state,
+        categoriesDetail: payload,
       };
 
     case SET_CATEGORIES_ERROR:
