@@ -164,9 +164,9 @@ const topUpBalance = async (req, res, next) => {
   try {
     const { id } = req.user;
     const { amount } = req.body;
-    const balanceHistory = await BalanceHistory.create({ userId: id, amount });
+    const balanceHistory = await BalanceHistory.create({ userId: id, amount,  isDone: false});
     const token = await midtrans(balanceHistory.id, amount, req.user.email);
-    res.status(200).json(token);
+    res.status(201).json(token);
   } catch (err) {
     next(err);
   }
@@ -204,6 +204,23 @@ const detailUserbyId = async (req, res, next) => {
   }
 };
 
+const profileDetails = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await User.findByPk(userId, {
+      attributes: { exclude: ["password"] },
+    });
+    // if (!user) {
+    //   throw { name: "notFound" };
+    // }
+
+    res.status(200).json(user);
+  } catch (err) {
+    next(err)
+  }
+}
+
 module.exports = {
   userRegister,
   adminRegister,
@@ -213,4 +230,5 @@ module.exports = {
   topUpBalance,
   successTopUp,
   detailUserbyId,
+  profileDetails
 };

@@ -88,7 +88,12 @@ const errorHandler = (err, req, res, next) => {
     case "emptyImage":
       res.status(400).json({ message: "Please insert an image" });
       break;
-
+    case "errorCreateRecipe":
+      res.status(500).json({message: "Internal Server Error: error creating recipe"})
+    case "errorUpdateRecipe":
+      res.status(500).json({message: 'Internal Server Error: error updating recipe'})
+    case "errorDeleteRecipe":
+      res.status(500).json({message: 'Internal Server Error: error deleting recipe'})
     default:
       res.status(500).json(err);
       break;
