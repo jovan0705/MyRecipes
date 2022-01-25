@@ -1,16 +1,16 @@
 const request = require("supertest");
 const app = require("../app");
-const { Recipe, User, UserFollow } = require("../models");
+const { Recipe, User, UserFollow, BalanceHistory } = require("../models");
 const { hashPassword, decryptPassword } = require("../helpers/bcrypt");
 const axios = require("axios");
 
-jest.mock("axios");
 
 let adminToken = "";
 let userToken1 = "";
 let userToken2 = "";
 let userToken3 = "";
 let userToken4 = "";
+let userToken5 = "";
 let wrongToken = "okyldkrgrndr";
 
 beforeAll(async () => {
@@ -36,6 +36,7 @@ beforeAll(async () => {
     email: "userTest2@gmail.com",
     password: "12345",
     role: "user",
+    balance: 0
   });
 
   await User.create({
@@ -46,13 +47,16 @@ beforeAll(async () => {
     role: "user",
   });
 
+
   await User.create({
     name: "userTest4",
     username: "userTest4name",
     email: "userTest4@gmail.com",
     password: "12345",
     role: "user",
+    balance: 0
   });
+
 
   const response = await request(app)
     .post("/login")
@@ -80,6 +84,7 @@ beforeAll(async () => {
   userToken4 = userLogin4.body.accessToken;
 
   await User.destroy({ where: { id: 5 } });
+
 });
 
 afterAll((done) => {
@@ -89,11 +94,18 @@ afterAll((done) => {
     cascade: true,
   })
     .then(() => {
-      UserFollow.destroy({
+      return UserFollow.destroy({
         truncate: true,
         restartIdentity: true,
         cascade: true,
       });
+    })
+    .then(() => {
+      BalanceHistory.destroy({
+        truncate: true,
+        restartIdentity: true,
+        cascade: true,
+      })
     })
     .then(() => {
       done();
@@ -541,6 +553,8 @@ describe("PUT /users/editprofile/:id", () => {
       });
   });
 
+  //test untuk edit imagekit belum dibuat
+
   //test untuk image kit
   test("[success - 200] - success add image when edit profile should be return an object with status code 200", (done) => {
     request(app)
@@ -662,3 +676,50 @@ describe("GET /users/:id", () => {
       });
   });
 });
+
+describe("POST /users/topup", () => {
+  beforeAll(() => {
+    axios.post.mockResolvedValue(
+      {data: {
+        token: 'initokendummy',
+        redirect_url: "http://iniredirecturl"
+      }})
+  })
+
+  test("topup done return token", (done) => {
+    request(app)
+      .post("/users/topup")
+      .set("access_token", userToken2)
+      .send({ amount: 50000 })
+      .then((response) => {
+        const result = response.body;
+        console.log(result, '<<<<<<<<<<< ini result')
+        expect(response.status).toBe(201);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty("token", "initokendummy");
+        expect(response.body).toHaveProperty("redirect_url", "http://iniredirecturl");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+})
+
+describe("POST /successTopUp", () => {
+  test("Success Top Up should return message : Success add Balance with Amount (amount)", (done) => {
+    request(app)
+      .put("/users/successTopUp")
+      .set("access_token", userToken2)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty("message", "Success add Balance with Amount 50000");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+})

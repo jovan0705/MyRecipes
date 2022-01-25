@@ -164,9 +164,9 @@ const topUpBalance = async (req, res, next) => {
   try {
     const { id } = req.user;
     const { amount } = req.body;
-    const balanceHistory = await BalanceHistory.create({ userId: id, amount });
+    const balanceHistory = await BalanceHistory.create({ userId: id, amount,  isDone: false});
     const token = await midtrans(balanceHistory.id, amount, req.user.email);
-    res.status(200).json(token);
+    res.status(201).json(token);
   } catch (err) {
     next(err);
   }
