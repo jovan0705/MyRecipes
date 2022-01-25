@@ -1,8 +1,11 @@
 const {
+  User,
   Recipe,
   UserFavoritedRecipe,
   RecipeRating,
   Category,
+  RecipeIngredients,
+  Ingredient,
 } = require("../models");
 
 const getRecipes = async (req, res, next) => {
@@ -10,7 +13,28 @@ const getRecipes = async (req, res, next) => {
     // untuk sementara belum ada paginasi
 
     const response = await Recipe.findAll({
-      include: [Category],
+      include: [
+        {
+          model: User,
+          attributes: {
+            exclude: [
+              "password",
+              "role",
+              "profilePict",
+              "balance",
+              "description",
+              "createdAt",
+              "updatedAt",
+            ],
+          },
+        },
+        {
+          model: Category,
+          attributes: {
+            exclude: ["imageUrl", "createdAt", "updatedAt"],
+          },
+        },
+      ],
     });
     if (!response) throw { name: "notFound" };
     res.status(200).json(response);
@@ -25,7 +49,31 @@ const getUserFavouritedRecipes = async (req, res, next) => {
     const userId = req.user.id;
     const response = await UserFavoritedRecipe.findAll({
       where: { userId },
-      include: Recipe,
+      include: {
+        model: Recipe,
+        include: [
+          {
+            model: User,
+            attributes: {
+              exclude: [
+                "password",
+                "role",
+                "profilePict",
+                "balance",
+                "description",
+                "createdAt",
+                "updatedAt",
+              ],
+            },
+          },
+          {
+            model: Category,
+            attributes: {
+              exclude: ["imageUrl", "createdAt", "updatedAt"],
+            },
+          },
+        ],
+      },
     });
     if (!response) throw { name: "notFound" };
     const payload = response.map((recipe) => {
@@ -40,7 +88,31 @@ const getUserFavouritedRecipes = async (req, res, next) => {
 const getLoggedInUserRecipes = async (req, res, next) => {
   try {
     const userId = req.user.id;
-    const response = await Recipe.findAll({ where: { userId } });
+    const response = await Recipe.findAll({
+      where: { userId },
+      include: [
+        {
+          model: User,
+          attributes: {
+            exclude: [
+              "password",
+              "role",
+              "profilePict",
+              "balance",
+              "description",
+              "createdAt",
+              "updatedAt",
+            ],
+          },
+        },
+        {
+          model: Category,
+          attributes: {
+            exclude: ["imageUrl", "createdAt", "updatedAt"],
+          },
+        },
+      ],
+    });
     if (!response) throw { name: "notFound" };
     res.status(200).json({ userCreatedRecipes: response });
   } catch (err) {
@@ -51,9 +123,32 @@ const getLoggedInUserRecipes = async (req, res, next) => {
 const getRecipeDetail = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const response = await Recipe.findByPk(id);
+    const response = await Recipe.findByPk(id, {
+      include: {
+        model: User,
+        attributes: {
+          exclude: [
+            "password",
+            "role",
+            "profilePict",
+            "balance",
+            "description",
+            "createdAt",
+            "updatedAt",
+          ],
+        },
+      },
+    });
     if (!response) throw { name: "notFound" };
-    res.status(200).json(response);
+    const ingredients = await RecipeIngredients.findAll({
+      where: { recipeId: id },
+      include: Ingredient,
+    });
+    console.log(ingredients);
+    const ingredientPayload = await ingredients.map((ingredient) => {
+      return ingredient.Ingredient.name;
+    });
+    res.status(200).json({ recipe: response, ingredients: ingredientPayload });
   } catch (err) {
     next(err);
   }
@@ -62,7 +157,10 @@ const getRecipeDetail = async (req, res, next) => {
 const createRecipe = async (req, res, next) => {
   try {
     // asumsi struktur tipe data step adalah array dan totalCalories sudah tertotal pas mengirimkan data input ke server
-    const { name, steps, totalCalories, categoryId } = req.body;
+    let { name, steps, totalCalories, categoryId, ingredients } = req.body;
+    ingredients = ingredients.split(",");
+    console.log(req.body, "<<<<<<<<<<<BODYNYA");
+    console.log(req.additionalData, "<<<<<<<<<<<BODYNYA");
     if (!name) throw { name: "emptyName" };
     if (!steps) throw { name: "emptySteps" };
     if (!totalCalories) throw { name: "emptyTotalCalories" };
@@ -85,8 +183,29 @@ const createRecipe = async (req, res, next) => {
     });
     if (!response) throw { name: "errorCreateRecipe" };
 
+    console.log(response.id);
+    console.log(
+      ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+      ingredients,
+      "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+    );
+    const payload = await ingredients.map((ingredientId) => {
+      return {
+        recipeId: response.id,
+        ingredientId: +ingredientId,
+        weight: 0,
+      };
+    });
+    console.log(payload, "><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+    const createIngredients = await RecipeIngredients.bulkCreate(payload, {
+      raw: true,
+    });
+    if (!createIngredients) throw err;
+
+
     res.status(201).json(response);
   } catch (err) {
+    console.log(">>>>>>>>>>>>>ERROR " + err);
     next(err);
   }
 };

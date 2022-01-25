@@ -1,10 +1,12 @@
 const request = require("supertest");
 const app = require("../app");
 const {
+  Ingredient,
   Recipe,
   User,
   UserFavoritedRecipe,
   RecipeRating,
+  Category
 } = require("../models");
 const { hashPassword, decryptPassword } = require("../helpers/bcrypt");
 const { readFileSync } = require("fs");
@@ -17,6 +19,26 @@ const testImageUrl =
   "https://toppng.com/uploads/preview/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png";
 
 let adminToken = "";
+const ingredientSeed = [
+  {
+		"name" : "Potato",
+		"calorie" : 77,
+		"createdAt" : "2022-01-18T17:37:46.346Z",
+		"updatedAt" : "2022-01-18T17:37:46.346Z"
+	},
+	{
+		"name" : "Meat",
+		"calorie" : 143,
+		"createdAt" : "2022-01-18T17:38:50.268Z",
+		"updatedAt" : "2022-01-18T17:38:50.268Z"
+	},
+	{
+		"name" : "Rice",
+		"calorie" : 130,
+		"createdAt" : "2022-01-18T17:37:12.192Z",
+		"updatedAt" : "2022-01-18T17:49:58.199Z"
+	}
+]
 
 beforeAll((done) => {
   User.create({
@@ -34,7 +56,12 @@ beforeAll((done) => {
         .send({ emailOrUsername: "admin1@gmail.com", password: "12345" });
       adminToken = response.body.accessToken;
 
-      Recipe.create({
+      await Category.create({
+        "name" : "Asian",
+        "imageUrl" : "https:\/\/ik.imagekit.io\/blyhh5i9rje\/fried-rice_Z0gnUEkDb.jpg"
+      })
+
+      await Recipe.create({
         name: "10-minute couscous salad",
         steps: [
           "Tip the couscous into a large bowl and pour over the stock. Cover, then leave for 10 mins until fluffy and all the stock has been absorbed. Meanwhile, slice the onions and pepper, and dice the cucumber. Add these to the couscous, fork through the pesto, crumble in the feta, then sprinkle over pine nuts to serve.",
@@ -42,9 +69,12 @@ beforeAll((done) => {
         imageUrl:
           "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/couscous-9ab75f0.jpg?quality=90&webp=true&resize=300,272",
         userId: 1,
+        categoryId: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
+
+      await Ingredient.bulkCreate(ingredientSeed)
     })
     .then(() => {
       UserFavoritedRecipe.create({ userId: 1, recipeId: 1 });
@@ -58,6 +88,7 @@ beforeAll((done) => {
         imageUrl:
           "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/couscous-9ab75f0.jpg?quality=90&webp=true&resize=300,272",
         userId: 1,
+        categoryId: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -102,6 +133,20 @@ afterAll((done) => {
     })
     .then(() => {
       UserFavoritedRecipe.destroy({
+        truncate: true,
+        restartIdentity: true,
+        cascade: true,
+      });
+    })
+    .then(() => {
+      Category.destroy({
+        truncate: true,
+        restartIdentity: true,
+        cascade: true,
+      });
+    })
+    .then(() => {
+      Ingredient.destroy({
         truncate: true,
         restartIdentity: true,
         cascade: true,
@@ -325,6 +370,8 @@ describe("POST /recipes", () => {
       "Tip the couscous into a large bowl and pour over the stock. Cover, then leave for 10 mins until fluffy and all the stock has been absorbed. Meanwhile, slice the onions and pepper, and dice the cucumber. Add these to the couscous, fork through the pesto, crumble in the feta, then sprinkle over pine nuts to serve.",
 
     totalCalories: 500,
+    categoryId: 1,
+    ingredients: '1,2,3',
     imageFile: testImage,
   };
 
@@ -346,12 +393,15 @@ describe("POST /recipes", () => {
       .field("name", sampleInput.name)
       .field("steps", sampleInput.steps)
       .field("totalCalories", sampleInput.totalCalories)
+      .field("categoryId", sampleInput.categoryId)
+      .field("ingredients", sampleInput.ingredients)
       .attach(
         "imageFile",
         "_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
       )
       .then((response) => {
         const result = response.body;
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>", result, "<<<<<<<<<<<<<<<<<<")
 
         expect(response.status).toEqual(201);
         expect(result).toBeInstanceOf(Object);
@@ -378,6 +428,8 @@ describe("POST /recipes", () => {
       .field("name", "")
       .field("steps", sampleInput.steps)
       .field("totalCalories", sampleInput.totalCalories)
+      .field("categoryId", sampleInput.categoryId)
+      .field("ingredients", sampleInput.ingredients)
       .attach(
         "imageFile",
         "_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
@@ -412,6 +464,8 @@ describe("POST /recipes", () => {
       .field("name", sampleInput.name)
       .field("steps", "")
       .field("totalCalories", sampleInput.totalCalories)
+      .field("categoryId", sampleInput.categoryId)
+      .field("ingredients", sampleInput.ingredients)
       .attach(
         "imageFile",
         "_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
@@ -446,6 +500,8 @@ describe("POST /recipes", () => {
       .field("name", sampleInput.name)
       .field("steps", sampleInput.steps)
       .field("totalCalories", "")
+      .field("categoryId", sampleInput.categoryId)
+      .field("ingredients", sampleInput.ingredients)
       .attach(
         "imageFile",
         "_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
@@ -480,6 +536,8 @@ describe("POST /recipes", () => {
       .field("name", sampleInput.name)
       .field("steps", sampleInput.steps)
       .field("totalCalories", sampleInput.totalCalories)
+      .field("categoryId", sampleInput.categoryId)
+      .field("ingredients", sampleInput.ingredients)
       .then((response) => {
         const result = response.body;
         console.log(result, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -510,6 +568,8 @@ describe("POST /recipes", () => {
       .field("name", sampleInput.name)
       .field("steps", sampleInput.steps)
       .field("totalCalories", sampleInput.totalCalories)
+      .field("categoryId", sampleInput.categoryId)
+      .field("ingredients", sampleInput.ingredients)
       .attach(
         "imageFile",
         "_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
