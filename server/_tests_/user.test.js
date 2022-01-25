@@ -4,6 +4,7 @@ const { Recipe, User, UserFollow, BalanceHistory } = require("../models");
 const { hashPassword, decryptPassword } = require("../helpers/bcrypt");
 const axios = require("axios");
 
+jest.mock('axios')
 
 let adminToken = "";
 let userToken1 = "";

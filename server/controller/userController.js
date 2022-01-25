@@ -1,4 +1,4 @@
-const { User, UserFollow, BalanceHistory } = require("../models/index");
+const { User, UserFollow, BalanceHistory, UserFavoritedRecipe } = require("../models/index");
 const { decryptPassword, hashPassword } = require("../helpers/bcrypt");
 const { getToken } = require("../helpers/jwt");
 const midtrans = require("../helpers/midtrans");
@@ -204,6 +204,8 @@ const detailUserbyId = async (req, res, next) => {
   }
 };
 
+
+
 module.exports = {
   userRegister,
   adminRegister,
@@ -212,5 +214,5 @@ module.exports = {
   doFollows,
   topUpBalance,
   successTopUp,
-  detailUserbyId,
+  detailUserbyId
 };

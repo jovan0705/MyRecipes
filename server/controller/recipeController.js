@@ -144,6 +144,44 @@ const createUserRating = async (req, res, next) => {
   }
 };
 
+const addFavourite = async (req, res, next) => {
+  try {
+    const {recipeId} = req.params
+    const userId = req.user.id
+    const isExist = await UserFavoritedRecipe.findOne({where: {
+      userId, recipeId
+    }})
+    if (isExist) {
+      throw {name: 'ALREADY_FAVORITED'}
+    } else {
+      await UserFavoritedRecipe.create({userId, recipeId})
+      res.status(201).json({message: 'Recipe Favorited'})
+    }
+  } catch (err) {
+    next(err)
+  }
+}
+
+const deleteFavourite = async (req, res, next) => {
+  try {
+    const {recipeId} = req.params
+    const userId = req.user.id
+    const isExist = await UserFavoritedRecipe.findOne({where: {
+      userId, recipeId
+    }})
+    if (!isExist) {
+      throw {name: 'NOT_FAVORITED'}
+    } else {
+      await UserFavoritedRecipe.destroy({where: {
+        userId, recipeId
+      }})
+      res.status(200).json({ message: "Recipe Unfavorited" })
+    }
+  } catch (err) {
+    next(err)
+  }
+}
+
 module.exports = {
   getRecipes,
   getUserFavouritedRecipes,
@@ -153,4 +191,6 @@ module.exports = {
   editRecipe,
   deleteRecipe,
   createUserRating,
+  addFavourite,
+  deleteFavourite
 };
