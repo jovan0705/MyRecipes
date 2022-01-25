@@ -1,10 +1,12 @@
-const { Recipe, UserFavoritedRecipe, RecipeRating } = require("../models");
+const { Recipe, UserFavoritedRecipe, RecipeRating, Category } = require("../models");
 
 const getRecipes = async (req, res, next) => {
   try {
     // untuk sementara belum ada paginasi
 
-    const response = await Recipe.findAll();
+    const response = await Recipe.findAll({
+      include: Category
+    });
     if (!response) throw {name: 'notFound'};
     res.status(200).json(response);
   } catch (err) {

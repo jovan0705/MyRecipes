@@ -13,7 +13,7 @@ router.post("/login", userController.doLogin);
 router.post("/userregister", userController.userRegister);
 
 //authentication
-router.use(userAuthentication)
+// router.use(userAuthentication)
 
 //use yang lain
 router.use('/users', userRouter)
