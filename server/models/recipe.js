@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Recipe.hasMany(models.UserFavoritedRecipe, {foreignKey: 'recipeId'})
+      Recipe.hasMany(models.UserFavoritedRecipe, {foreignKey: 'recipeId'}),
+      Recipe.belongsTo(models.Category, {foreignKey: 'categoryId'})
     }
   }
   Recipe.init({
@@ -40,6 +41,14 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
+    },
+    categoryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {

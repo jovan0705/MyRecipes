@@ -689,7 +689,7 @@ describe("POST recipes/:id/rate ", () => {
     request(app)
       .post("/recipes/1/rate")
       .send({
-        rating: "",
+        rating: "",                                           
         review: "Good Menu",
       })
       .set("access_token", adminToken)
