@@ -39,10 +39,10 @@ class Controller {
     static async editCategory(req, res, next) {
         try {
             const { categoryId } = req.params;
-            const foundCategory = await Category.findByPk(categoryId);
-            if(!foundCategory) {
-                throw {name: 'notFound'}
-            }
+            // const foundCategory = await Category.findByPk(categoryId);
+            // if(!foundCategory) {
+            //     throw {name: 'notFound'}
+            // }
 
             const data = {
                 name: req.body.name,

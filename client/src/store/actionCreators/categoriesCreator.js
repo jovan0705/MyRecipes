@@ -31,3 +31,46 @@ export const fetchCategories = () => {
     }
   };
 };
+
+export const addCategory = (formData) => {
+  return async (dispatch, getState) => {
+    dispatch(setCategoriesLoading(true));
+    dispatch(setCategoriesError(null));
+    try {
+      const {data: category} = await baseUrl.post('/ingredients', formData)
+      const { categoryReducer } = getState()
+      const { categories } = categoryReducer
+      const newCategories = [...categories, category]
+
+      dispatch(setCategories(newCategories))
+      return category
+    } catch (err) {
+      dispatch(setCategoriesError(err.message));
+    } finally {
+      dispatch(setCategoriesLoading(false));
+    }
+  }
+}
+
+export const deleteCategory = (id) => {
+  return async (dispatch, getState) => {
+    dispatch(setCategoriesLoading(true));
+    dispatch(setCategoriesError(null));
+
+    try {
+      const { data } = await baseUrl.delete(`/categories/${id}`)
+
+      const { categoryReducer } = getState()
+      const { categories } = categoryReducer
+      const newCategories = categories.filter(el => el.id !== id)
+      dispatch(setCategories(newCategories))
+      
+      return data
+
+    } catch (err) {
+      dispatch(setCategoriesError(err.message));
+    } finally {
+      dispatch(setCategoriesLoading(false));
+    }
+  }
+}

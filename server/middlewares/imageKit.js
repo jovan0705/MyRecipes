@@ -3,6 +3,7 @@ const imagekitAxios = require("../apis/imagekitAxios");
 const axios = require('axios')
 const imageKitUpload = async (req, res, next) => {
   if (req.file === undefined) {
+    console.log("MASUK KESINI REQ.FILENYA")
     next();
   } else {
     try {

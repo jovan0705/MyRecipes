@@ -1,9 +1,25 @@
 import IngredientListAdmin from "../../components/admin/IngredientListAdmin"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddIngredientModal from "../forms/AddIngredientModal";
+import { fetchIngredients } from '../../store/actionCreators/ingredientsCreator'
+import { useDispatch, useSelector } from "react-redux"
+import CategoryCardLoading from '../../components/CategoryCardLoading.js'
 
 const IngredientAdmin = () => {
     const [showModal, setShowModal] = useState(false)
+
+    const { ingredients, ingredientsError, ingredientsLoading } = useSelector((store) => store.ingredientsReducer)
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+        dispatch(fetchIngredients())
+    }, [])
+
+    if(ingredientsLoading) {
+        return (
+            <CategoryCardLoading/>
+        )
+    }
 
     return (
         <>
@@ -22,7 +38,11 @@ const IngredientAdmin = () => {
                 </tr>
                 </thead>
                 <tbody className="">
-                    <IngredientListAdmin/>
+                    {ingredients.map(el => {
+                        return (
+                            <IngredientListAdmin ingredientItem={el} key={el.id}/>
+                        )
+                    })}
                 </tbody>
             </table>
         </div>

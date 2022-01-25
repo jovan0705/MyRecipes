@@ -16,7 +16,7 @@ const {
 // fetch all recipes
 router.get("/", getRecipes);
 // fetch all user favourited recipes (untested)
-router.get("/favourite", getUserFavouritedRecipes);
+router.get("/favourites", getUserFavouritedRecipes);
 // fetch all logged in user recipes
 router.get("/own", getLoggedInUserRecipes);
 // fetch recipe detail
@@ -29,7 +29,7 @@ router.post(
   createRecipe
 );
 // edit recipe
-router.put("/", instanceMulter.single("imageFile"), imageKitUpload, editRecipe);
+router.put("/:id", instanceMulter.single("imageFile"), imageKitUpload, editRecipe);
 // delete recipe
 // authorizationnya dihapus dulu gara2 bikin error pas test
 router.delete("/:id", deleteRecipe);

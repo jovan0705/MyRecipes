@@ -2,9 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const port = process.env.PORT || 3000
 const router = require('./router')
-const { getRecipes, getUserFavouritedRecipes, getLoggedInUserRecipes, getRecipeDetail } = require('./controller/recipeController')
 // ! required for socket
 // const { createServer } = require('http');
 // const { Server } = require("socket.io");
