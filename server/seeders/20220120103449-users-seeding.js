@@ -38,6 +38,7 @@ module.exports = {
         email: "user1@gmail.com",
         password: hashPassword("12345"),
         role: "user",
+        balance: 0,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -47,6 +48,7 @@ module.exports = {
         email: "user2@gmail.com",
         password: hashPassword("12345"),
         role: "user",
+        balance: 0,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -56,6 +58,7 @@ module.exports = {
         email: "user3@gmail.com",
         password: hashPassword("12345"),
         role: "user",
+        balance: 0,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -65,6 +68,7 @@ module.exports = {
         email: "user4@gmail.com",
         password: hashPassword("12345"),
         role: "user",
+        balance: 0,
         createdAt: new Date(),
         updatedAt: new Date()
       }

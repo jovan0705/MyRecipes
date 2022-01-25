@@ -15,6 +15,7 @@ const userRegister = async (req, res, next) => {
       email,
       password,
       role: "user",
+      balance: 0
     });
     res.status(201).json({ id: newUser.id, email: newUser.email });
   } catch (err) {
