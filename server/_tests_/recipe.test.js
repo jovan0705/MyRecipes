@@ -66,6 +66,23 @@ beforeAll((done) => {
     .catch((err) => done(err));
 });
 
+let userToken1 = "";
+
+beforeAll(async () => {
+  await User.create({
+    name: "userTest1",
+    username: "userTest1name",
+    email: "userTest1@gmail.com",
+    password: "12345",
+    role: "user",
+  });
+
+  const userLogin1 = await request(app)
+    .post("/login")
+    .send({ emailOrUsername: "userTest1@gmail.com", password: "12345" });
+  userToken1 = userLogin1.body.accessToken;
+
+});
 beforeEach(() => {
   jest.restoreAllMocks();
 });
@@ -441,6 +458,76 @@ describe("POST recipes/:id/rate ", () => {
       .catch((err) => done(err));
   });
 });
+
+describe("POST /recipes/favourite/:recipeId", () => {
+  test("should return status code 201 when success", (done) => {
+    request(app)
+      .post("/recipes/favourite/1")
+      .set("access_token", userToken1)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toEqual(201);
+        expect(result).toBeInstanceOf(Object);
+        expect(result).toHaveProperty("message", "Recipe Favorited");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test("should return status code 400 when error", (done) => {
+    request(app)
+      .post("/recipes/favourite/1")
+      .set("access_token", userToken1)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toEqual(400);
+        expect(result).toBeInstanceOf(Object);
+        expect(result).toHaveProperty("message", "Recipe already Favorited");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+})
+
+describe("DELETE /recipes/favourite/:recipeId", () => {
+  test("should return status code 200 when success", (done) => {
+    request(app)
+      .delete("/recipes/favourite/1")
+      .set("access_token", userToken1)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toEqual(200);
+        expect(result).toBeInstanceOf(Object);
+        expect(result).toHaveProperty("message", "Recipe Unfavorited");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test("should return status code 400 when error", (done) => {
+    request(app)
+      .delete("/recipes/favourite/1")
+      .set("access_token", userToken1)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toEqual(400);
+        expect(result).toBeInstanceOf(Object);
+        expect(result).toHaveProperty("message", "Recipe not Favorited");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+})
+
+
 
 describe("DELETE /recipes/:id", () => {
   test("DELETE /recipes/:id should return object with message 'Deleted Successfully'", (done) => {
