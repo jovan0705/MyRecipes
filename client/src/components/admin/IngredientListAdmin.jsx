@@ -11,7 +11,6 @@ const IngredientListAdmin = ({ingredientItem}) => {
         event.preventDefault()
         dispatch(deleteIngredient(id))
         .then(data => {
-            console.log(data)
             successAlert(data.message)
             navigate('/admin/ingredient')
         })
