@@ -1,9 +1,4 @@
-import {
-  IoBookmarkOutline,
-  IoHeartOutline,
-  IoBookmark,
-  IoHeart,
-} from "react-icons/io5";
+import { IoBookmarkOutline, IoHeartOutline } from "react-icons/io5";
 
 const RecipeCardLoading = () => {
   return (
@@ -14,8 +9,8 @@ const RecipeCardLoading = () => {
       <div className="w-1/2 py-2 flex flex-col justify-between">
         <div className="space-y-2">
           <div className="flex gap-2 py-2 flex-wrap">
-            <div class="h-5 w-14 border border-secondary rounded-full"></div>
-            <div class="h-5 w-14 border border-accent rounded-full"></div>
+            <div className="h-5 w-14 border border-secondary rounded-full"></div>
+            <div className="h-5 w-14 border border-accent rounded-full"></div>
           </div>
           <div className="">
             <div className="w-1/2 h-8 bg-zinc-400 rounded-full"></div>

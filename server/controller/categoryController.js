@@ -6,7 +6,7 @@ class Controller {
             const response = await Category.findAll()
             res.status(200).json({response});
         } catch (err) {
-            console.log(err);
+            next(err);
         }
     }
 
@@ -19,8 +19,7 @@ class Controller {
             const response = await Category.create(data);
             res.status(201).json({response});
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            next(err);
         }
     }
 
@@ -28,20 +27,22 @@ class Controller {
         try {
             const { categoryId } = req.params;
             const response = await Category.findByPk(categoryId);
+            if(!response) {
+                throw {name: 'notFound'}
+            }
             res.status(200).json({response});
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err)
+            next(err);
         }
     }
 
     static async editCategory(req, res, next) {
         try {
             const { categoryId } = req.params;
-            const foundCategory = await Category.findByPk(categoryId);
-            if(!foundCategory) {
-                throw {name: 'NotFound'}
-            }
+            // const foundCategory = await Category.findByPk(categoryId);
+            // if(!foundCategory) {
+            //     throw {name: 'notFound'}
+            // }
 
             const data = {
                 name: req.body.name,
@@ -56,8 +57,7 @@ class Controller {
             })
             res.status(200).json({edited: response[1][0]})
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            next(err);
         }
     }
 
@@ -66,7 +66,7 @@ class Controller {
             const { categoryId } = req.params;
             const foundCategory = await Category.findByPk(categoryId);
             if(!foundCategory) {
-                throw {name: 'NotFound'}
+                throw {name: 'notFound'}
             }
 
             await Category.destroy({
@@ -78,8 +78,7 @@ class Controller {
                 message: `Deleted category ${foundCategory.name} from the list`
             })
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            next(err);
         }
     }
 }

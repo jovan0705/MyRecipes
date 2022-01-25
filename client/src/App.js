@@ -1,5 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+
+// Pages
 import HomePage from "./views/HomePage";
 import RecipesPage from "./views/RecipesPage";
 import Container from "./views/Container";
@@ -10,23 +12,24 @@ import PostRecipe from "./views/forms/PostRecipe";
 import ClassPage from "./views/ClassPage";
 import WalletPage from "./views/WalletPage";
 import CategoriesPage from "./views/CategoriesPage";
-import ProtectedRoute from "./routes/ProtectedRoute";
+import {ProtectedRoute, ProtectedLogin} from "./routes/ProtectedRoute";
 import RecipeDetail from './views/RecipeDetail'
 import Dashboard from "./views/admin/Dashoard";
 import CategoriesAdmin from "./views/admin/CategoriesAdmin";
 import IngredientAdmin from "./views/admin/IngredientAdmin";
 import Feed from "./views/Feed";
 import ForumPage from "./views/ForumPage";
-import { io } from "socket.io-client";
+import ForumChat from "./components/ForumChat";
+// import { io } from "socket.io-client";
 
-const socket = io.connect("http://localhost:3000")
+// const socket = io.connect("http://localhost:3000")
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<ProtectedLogin> <Login /> </ProtectedLogin>} />
+        <Route path="/register" element={<ProtectedLogin> <Register /> </ProtectedLogin> } />
         <Route
           path="/"
           element={
@@ -35,17 +38,21 @@ function App() {
             </ProtectedRoute>
           }
         >
+          <Route path="" element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="recipes" element={<RecipesPage />} />
+          <Route path="detail/:id" element={<RecipeDetail />} />
           <Route path="UserProfile" element={<UserProfile />} />
           <Route path="post" element={<PostRecipe />} />
           <Route path="classes" element={<ClassPage />} />
           <Route path="wallet" element={<WalletPage />} />
           <Route path="categories" element={<CategoriesPage />} />
           <Route path="feeds" element={<Feed />} />
-          <Route path="forum" element={<ForumPage />} />
+          <Route path="forum" element={<ForumPage />}>
+            <Route path=":region" element={<ForumChat />} />
+          </Route>
           <Route path="detail" element={<RecipeDetail />} />
-          <Route path="admin" element={<Dashboard />} >
+          <Route path="admin" element={<Dashboard />}>
             <Route path="" element={<CategoriesAdmin />} />
             <Route path="categories" element={<CategoriesAdmin />} />
             <Route path="ingredient" element={<IngredientAdmin />} />
