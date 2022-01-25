@@ -4,6 +4,7 @@ import AddIngredientModal from "../forms/AddIngredientModal";
 import { fetchIngredients } from '../../store/actionCreators/ingredientsCreator'
 import { useDispatch, useSelector } from "react-redux"
 import CategoryCardLoading from '../../components/CategoryCardLoading.js'
+import EditIngredientModal from "../forms/EditIngredientModal";
 
 const IngredientAdmin = () => {
     const [showModal, setShowModal] = useState(false)

@@ -1,5 +1,6 @@
 import {
   SET_INGREDIENTS,
+  INGREDIENTS_DETAIL,
   SET_INGREDIENTS_ERROR,
   SET_INGREDIENTS_LOADING,
 } from "../actionTypes";
@@ -7,6 +8,9 @@ import { baseUrl } from "../../apis/baseUrl";
 
 const setIngredients = (payload) => {
   return { type: SET_INGREDIENTS, payload };
+};
+const setIngredientsDetail = (payload) => {
+  return { type: INGREDIENTS_DETAIL, payload };
 };
 
 const setIngredientsError = (payload) => {
@@ -33,6 +37,21 @@ export const fetchIngredients = () => {
   };
 };
 
+export const fetchIngredientsById = (id) => {
+  return async (dispatch) => {
+    dispatch(setIngredientsLoading(true));
+    dispatch(setIngredientsError(null));
+    try {
+      const { data: ingredients } = await baseUrl.get(`/ingredients/${id}`);
+      dispatch(setIngredientsDetail(ingredients.response));
+    } catch (err) {
+      dispatch(setIngredientsError(err.message));
+    } finally {
+      dispatch(setIngredientsLoading(false));
+    }
+  };
+};
+
 export const addIngredient = (formData) => {
   return async (dispatch, getState) => {
     dispatch(setIngredientsLoading(true));
@@ -45,6 +64,23 @@ export const addIngredient = (formData) => {
 
       dispatch(setIngredients(newIngredients))
       return ingredients
+    } catch (err) {
+      dispatch(setIngredientsError(err.message));
+    } finally {
+      dispatch(setIngredientsLoading(false));
+    }
+  }
+}
+
+export const updateIngredient = (id, formData) => {
+  return async (dispatch, getState) => {
+    dispatch(setIngredientsLoading(true));
+    dispatch(setIngredientsError(null));
+    try {
+      const {data: ingredient} = await baseUrl.put(`/ingredients/${id}`, formData)
+
+      dispatch(fetchIngredients())
+      return ingredient
     } catch (err) {
       dispatch(setIngredientsError(err.message));
     } finally {
