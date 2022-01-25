@@ -336,7 +336,7 @@ describe("PUT /recipes", () => {
     axios.post.mockResolvedValue(resp);
 
     request(app)
-      .put("/recipes/2")
+      .put("/recipes/1")
       .set({
         access_token: adminToken,
         testing: true,
@@ -387,7 +387,7 @@ describe("PUT /recipes", () => {
 
         expect(response.status).toEqual(404);
         expect(result).toBeInstanceOf(Object);
-        expect(result).toHaveProperty("message", "Edit Successful")
+        expect(result).toHaveProperty("message", "Request Not Found")
         done()
       })
       .catch(err => done(err))
