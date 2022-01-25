@@ -1,4 +1,4 @@
-const { Recipe, UserFavoritedRecipe, RecipeRating, Category } = require("../models");
+const { Recipe, UserFavoritedRecipe, RecipeRating, Category, RecipeIngredients, Ingredient } = require("../models");
 
 const getRecipes = async (req, res, next) => {
   try {
@@ -48,7 +48,11 @@ const getRecipeDetail = async (req, res, next) => {
     const { id } = req.params;
     const response = await Recipe.findByPk(id);
     if (!response) throw {name: 'notFound'};
-    res.status(200).json(response);
+    const ingredients = await RecipeIngredients.findAll({where: {recipeId: id}, include: Ingredient})
+    const ingredientPayload = await ingredients.map(ingredient => {
+      return ingredient.Ingredient.name
+    })
+    res.status(200).json({recipe: response, ingredients: ingredientPayload});
   } catch (err) {
     next(err);
   }
@@ -57,7 +61,8 @@ const getRecipeDetail = async (req, res, next) => {
 const createRecipe = async (req, res, next) => {
   try {
     // asumsi struktur tipe data step adalah array dan totalCalories sudah tertotal pas mengirimkan data input ke server
-    const { name, steps, totalCalories, categoryId } = req.body;
+    let { name, steps, totalCalories, categoryId, ingredients } = req.body;
+    ingredients = ingredients.split(',')
     if (!name) throw { name: "emptyName" };
     if (!steps) throw { name: "emptySteps" };
     if (!totalCalories) throw { name: "emptyTotalCalories" };
@@ -79,8 +84,19 @@ const createRecipe = async (req, res, next) => {
       imageUrl,
     });
     if (!response) throw {name: 'errorCreateRecipe'};
+    console.log(response.id)
+    const payload = await ingredients.map(ingredientId => {
+      return {
+        recipeId: response.id,
+        ingredientId,
+        weight: 0
+      }
+    })
+    console.log(payload)
+    const createIngredients = await RecipeIngredients.bulkCreate(payload, {raw: true})
+    if(!createIngredients) throw err
 
-    res.status(201).json(response);
+    res.status(201).json({createdRecipe: response});
   } catch (err) {
     next(err);
   }
