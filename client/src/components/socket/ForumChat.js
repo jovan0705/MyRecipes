@@ -51,16 +51,15 @@ function ForumChat() {
             {messageList.map((msg) => {
             return (
                 <div
-                    className="message"
-                    id={username === msg.username ? "you" : "other"}
+                    // className="message"
+                    className={username === msg.username ? 'text-right bg-amber-200' : 'text-left bg-amber-500'}
                     >
                     <div>
                     <div className="message-content">
                         <p>{msg.message}</p>
                     </div>
                     <div className="message-meta">
-                        <p id="time">{msg.time}</p>
-                        <p id="author">{msg.username}</p>
+                        <p id="author">@{msg.username}</p>
                     </div>
                     </div>
                 </div>

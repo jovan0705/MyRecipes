@@ -11,7 +11,7 @@ let msgPro = [];
 let msgAmt = [];
 let homeCook = [];
 io.on('connection', (socket) => {
-    console.log(`User connected`);
+    // console.log(`User connected`);
 
     // socket.on("join_room", (data) => {
     //     // console.log(data);
