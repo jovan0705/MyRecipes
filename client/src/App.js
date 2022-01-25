@@ -19,7 +19,9 @@ import CategoriesAdmin from "./views/admin/CategoriesAdmin";
 import IngredientAdmin from "./views/admin/IngredientAdmin";
 import Feed from "./views/Feed";
 import ForumPage from "./views/ForumPage";
-import ForumChat from "./components/ForumChat";
+import ForumChat from "./components/socket/ForumChat";
+import ForumChatTwo from "./components/socket/ForumChatTwo";
+import ForumChatThree from "./components/socket/ForumChatTwo";
 import EditCategoryModal from "./views/forms/EditCategoryModal";
 import EditIngredientModal from "./views/forms/EditIngredientModal";
 import RecipeAdmin from "./views/admin/recipeAdmin";
@@ -71,7 +73,9 @@ function App() {
           <Route path="feeds" element={<Feed />} />
           <Route path="favourite" element={<FavouritePage />} />
           <Route path="forum" element={<ForumPage />}>
-            <Route path=":region" element={<ForumChat />} />
+            <Route path="chatPro" element={<ForumChat />} />
+            <Route path="chatAmt" element={<ForumChatTwo />} />
+            <Route path="homeCook" element={<ForumChatThree />} />
           </Route>
           <Route path="detail" element={<RecipeDetail />} />
           <Route path="myrecipes" element={<MyRecipesPage />} />
