@@ -104,6 +104,7 @@ const AddRecipe = () => {
     fd.append("imageFile", inputData.imageFile);
     fd.append("steps", inputData.steps);
     fd.append("totalCalories", inputData.totalCalories);
+    fd.append("categoryId", inputData.category);
 
     dispatch(postRecipe(fd))
       .then(() => {

@@ -56,3 +56,36 @@ export const postRecipe = (fd) => {
     }
   };
 };
+
+export const likeRecipe = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data: recipe } = await baseUrl.post(`/recipes/favourite/${id}`, {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      });
+      return recipe;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const unlikeRecipe = (id) => {
+  return async () => {
+    try {
+      const { data: recipe } = await baseUrl.delete(
+        `/recipes/favourite/${id}`,
+        {
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        }
+      );
+      return recipe;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};

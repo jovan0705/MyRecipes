@@ -1,13 +1,18 @@
-const { Recipe, UserFavoritedRecipe, RecipeRating, Category } = require("../models");
+const {
+  Recipe,
+  UserFavoritedRecipe,
+  RecipeRating,
+  Category,
+} = require("../models");
 
 const getRecipes = async (req, res, next) => {
   try {
     // untuk sementara belum ada paginasi
 
     const response = await Recipe.findAll({
-      include: Category
+      include: [Category],
     });
-    if (!response) throw {name: 'notFound'};
+    if (!response) throw { name: "notFound" };
     res.status(200).json(response);
   } catch (err) {
     next(err);
@@ -22,7 +27,7 @@ const getUserFavouritedRecipes = async (req, res, next) => {
       where: { userId },
       include: Recipe,
     });
-    if (!response) throw {name: 'notFound'};
+    if (!response) throw { name: "notFound" };
     const payload = response.map((recipe) => {
       return recipe.Recipe;
     });
@@ -36,7 +41,7 @@ const getLoggedInUserRecipes = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const response = await Recipe.findAll({ where: { userId } });
-    if (!response) throw {name: 'notFound'};
+    if (!response) throw { name: "notFound" };
     res.status(200).json({ userCreatedRecipes: response });
   } catch (err) {
     next(err);
@@ -47,7 +52,7 @@ const getRecipeDetail = async (req, res, next) => {
   try {
     const { id } = req.params;
     const response = await Recipe.findByPk(id);
-    if (!response) throw {name: 'notFound'};
+    if (!response) throw { name: "notFound" };
     res.status(200).json(response);
   } catch (err) {
     next(err);
@@ -61,7 +66,7 @@ const createRecipe = async (req, res, next) => {
     if (!name) throw { name: "emptyName" };
     if (!steps) throw { name: "emptySteps" };
     if (!totalCalories) throw { name: "emptyTotalCalories" };
-    if(!categoryId) throw {name: 'emptyCategoryId'}
+    if (!categoryId) throw { name: "emptyCategoryId" };
     const newSteps = steps.split(",").map((step) => {
       return step;
     });
@@ -78,7 +83,7 @@ const createRecipe = async (req, res, next) => {
       categoryId,
       imageUrl,
     });
-    if (!response) throw {name: 'errorCreateRecipe'};
+    if (!response) throw { name: "errorCreateRecipe" };
 
     res.status(201).json(response);
   } catch (err) {
@@ -93,18 +98,18 @@ const editRecipe = async (req, res, next) => {
     const newSteps = steps.split(",").map((step) => {
       return step;
     });
-    const id = req.params.id
+    const id = req.params.id;
     const userId = req.user.id;
     const imageUrl = req.additionalData;
 
-    const found = await Recipe.findByPk(id)
-    if(!found) throw {name: 'notFound'}
+    const found = await Recipe.findByPk(id);
+    if (!found) throw { name: "notFound" };
 
     const response = await Recipe.update(
       { name, steps: newSteps, totalCalories, imageUrl },
-      { where: { id ,userId } }
+      { where: { id, userId } }
     );
-    if (!response) throw {name: 'errorUpdateRecipe'};
+    if (!response) throw { name: "errorUpdateRecipe" };
 
     res.status(200).json({ message: "Edit Successful" });
   } catch (err) {
@@ -118,7 +123,7 @@ const deleteRecipe = async (req, res, next) => {
     const found = await Recipe.findByPk(id);
     if (!found) throw { name: "notFound" };
     const response = await Recipe.destroy({ where: { id } });
-    if (!response) throw {name: 'errorDeleteRecipe'};
+    if (!response) throw { name: "errorDeleteRecipe" };
     res.status(200).json({ message: "Deleted Successfully" });
   } catch (err) {
     next(err);
@@ -150,41 +155,50 @@ const createUserRating = async (req, res, next) => {
 
 const addFavourite = async (req, res, next) => {
   try {
-    const {recipeId} = req.params
-    const userId = req.user.id
-    const isExist = await UserFavoritedRecipe.findOne({where: {
-      userId, recipeId
-    }})
+    const { recipeId } = req.params;
+    const userId = req.user.id;
+    const isExist = await UserFavoritedRecipe.findOne({
+      where: {
+        userId,
+        recipeId,
+      },
+    });
     if (isExist) {
-      throw {name: 'ALREADY_FAVORITED'}
+      throw { name: "ALREADY_FAVORITED" };
     } else {
-      await UserFavoritedRecipe.create({userId, recipeId})
-      res.status(201).json({message: 'Recipe Favorited'})
+      await UserFavoritedRecipe.create({ userId, recipeId });
+      res.status(201).json({ message: "Recipe Favorited" });
     }
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
 
 const deleteFavourite = async (req, res, next) => {
   try {
-    const {recipeId} = req.params
-    const userId = req.user.id
-    const isExist = await UserFavoritedRecipe.findOne({where: {
-      userId, recipeId
-    }})
+    const { recipeId } = req.params;
+    const userId = req.user.id;
+    const isExist = await UserFavoritedRecipe.findOne({
+      where: {
+        userId,
+        recipeId,
+      },
+    });
     if (!isExist) {
-      throw {name: 'NOT_FAVORITED'}
+      throw { name: "NOT_FAVORITED" };
     } else {
-      await UserFavoritedRecipe.destroy({where: {
-        userId, recipeId
-      }})
-      res.status(200).json({ message: "Recipe Unfavorited" })
+      await UserFavoritedRecipe.destroy({
+        where: {
+          userId,
+          recipeId,
+        },
+      });
+      res.status(200).json({ message: "Recipe Unfavorited" });
     }
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
 
 module.exports = {
   getRecipes,
@@ -196,5 +210,5 @@ module.exports = {
   deleteRecipe,
   createUserRating,
   addFavourite,
-  deleteFavourite
+  deleteFavourite,
 };

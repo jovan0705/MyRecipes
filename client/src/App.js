@@ -21,7 +21,7 @@ import Feed from "./views/Feed";
 import ForumPage from "./views/ForumPage";
 import ForumChat from "./components/ForumChat";
 import MyRecipesPage from "./views/MyRecipesPage";
-import LikesPage from "./views/LikesPage";
+import FavouritePage from "./views/FavouritePage";
 // import { io } from "socket.io-client";
 
 // const socket = io.connect("http://localhost:3000")
@@ -66,7 +66,7 @@ function App() {
           <Route path="wallet" element={<WalletPage />} />
           <Route path="categories" element={<CategoriesPage />} />
           <Route path="feeds" element={<Feed />} />
-          <Route path="likes" element={<LikesPage />} />
+          <Route path="favourite" element={<FavouritePage />} />
           <Route path="forum" element={<ForumPage />}>
             <Route path=":region" element={<ForumChat />} />
           </Route>
