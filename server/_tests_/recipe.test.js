@@ -129,6 +129,22 @@ describe("GET /recipes", () => {
       })
       .catch((err) => done(err));
   });
+
+  test("GET /recipes return status code 404 when not found", (done) => {
+    jest.spyOn(Recipe, "findAll").mockResolvedValue(false);
+    request(app)
+      .get("/recipes")
+      .set("access_token", adminToken)
+      .then((response) => {
+        const result = response.body;
+        response.status = 404;
+
+        expect(response.status).toBe(404);
+        expect(result).toStrictEqual({ message: "Request Not Found" });
+        done();
+      })
+      .catch((err) => done(err));
+  });
 });
 
 describe("GET /recipes/favourites", () => {
@@ -156,6 +172,22 @@ describe("GET /recipes/favourites", () => {
     jest
       .spyOn(UserFavoritedRecipe, "findAll")
       .mockRejectedValue({ message: "Request Not Found" });
+    request(app)
+      .get("/recipes/favourites")
+      .set("access_token", adminToken)
+      .then((response) => {
+        const result = response.body;
+        response.status = 404;
+
+        expect(response.status).toBe(404);
+        expect(result).toStrictEqual({ message: "Request Not Found" });
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  test("GET /recipes/favourites should return status code 404 when not found", (done) => {
+    jest.spyOn(UserFavoritedRecipe, "findAll").mockResolvedValue(false);
     request(app)
       .get("/recipes/favourites")
       .set("access_token", adminToken)
@@ -205,6 +237,22 @@ describe("GET /recipes/own", () => {
       })
       .catch((err) => done(err));
   });
+
+  test("GET /recipes/own should return status code 404 when not found", (done) => {
+    jest.spyOn(Recipe, "findAll").mockResolvedValue(false);
+    request(app)
+      .get("/recipes/own")
+      .set("access_token", adminToken)
+      .then((response) => {
+        const result = response.body;
+        response.status = 404;
+
+        expect(response.status).toBe(404);
+        expect(result).toStrictEqual({ message: "Request Not Found" });
+        done();
+      })
+      .catch((err) => done(err));
+  });
 });
 
 describe("GET /recipes/:id", () => {
@@ -222,9 +270,22 @@ describe("GET /recipes/:id", () => {
   });
 
   test("should return not found when requested id not found", (done) => {
-    jest
-      .spyOn(Recipe, "findByPk")
-      .mockRejectedValue({ message: "Request Not Found" });
+    jest.spyOn(Recipe, "findByPk").mockResolvedValue(false);
+    request(app)
+      .get("/recipes/1")
+      .set("access_token", adminToken)
+      .then((response) => {
+        const result = response.body;
+
+        expect(response.status).toBe(404);
+        expect(result).toStrictEqual({ message: "Request Not Found" });
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  test("should return not found when requested id not found", (done) => {
+    jest.spyOn(Recipe, "findByPk").mockResolvedValue(false);
     request(app)
       .get("/recipes/1")
       .set("access_token", adminToken)
@@ -282,7 +343,7 @@ describe("POST /recipes", () => {
       .catch((err) => done(err));
   });
 
-  test("POST /recipes should return status code 400 when form incorrect", (done) => {
+  test("POST /recipes should return status code 400 when name empty", (done) => {
     const resp = {
       data: {
         url: testImageUrl,
@@ -298,6 +359,40 @@ describe("POST /recipes", () => {
         testing: true,
       })
       .field("name", "")
+      .field("steps", sampleInput.steps)
+      .field("totalCalories", sampleInput.totalCalories)
+      .attach(
+        "imageFile",
+        "_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
+      )
+      .then((response) => {
+        const result = response.body;
+        console.log(result, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+        expect(response.status).toEqual(400);
+        expect(result).toBeInstanceOf(Object);
+        expect(result).toHaveProperty("message", "Name required");
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  test("POST /recipes should return status code 400 when steps empty", (done) => {
+    const resp = {
+      data: {
+        url: testImageUrl,
+      },
+    };
+    // console.log(resp)
+    axios.post.mockResolvedValue(resp);
+
+    request(app)
+      .post("/recipes")
+      .set({
+        access_token: adminToken,
+        testing: true,
+      })
+      .field("name", sampleInput.name)
       .field("steps", "")
       .field("totalCalories", sampleInput.totalCalories)
       .attach(
@@ -310,7 +405,108 @@ describe("POST /recipes", () => {
 
         expect(response.status).toEqual(400);
         expect(result).toBeInstanceOf(Object);
-        expect(result).toHaveProperty("message", "Bad Request");
+        expect(result).toHaveProperty("message", "Steps required");
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  test("POST /recipes should return status code 400 when total calories empty", (done) => {
+    const resp = {
+      data: {
+        url: testImageUrl,
+      },
+    };
+    // console.log(resp)
+    axios.post.mockResolvedValue(resp);
+
+    request(app)
+      .post("/recipes")
+      .set({
+        access_token: adminToken,
+        testing: true,
+      })
+      .field("name", sampleInput.name)
+      .field("steps", sampleInput.steps)
+      .field("totalCalories", "")
+      .attach(
+        "imageFile",
+        "_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
+      )
+      .then((response) => {
+        const result = response.body;
+        console.log(result, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+        expect(response.status).toEqual(400);
+        expect(result).toBeInstanceOf(Object);
+        expect(result).toHaveProperty("message", "Total Calories required");
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  test("POST /recipes should return status code 400 when image empty", (done) => {
+    const resp = {
+      data: {
+        url: testImageUrl,
+      },
+    };
+    // console.log(resp)
+    axios.post.mockResolvedValue(resp);
+
+    request(app)
+      .post("/recipes")
+      .set({
+        access_token: adminToken,
+        testing: true,
+      })
+      .field("name", sampleInput.name)
+      .field("steps", sampleInput.steps)
+      .field("totalCalories", sampleInput.totalCalories)
+      .then((response) => {
+        const result = response.body;
+        console.log(result, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+        expect(response.status).toEqual(400);
+        expect(result).toBeInstanceOf(Object);
+        expect(result).toHaveProperty("message", "Please insert an image");
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  test("POST /recipes should return status code 500 when error create", (done) => {
+    const resp = {
+      data: {
+        url: testImageUrl,
+      },
+    };
+    // console.log(resp)
+    axios.post.mockResolvedValue(resp);
+    jest.spyOn(Recipe, "create").mockResolvedValue(false);
+    request(app)
+      .post("/recipes")
+      .set({
+        access_token: adminToken,
+        testing: true,
+      })
+      .field("name", sampleInput.name)
+      .field("steps", sampleInput.steps)
+      .field("totalCalories", sampleInput.totalCalories)
+      .attach(
+        "imageFile",
+        "_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
+      )
+      .then((response) => {
+        const result = response.body;
+        console.log(result, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+        expect(response.status).toEqual(500);
+        expect(result).toBeInstanceOf(Object);
+        expect(result).toHaveProperty(
+          "message",
+          "Internal Server Error: error creating recipe"
+        );
         done();
       })
       .catch((err) => done(err));
@@ -349,16 +545,20 @@ describe("PUT /recipes", () => {
         "_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
       )
       .then((response) => {
-        const result = response.body
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>", result, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+        const result = response.body;
+        console.log(
+          ">>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+          result,
+          "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+        );
 
         expect(response.status).toEqual(200);
         expect(result).toBeInstanceOf(Object);
-        expect(result).toHaveProperty("message", "Edit Successful")
-        done()
+        expect(result).toHaveProperty("message", "Edit Successful");
+        done();
       })
-      .catch(err => done(err))
-  })
+      .catch((err) => done(err));
+  });
 
   test("EDIT /recipes/:id should return status code 404 when not found", (done) => {
     const resp = {
@@ -382,16 +582,60 @@ describe("PUT /recipes", () => {
         "_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
       )
       .then((response) => {
-        const result = response.body
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>", result, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+        const result = response.body;
+        console.log(
+          ">>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+          result,
+          "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+        );
 
         expect(response.status).toEqual(404);
         expect(result).toBeInstanceOf(Object);
-        expect(result).toHaveProperty("message", "Request Not Found")
-        done()
+        expect(result).toHaveProperty("message", "Request Not Found");
+        done();
       })
-      .catch(err => done(err))
-  })
+      .catch((err) => done(err));
+  });
+
+  test("EDIT /recipes/:id should return status code 500 when update operation failed", (done) => {
+    const resp = {
+      data: {
+        url: testImageUrl,
+      },
+    };
+    axios.post.mockResolvedValue(resp);
+    jest.spyOn(Recipe, "update").mockResolvedValue(false);
+    request(app)
+      .put("/recipes/1")
+      .set({
+        access_token: adminToken,
+        testing: true,
+      })
+      .field("name", sampleInput.name)
+      .field("steps", sampleInput.steps)
+      .field("totalCalories", sampleInput.totalCalories)
+      .attach(
+        "imageFile",
+        "_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
+      )
+      .then((response) => {
+        const result = response.body;
+        console.log(
+          ">>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+          result,
+          "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+        );
+
+        expect(response.status).toEqual(500);
+        expect(result).toBeInstanceOf(Object);
+        expect(result).toHaveProperty(
+          "message",
+          "Internal Server Error: error updating recipe"
+        );
+        done();
+      })
+      .catch((err) => done(err));
+  });
 });
 
 describe("POST recipes/:id/rate ", () => {
@@ -436,6 +680,42 @@ describe("POST recipes/:id/rate ", () => {
 
         expect(response.status).toBe(400);
         expect(result).toStrictEqual({ message: "Item already rated" });
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  test("should return status code 400 if rating empty", (done) => {
+    request(app)
+      .post("/recipes/1/rate")
+      .send({
+        rating: "",
+        review: "Good Menu",
+      })
+      .set("access_token", adminToken)
+      .then((response) => {
+        const result = response.body;
+
+        expect(response.status).toBe(400);
+        expect(result).toHaveProperty("message", "Bad Request");
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  test("should return status code 400 if review empty", (done) => {
+    request(app)
+      .post("/recipes/1/rate")
+      .send({
+        rating: 5,
+        review: "",
+      })
+      .set("access_token", adminToken)
+      .then((response) => {
+        const result = response.body;
+
+        expect(response.status).toBe(400);
+        expect(result).toHaveProperty("message", "Bad Request");
         done();
       })
       .catch((err) => done(err));
@@ -486,6 +766,25 @@ describe("DELETE /recipes/:id", () => {
 
         expect(response.status).toEqual(500);
         expect(result).toStrictEqual({ message: "Internal Server Error" });
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  test("DELETE /recipes/:id should return status code 500 fail delete operation", (done) => {
+    jest.spyOn(Recipe, "destroy").mockResolvedValue(false);
+    request(app)
+      .delete("/recipes/2")
+      .set("access_token", adminToken)
+      .then((response) => {
+        const result = response.body;
+        response.status = 500;
+
+        expect(response.status).toEqual(500);
+        expect(result).toHaveProperty(
+          "message",
+          "Internal Server Error: error deleting recipe"
+        );
         done();
       })
       .catch((err) => done(err));

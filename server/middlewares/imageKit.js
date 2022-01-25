@@ -89,16 +89,6 @@ const imageKitUpload = async (req, res, next) => {
           Authorization: `Basic ${endcodedPrivateKey}`
         },
       });
-
-      const privateKey = 'private_tuI0W9YXaMB5UZWACMAX68tpkMI=:'
-      const endcodedPrivateKey = Buffer.from(privateKey).toString('base64');
-      const response = await axios.post("https://upload.imagekit.io/api/v1/files/upload", form, {
-        headers: {
-          ...form.getHeaders(),
-          Authorization: `Basic ${endcodedPrivateKey}`
-        },
-      });
-
       req.additionalData = response.data.url;
 
       next();
