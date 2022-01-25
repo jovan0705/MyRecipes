@@ -7,24 +7,12 @@ const {
   RecipeIngredients,
   Ingredient,
 } = require("../models");
-const { Op } = require("sequelize");
 
 const getRecipes = async (req, res, next) => {
   try {
     // untuk sementara belum ada paginasi
-    const {search, categoryId} = req.query
-    let filter = {}
-    if (search) {
-      filter.name = {[Op.iLike]: `%${search}%`}
-    }
-    if (categoryId) {
-      filter = {
-        ...filter,
-        categoryId
-      }
-    }
+
     const response = await Recipe.findAll({
-      where: filter,
       include: [
         {
           model: User,
