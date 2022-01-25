@@ -97,6 +97,15 @@ const errorHandler = (err, req, res, next) => {
       res.status(400).json({ message: "Recipe not Favorited" })
       break;
       
+    case "errorCreateRecipe":
+      res.status(500).json({message: "Internal Server Error: error creating recipe"})
+      break;
+    case "errorUpdateRecipe":
+      res.status(500).json({message: 'Internal Server Error: error updating recipe'})
+      break;
+    case "errorDeleteRecipe":
+      res.status(500).json({message: 'Internal Server Error: error deleting recipe'})
+      break;
     default:
       res.status(500).json(err);
       break;

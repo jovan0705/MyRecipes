@@ -204,7 +204,22 @@ const detailUserbyId = async (req, res, next) => {
   }
 };
 
+const profileDetails = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
 
+    const user = await User.findByPk(userId, {
+      attributes: { exclude: ["password"] },
+    });
+    // if (!user) {
+    //   throw { name: "notFound" };
+    // }
+
+    res.status(200).json(user);
+  } catch (err) {
+    next(err)
+  }
+}
 
 module.exports = {
   userRegister,
@@ -214,5 +229,6 @@ module.exports = {
   doFollows,
   topUpBalance,
   successTopUp,
-  detailUserbyId
+  detailUserbyId,
+  profileDetails
 };
