@@ -37,7 +37,7 @@ export const addCategory = (formData) => {
     dispatch(setCategoriesLoading(true));
     dispatch(setCategoriesError(null));
     try {
-      const {data: category} = await baseUrl.post('/ingredients', formData)
+      const {data: category} = await baseUrl.post('/categories', formData)
       const { categoryReducer } = getState()
       const { categories } = categoryReducer
       const newCategories = [...categories, category]
