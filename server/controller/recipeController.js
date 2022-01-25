@@ -1,11 +1,23 @@
-const { Recipe, UserFavoritedRecipe, RecipeRating, Category, RecipeIngredients, Ingredient } = require("../models");
+const { User, Recipe, UserFavoritedRecipe, RecipeRating, Category, RecipeIngredients, Ingredient } = require("../models");
 
 const getRecipes = async (req, res, next) => {
   try {
     // untuk sementara belum ada paginasi
 
     const response = await Recipe.findAll({
-      include: Category
+      include: [{
+        model: User,
+        attributes: {
+          exclude: ['password', 'role', 'profilePict', 'balance', 'description', 'createdAt', 'updatedAt']
+        }
+      },
+      {
+        model: Category,
+        attributes: {
+          exclude: ['imageUrl', 'createdAt', 'updatedAt']
+        }
+      }
+    ]
     });
     if (!response) throw {name: 'notFound'};
     res.status(200).json(response);
@@ -46,9 +58,19 @@ const getLoggedInUserRecipes = async (req, res, next) => {
 const getRecipeDetail = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const response = await Recipe.findByPk(id);
+    const response = await Recipe.findByPk(
+      id, 
+      {
+        include: {
+          model: User,
+          attributes: {
+            exclude: ['password', 'role', 'profilePict', 'balance', 'description', 'createdAt', 'updatedAt']
+          }
+        }
+      });
     if (!response) throw {name: 'notFound'};
     const ingredients = await RecipeIngredients.findAll({where: {recipeId: id}, include: Ingredient})
+    console.log(ingredients)
     const ingredientPayload = await ingredients.map(ingredient => {
       return ingredient.Ingredient.name
     })

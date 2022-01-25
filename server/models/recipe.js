@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Recipe.hasMany(models.UserFavoritedRecipe, {foreignKey: 'recipeId'}),
       Recipe.belongsTo(models.Category, {foreignKey: 'categoryId'}),
-      Recipe.hasMany(models.RecipeIngredients, {foreignKey: 'recipeId'})
+      Recipe.hasMany(models.RecipeIngredients, {foreignKey: 'recipeId'}),
+      Recipe.belongsTo(models.User, {foreignKey: 'userId'})
     }
   }
   Recipe.init({
