@@ -33,3 +33,21 @@ export const fetchClasses = () => {
     }
   };
 };
+
+export const registerClass = (classId) => {
+  return async (dispatch) => {
+    try {
+      const data = await baseUrl.post(`/class/register/${classId}`, {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      })
+      return data
+    } catch (err) {
+      dispatch(setClassesError(err.message));
+      return err
+    } finally {
+      dispatch(setClassesLoading(false));
+    }
+  }
+}
