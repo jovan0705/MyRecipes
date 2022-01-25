@@ -38,7 +38,7 @@ module.exports = {
         email: "user1@gmail.com",
         password: hashPassword("12345"),
         role: "user",
-        balance: 0,
+        balance: 1000000,
         createdAt: new Date(),
         updatedAt: new Date()
       },
