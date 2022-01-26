@@ -103,6 +103,7 @@ const getUserFavouritedRecipes = async (req, res, next) => {
           },
           {
             model: RecipeRating,
+            include: User,
             attributes: {
               exclude: ["createdAt", "updatedAt"],
             },
@@ -157,6 +158,7 @@ const getLoggedInUserRecipes = async (req, res, next) => {
         },
         {
           model: RecipeRating,
+          include: User,
           attributes: {
             exclude: ["createdAt", "updatedAt"],
           },
@@ -203,7 +205,14 @@ const getRecipeDetail = async (req, res, next) => {
         },
       },
       {
+        model: Category,
+        attributes: {
+          exclude: ["imageUrl", "createdAt", "updatedAt"],
+        },
+      },
+      {
         model: RecipeRating,
+        include: User,
         attributes: {
           exclude: ["createdAt", "updatedAt"],
         },
