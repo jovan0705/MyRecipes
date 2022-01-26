@@ -25,6 +25,10 @@ import EditIngredientModal from "./views/forms/EditIngredientModal";
 import RecipeAdmin from "./views/admin/recipeAdmin";
 import MyRecipesPage from "./views/MyRecipesPage";
 import FavouritePage from "./views/FavouritePage";
+import AddAdmin from "./views/admin/AddAdmin";
+import ClassesAdminPage from "./views/admin/ClassesAdminPage";
+import AddClass from "./views/forms/AddClass";
+import EditClass from "./views/forms/editClass";
 // import { io } from "socket.io-client";
 
 // const socket = io.connect("http://localhost:3000")
@@ -77,10 +81,14 @@ function App() {
           <Route path="myrecipes" element={<MyRecipesPage />} />
           <Route path="admin" element={<Dashboard />}>
             <Route path="" element={<RecipeAdmin />} />
+            <Route path="addAdmin" element={<AddAdmin />} />
             <Route path="categories" element={<CategoriesAdmin />} />
             <Route path="categories/:id" element={<EditCategoryModal />} />
             <Route path="ingredient" element={<IngredientAdmin />} />
             <Route path="ingredient/:id" element={<EditIngredientModal />} />
+            <Route path="class" element={<ClassesAdminPage />} />
+            <Route path="class/update/:id" element={<EditClass />} />
+            <Route path="addClass" element={<AddClass />} />
           </Route>
         </Route>
       </Routes>
