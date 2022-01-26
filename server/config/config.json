@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "postgres",
+    "username": "",
     "password": "postgres",
     "database": "MyRecipesDB",
     "host": "localhost",

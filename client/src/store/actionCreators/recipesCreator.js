@@ -75,6 +75,21 @@ export const postRecipe = (fd) => {
   };
 };
 
+export const updateRecipe = (id, fd) => {
+  return async (dispatch) => {
+    try {
+      dispatch(setRecipePostStatus(true));
+      const { data: recipe } = await uploadFile.put(`/recipes/${id}`, fd);
+      return recipe;
+    } catch (err) {
+      errorAlert(err.response.data.message);
+      throw new Error(err.response.data.message);
+    } finally {
+      dispatch(setRecipePostStatus(false));
+    }
+  };
+};
+
 export const likeRecipe = (id) => {
   return async (dispatch) => {
     try {
