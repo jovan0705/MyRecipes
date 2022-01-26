@@ -8,6 +8,7 @@ const {
   Ingredient,
 } = require("../models");
 const { Op } = require("sequelize");
+const convertToArray = require('../helpers/sequelizePostgresArrayConverter')
 
 const getRecipes = async (req, res, next) => {
   try {
@@ -56,7 +57,16 @@ const getRecipes = async (req, res, next) => {
       ],
     });
     if (!response) throw { name: "notFound" };
-    res.status(200).json(response);
+
+    const newResponse = await response.map(resp => {
+      const newSteps = convertToArray(resp.dataValues.steps)
+      const newResp = {
+        ...resp.dataValues,
+        steps: newSteps
+      }
+      return newResp
+    })
+    res.status(200).json(newResponse);
   } catch (err) {
     next(err);
   }
@@ -93,6 +103,7 @@ const getUserFavouritedRecipes = async (req, res, next) => {
           },
           {
             model: RecipeRating,
+            include: User,
             attributes: {
               exclude: ["createdAt", "updatedAt"],
             },
@@ -104,7 +115,16 @@ const getUserFavouritedRecipes = async (req, res, next) => {
     const payload = response.map((recipe) => {
       return recipe.Recipe;
     });
-    res.status(200).json({ favoritedRecipes: payload });
+
+    const newResponse = await payload.map(resp => {
+      const newSteps = convertToArray(resp.dataValues.steps)
+      const newResp = {
+        ...resp.dataValues,
+        steps: newSteps
+      }
+      return newResp
+    })
+    res.status(200).json({ favoritedRecipes: newResponse });
   } catch (err) {
     next(err);
   }
@@ -138,6 +158,7 @@ const getLoggedInUserRecipes = async (req, res, next) => {
         },
         {
           model: RecipeRating,
+          include: User,
           attributes: {
             exclude: ["createdAt", "updatedAt"],
           },
@@ -145,7 +166,21 @@ const getLoggedInUserRecipes = async (req, res, next) => {
       ],
     });
     if (!response) throw { name: "notFound" };
-    res.status(200).json({ userCreatedRecipes: response });
+
+    // const newSteps = convertToArray(response.dataValues.steps)
+    // const recipePayload = {
+    //   ...response.dataValues,
+    //   steps: newSteps
+    // }
+    const newResponse = await response.map(resp => {
+      const newSteps = convertToArray(resp.dataValues.steps)
+      const newResp = {
+        ...resp.dataValues,
+        steps: newSteps
+      }
+      return newResp
+    })
+    res.status(200).json({ userCreatedRecipes: newResponse });
   } catch (err) {
     next(err);
   }
@@ -170,7 +205,14 @@ const getRecipeDetail = async (req, res, next) => {
         },
       },
       {
+        model: Category,
+        attributes: {
+          exclude: ["imageUrl", "createdAt", "updatedAt"],
+        },
+      },
+      {
         model: RecipeRating,
+        include: User,
         attributes: {
           exclude: ["createdAt", "updatedAt"],
         },
@@ -182,11 +224,16 @@ const getRecipeDetail = async (req, res, next) => {
       where: { recipeId: id },
       include: Ingredient,
     });
-    console.log(ingredients);
     const ingredientPayload = await ingredients.map((ingredient) => {
       return ingredient.Ingredient.name;
     });
-    res.status(200).json({ recipe: response, ingredients: ingredientPayload });
+
+    const newSteps = convertToArray(response.dataValues.steps)
+    const recipePayload = {
+      ...response.dataValues,
+      steps: newSteps
+    }
+    res.status(200).json({ recipe: recipePayload, ingredients: ingredientPayload });
   } catch (err) {
     next(err);
   }
@@ -203,9 +250,10 @@ const createRecipe = async (req, res, next) => {
     if (!steps) throw { name: "emptySteps" };
     if (!totalCalories) throw { name: "emptyTotalCalories" };
     if (!categoryId) throw { name: "emptyCategoryId" };
-    const newSteps = steps.split(",").map((step) => {
+    const newSteps = steps.split("~").map((step) => {
       return step;
     });
+    console.log(newSteps)
     const userId = req.user.id;
     const imageUrl = req.additionalData;
 
@@ -220,13 +268,6 @@ const createRecipe = async (req, res, next) => {
       imageUrl,
     });
     if (!response) throw { name: "errorCreateRecipe" };
-
-    console.log(response.id);
-    console.log(
-      ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-      ingredients,
-      "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-    );
     const payload = await ingredients.map((ingredientId) => {
       return {
         recipeId: response.id,
@@ -234,14 +275,17 @@ const createRecipe = async (req, res, next) => {
         weight: 0,
       };
     });
-    console.log(payload, "><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     const createIngredients = await RecipeIngredients.bulkCreate(payload, {
       raw: true,
     });
     if (!createIngredients) throw err;
 
-
-    res.status(201).json(response);
+    const stepsPayload = convertToArray(response.dataValues.steps)
+    const responsePayload = {
+      ...response.dataValues,
+      steps: stepsPayload
+    }
+    res.status(201).json(responsePayload);
   } catch (err) {
     console.log(">>>>>>>>>>>>>ERROR " + err);
     next(err);
@@ -309,7 +353,7 @@ const createUserRating = async (req, res, next) => {
     next(err);
   }
 };
-
+ 
 const getRatings = async (req, res, next) => {
   try {
     const recipeId = req.params.id
@@ -321,7 +365,8 @@ const getRatings = async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-}
+};
+
 const addFavourite = async (req, res, next) => {
   try {
     const { recipeId } = req.params;
