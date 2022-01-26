@@ -4,14 +4,14 @@ const server = require('../socket/config');
 
 describe('Suite of unit tests', function () {
   //ngejalain servernya
-  server.attach(3018); //kalo server in use, ganti server disini dan di localhost dibawah
+  server.attach(3022); //kalo server in use, ganti server disini dan di localhost dibawah
   // let sender;
   // let receiver;
   let socket;
 
   beforeEach(function (done) {
     // Setup
-    socket = io.connect('http://localhost:3018', {
+    socket = io.connect('http://localhost:3022', {
       'reconnection delay': 0
       , 'reopen delay': 0
       , 'force new connection': true
@@ -43,15 +43,44 @@ describe('Suite of unit tests', function () {
 
     test('Show message', (done) => {
       let payload = {
-        room: '1',
-        name: 'Budi'
+        username: 'Budi',
+        message: 'test'
       };
-      socket.emit('send_msg', payload);
+      socket.emit('send_msg_pro', payload);
 
-      socket.on('get_msg', data => {
+      socket.on('get_msg_pro', data => {
         expect(data).toEqual(payload);
         done();
       });
+      
+    });
+
+    test('Show message 2', (done) => {
+      let payload = {
+        username: 'Budi',
+        message: 'test'
+      };
+      socket.emit('send_msg_amateur', payload);
+
+      socket.on('get_msg_amateur', data => {
+        expect(data).toEqual(payload);
+        done();
+      });
+      
+    });
+
+    test('Show message 3', (done) => {
+      let payload = {
+        username: 'Budi',
+        message: 'test'
+      };
+      socket.emit('send_msg_home_cook', payload);
+
+      socket.on('get_msg_home_cook', data => {
+        expect(data).toEqual(payload);
+        done();
+      });
+      
     });
 
   });

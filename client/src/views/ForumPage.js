@@ -1,22 +1,23 @@
 import { Link, Outlet } from "react-router-dom";
 
 const ForumPage = () => {
+  
   return (
     <div className="h-screen w-full flex py-10">
       <div className="flex-1 flex justify-center items-center border border-red-600">
         <div className="flex flex-col gap-10">
-          <Link to="jakarta" className="btn btn-primary">
-            Jakarta
+          <Link to="chatPro" className="btn btn-primary">
+            PRO CHEF
           </Link>
-          <Link to="bandung" className="btn btn-primary">
-            Bandung
+          <Link to="chatAmt" className="btn btn-primary">
+            AMATEUR CHEF
           </Link>
-          <Link to="surabaya" className="btn btn-primary">
-            Surabaya
+          <Link to="homeCook" className="btn btn-primary">
+            HOME COOK
           </Link>
-          <Link to="yogyakarta" className="btn btn-primary">
+          {/* <Link to="yogyakarta" className="btn btn-primary">
             Yogyakarta
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div className="flex-1 flex justify-center items-center border border-blue-600">
