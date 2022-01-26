@@ -122,10 +122,10 @@ const AddRecipe = () => {
   };
 
   return (
-    <div className="min-h-screen border flex justify-center items-center">
-      <div className="flex w-11/12 border h-11/12">
-        <div className="flex-1 border-r-2"> Test</div>
-        <form style={{ flex: 2 }} onSubmit={(e) => handleSubmit(e)}>
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="w-1/2 h-1/2 bg-white p-10 shadow-lg rounded-lg">
+        <h1 className="heading text-center">Add a New Recipe</h1>
+        <form onSubmit={(e) => handleSubmit(e)}>
           {/* First Row */}
           {/* Name  */}
           <div className="flex justify-between gap-10 mb-6">
@@ -178,7 +178,7 @@ const AddRecipe = () => {
           <div className="form-control flex-1 mb-6 z-0">
             <label className="label">
               <span className="label-text text-lg text-base-content">
-                Indegrients
+                Ingredients
               </span>
             </label>
             <Select
@@ -198,7 +198,7 @@ const AddRecipe = () => {
             <div className="form-control">
               <label className="label">
                 <span className="label-text text-lg text-base-content">
-                  imageFile
+                  Image
                 </span>
               </label>
               <label className="flex flex-col items-center px-4 py-6 bg-primary rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white duration-200">
@@ -244,9 +244,11 @@ const AddRecipe = () => {
           </div>
           {/* End of Steps */}
           {/* Total Cal */}
-          <div>Total Calories: {inputData.totalCalories}</div>
+          <div className="text-center mb-5 font-bold text-lg">
+            Total Calories: {inputData.totalCalories}
+          </div>
 
-          <div>
+          <div className="flex justify-center">
             {!recipeReducer.posting && (
               <button className="btn btn-primary" type="submit">
                 Post a new recipe

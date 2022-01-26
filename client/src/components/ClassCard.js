@@ -1,9 +1,18 @@
+
+
+
+
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerClass } from "../store/actionCreators/classesCreator";
 import { successAlert, errorAlert } from "../helpers/alerts";
 
 const ClassCard = ({ id, name, image }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const toDetail = (id) => {
+    navigate(`/classes/${id}`);
+  };
   const handleClick = () => {
     dispatch(registerClass(id))
       .then((data) => {
@@ -35,7 +44,9 @@ const ClassCard = ({ id, name, image }) => {
         </p>
         <div class="card-actions">
           <button class="btn btn-primary" onClick={() => handleClick()}>Buy This Class</button>
-          <button class="btn btn-ghost">More info</button>
+          <button class="btn btn-ghost" onClick={() => toDetail(id)}>
+            More info
+          </button>
         </div>
       </div>
     </div>

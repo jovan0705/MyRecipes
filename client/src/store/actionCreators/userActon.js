@@ -72,7 +72,10 @@ export const registerAdmin = (registerData) => {
     dispatch(setUserLoading(true));
     dispatch(setUserError(null));
     try {
-      const { data: user } = await baseUrl.post("/users/adminregister", registerData);
+      const { data: user } = await baseUrl.post(
+        "/users/adminregister",
+        registerData
+      );
       return user;
     } catch (err) {
       dispatch(setUserError(err.response.data.message));
@@ -94,6 +97,21 @@ export const doTopUp = (amount) => {
         },
       });
       return data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const doRating = (id, payload) => {
+  return async () => {
+    try {
+      const { data: rating } = await baseUrl.post(
+        `/recipes/${id}/rate`,
+        payload,
+        { headers: { access_token: localStorage.access_token } }
+      );
+      console.log(rating);
     } catch (err) {
       console.log(err);
     }

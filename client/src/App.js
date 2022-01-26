@@ -31,6 +31,8 @@ import AddAdmin from "./views/admin/AddAdmin";
 import ClassesAdminPage from "./views/admin/ClassesAdminPage";
 import AddClass from "./views/forms/AddClass";
 import EditClass from "./views/forms/editClass";
+import ClassDetailPage from "./views/ClassDetailPage";
+import MyClasses from "./views/MyClasses";
 // import { io } from "socket.io-client";
 
 // const socket = io.connect("http://localhost:3000")
@@ -75,6 +77,7 @@ function App() {
           <Route path="wallet" element={<WalletPage />} />
           <Route path="categories" element={<CategoriesPage />} />
           <Route path="feeds" element={<Feed />} />
+          <Route path="myclasses" element={<MyClasses />} />
           <Route path="favourite" element={<FavouritePage />} />
           <Route path="forum" element={<ForumPage />}>
             <Route path="chatPro" element={<ForumChat />} />
@@ -83,6 +86,7 @@ function App() {
           </Route>
           <Route path="detail" element={<RecipeDetail />} />
           <Route path="myrecipes" element={<MyRecipesPage />} />
+          <Route path="classes/:id" element={<ClassDetailPage />} />
           <Route path="admin" element={<Dashboard />}>
             <Route path="" element={<RecipeAdmin />} />
             <Route path="addAdmin" element={<AddAdmin />} />
