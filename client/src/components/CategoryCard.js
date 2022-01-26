@@ -1,6 +1,14 @@
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
-
-const CategoryCard = ({ id, name, imageUrl }) => {
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setFilter } from "../store/actionCreators/recipesCreator";
+const CategoryCard = ({ id, name, imageUrl }) => {a
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const handleClick = () => {
+    dispatch(setFilter(`?categoryId=${id}`))
+    navigate(`/recipes/?categoryId=${id}`)
+  }
   return (
     <div className="col-span-1 border bg-white rounded-xl shadow hover:bg-primary  hover:text-white duration-200 ease-in group h-56">
       <div className="text-center p-5 border h-full flex justify-around flex-col">
@@ -13,7 +21,7 @@ const CategoryCard = ({ id, name, imageUrl }) => {
           {name}
         </div>
         <div className="text-primary text-3xl flex justify-center group-hover:text-white duration-200 hover:scale-125 hover:cursor-pointer">
-          <IoChevronForwardCircleSharp />
+          <IoChevronForwardCircleSharp onClick={() => handleClick()}/>
         </div>
       </div>
     </div>

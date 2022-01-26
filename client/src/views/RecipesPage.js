@@ -1,9 +1,10 @@
 // Reacct
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 // Store
-import { fetchRecipes } from "../store/actionCreators/recipesCreator";
+import { fetchRecipes, setFilter } from "../store/actionCreators/recipesCreator";
 
 // Components
 import RecipeCard from "../components/RecipeCard";
@@ -13,11 +14,20 @@ import InternalServerError from "../components/InternalServerError";
 const RecipesPage = () => {
   const dispatch = useDispatch();
   const { recipeReducer } = useSelector((store) => store);
-
+  
+  const search = useLocation().search;
+  const categoryId = useLocation().categoryId
   useEffect(() => {
-    dispatch(fetchRecipes());
+    if (search) {
+      dispatch(fetchRecipes(search));
+    } else if (categoryId) {
+      dispatch(fetchRecipes(categoryId));
+    } else {
+      dispatch(fetchRecipes(recipeReducer.filter));
+    }
   }, []);
 
+  
   return (
     <div className="min-h-screen py-10">
       <h1 className="heading text-center">Recipes</h1>

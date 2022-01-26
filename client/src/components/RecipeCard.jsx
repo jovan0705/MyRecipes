@@ -13,8 +13,20 @@ import {
   unlikeRecipe,
 } from "../store/actionCreators/recipesCreator";
 import { useDispatch } from "react-redux";
+import { deleteRecipe } from "../store/actionCreators/userRecipesCreator";
+import { useEffect } from "react";
+import { fetchFavourites } from "../store/actionCreators/favouritesCreator";
 
-const RecipeCard = ({ id, imageUrl, name, totalCalories, category, user }) => {
+
+const RecipeCard = ({
+  id,
+  imageUrl,
+  name,
+  totalCalories,
+  category,
+  user,
+  page,
+}) => {
   const [liked, setLiked] = useState(false);
   // const [bookmarked, setBookmarked] = useState(false);
   const navigate = useNavigate();
@@ -22,6 +34,17 @@ const RecipeCard = ({ id, imageUrl, name, totalCalories, category, user }) => {
   const toDetail = (id) => {
     navigate(`/detail/${id}`);
   };
+  useEffect(() => {
+    dispatch(fetchFavourites())
+      .then((data) => {
+        console.log(data.favoritedRecipes, 'INI DATAA')
+        data.favoritedRecipes.forEach(el => {
+          if (el.id === id) {
+            setLiked(true)
+          } 
+        })
+      })
+  }, [])
 
   const handleLikeButton = (id) => {
     setLiked(true);
@@ -45,12 +68,16 @@ const RecipeCard = ({ id, imageUrl, name, totalCalories, category, user }) => {
       });
   };
 
-  // const handleBookmarkButton = (status) => {
-  //   status
-  //      successAlert(`Bookmark ${name}`)
-  //     : successAlert(`Unbookmark ${name}`);
-  //   setBookmarked(status);
-  // };
+  const handleDelete = (id) => {
+    dispatch(deleteRecipe(id))
+      .then(() => {
+        successAlert("Recipe has been deleted");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <div className="w-auto h-auto border shadow-md flex gap-2 rounded-md text-gray-400 hover:shadow-xl duration-200 ease-in ">
@@ -85,32 +112,17 @@ const RecipeCard = ({ id, imageUrl, name, totalCalories, category, user }) => {
             </p>
           </div>
           <div className="flex flex-row-reverse gap-3 py-2 px-5">
-            {/* {!bookmarked && (
-              <div className="group">
-                <button className="text-xl block group-hover:hidden text-secondary ">
-                  <IoBookmarkOutline />
-                </button>
-                <button
-                  className="text-xl hidden group-hover:block text-secondary tooltip"
-                  data-tip="Bookmark"
-                  onClick={() => handleBookmarkButton(true)}
-                >
-                  <IoBookmark />
-                </button>
+            {page === "myrecipes" && (
+              <div onClick={() => handleDelete(id)}>
+                <button className="btn btn-error">Delete</button>
               </div>
             )}
-            {bookmarked && (
+            {page === "myrecipes" && (
               <div>
-                <button
-                  className="text-xl block text-secondary tooltip"
-                  data-tip="Unbookmark"
-                  onClick={() => handleBookmarkButton(false)}
-                >
-                  <IoBookmark />
-                </button>
+                <button className="btn btn-success">Edit</button>
               </div>
-            )} */}
-            {!liked && (
+            )}
+            {page != "myrecipes" && !liked && (
               <div className="group">
                 <button className="text-xl block text-base-content group-hover:hidden">
                   <IoHeartOutline />
@@ -124,11 +136,11 @@ const RecipeCard = ({ id, imageUrl, name, totalCalories, category, user }) => {
                 </button>
               </div>
             )}
-            {liked && (
+            {page != "myrecipes" && liked && (
               <div>
                 <button
                   className="text-xl block text-red-600 tooltip"
-                  data-tip="Remove from favourite"
+                  data-tip="Remove from myrecipes"
                   onClick={() => handleUnlikeButton(id)}
                 >
                   <IoHeart />
