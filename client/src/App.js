@@ -21,7 +21,7 @@ import Feed from "./views/Feed";
 import ForumPage from "./views/ForumPage";
 import ForumChat from "./components/socket/ForumChat";
 import ForumChatTwo from "./components/socket/ForumChatTwo";
-import ForumChatThree from "./components/socket/ForumChatTwo";
+import ForumChatThree from "./components/socket/ForumChatThree";
 import EditCategoryModal from "./views/forms/EditCategoryModal";
 import EditIngredientModal from "./views/forms/EditIngredientModal";
 import RecipeAdmin from "./views/admin/recipeAdmin";

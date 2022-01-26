@@ -14,9 +14,6 @@ const ForumPage = () => {
           <Link to="homeCook" className="btn btn-primary">
             HOME COOK
           </Link>
-          {/* <Link to="yogyakarta" className="btn btn-primary">
-            Yogyakarta
-          </Link> */}
         </div>
       </div>
       <div className="flex-1 flex justify-center items-center border border-blue-600">
