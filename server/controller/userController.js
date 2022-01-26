@@ -259,6 +259,34 @@ const getFollowings = async (req, res, next) => {
   }
 };
 
+const getFollowers = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const followers = await UserFollow.findAll({
+      where: { followingId: userId },
+    });
+
+    res.status(200).json(followers);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getFollowings = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const following = await UserFollow.findAll({
+      where: { followerId: userId },
+    });
+
+    res.status(200).json(following);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   userRegister,
   adminRegister,

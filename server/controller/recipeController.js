@@ -10,6 +10,7 @@ const {
 const { Op } = require("sequelize");
 const convertToArray = require('../helpers/sequelizePostgresArrayConverter')
 
+
 const getRecipes = async (req, res, next) => {
   try {
     // untuk sementara belum ada paginasi
@@ -367,6 +368,18 @@ const getRatings = async (req, res, next) => {
   }
 };
 
+const getRatings = async (req, res, next) => {
+  try {
+    const recipeId = req.params.id
+    const response = await RecipeRating.findAll({
+      include: User, Recipe,
+      where: {recipeId}
+    })
+    res.status(200).json(response)
+  } catch (err) {
+    next(err)
+  }
+}
 const addFavourite = async (req, res, next) => {
   try {
     const { recipeId } = req.params;

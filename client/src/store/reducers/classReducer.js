@@ -1,5 +1,6 @@
 import {
   SET_CLASSES,
+  SET_USER_CLASSES,
   SET_CLASSES_DETAIL,
   SET_CLASSES_ERROR,
   SET_CLASSES_LOADING,
@@ -9,9 +10,9 @@ import {
 const initialState = {
   classes: [],
   classDetail: {},
+  userClasses: [],
   classesError: null,
   classesLoading: true,
-  userClasses: [],
   registerMessage: ""
 };
 
@@ -22,6 +23,12 @@ const classReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         classes: payload,
+      };
+
+    case SET_USER_CLASSES:
+      return {
+        ...state,
+        userClasses: payload,
       };
 
     case SET_CLASSES_DETAIL:

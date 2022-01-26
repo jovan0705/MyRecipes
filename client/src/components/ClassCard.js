@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerClass } from "../store/actionCreators/classesCreator";
 import { successAlert, errorAlert } from "../helpers/alerts";
 
-const ClassCard = ({ id, name, image }) => {
+
+const ClassCard = ({ id, name, image, link, date, page }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toDetail = (id) => {
@@ -27,6 +28,12 @@ const ClassCard = ({ id, name, image }) => {
         console.log(err, '<<<<< ini err')
       })
   }
+  const btnRenderHandler = () => {
+    if(!page) {
+      return <button class="btn btn-primary" onClick={() => handleClick()}>Buy This Class</button>
+    }
+  }
+
   return (
     <div className="border border-primary flex col-span-1 rounded-xl overflow-hidden">
       <div className="flex-1 rounded-xl">
@@ -38,15 +45,15 @@ const ClassCard = ({ id, name, image }) => {
           <div class="badge mx-2">NEW</div>
         </h2>
         <p>
-          Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. Sit
-          sit necessitatibus veritatis sed molestiae voluptates incidunt iure
-          sapiente.
+          {link}
         </p>
+        <p>{date}</p>
         <div class="card-actions">
-          <button class="btn btn-primary" onClick={() => handleClick()}>Buy This Class</button>
-          <button class="btn btn-ghost" onClick={() => toDetail(id)}>
+          {btnRenderHandler()}
+          {/* <button class="btn btn-primary" onClick={() => handleClick()}>Buy This Class</button> */}
+          {/* <button class="btn btn-ghost" onClick={() => toDetail(id)}>
             More info
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
