@@ -39,6 +39,7 @@ export const ADD_INGREDIENT = "ingredient/addIngredient";
 export const SET_USER = "user/fetch";
 export const SET_USER_ERROR = "user/error";
 export const SET_USER_LOADING = "user/loading";
+export const SET_USER_ALREADYRATED = "user/alreadyrated";
 
 //Likes
 export const SET_FAVOURITES = "likes/fetch";

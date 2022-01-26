@@ -51,10 +51,24 @@ const getRecipes = async (req, res, next) => {
         },
         {
           model: RecipeRating,
+          include: {
+            model: User,
+            attributes: {
+              exclude: [
+                "password",
+                "role",
+                "profilePict",
+                "balance",
+                "description",
+                "createdAt",
+                "updatedAt",
+              ],
+            },
+          },
           attributes: {
             exclude: ["createdAt", "updatedAt"],
           },
-        },
+        }
       ],
     });
     if (!response) throw { name: "notFound" };
@@ -104,7 +118,20 @@ const getUserFavouritedRecipes = async (req, res, next) => {
           },
           {
             model: RecipeRating,
-            include: User,
+            include: {
+              model: User,
+              attributes: {
+                exclude: [
+                  "password",
+                  "role",
+                  "profilePict",
+                  "balance",
+                  "description",
+                  "createdAt",
+                  "updatedAt",
+                ],
+              },
+            },
             attributes: {
               exclude: ["createdAt", "updatedAt"],
             },
@@ -159,7 +186,20 @@ const getLoggedInUserRecipes = async (req, res, next) => {
         },
         {
           model: RecipeRating,
-          include: User,
+          include: {
+            model: User,
+            attributes: {
+              exclude: [
+                "password",
+                "role",
+                "profilePict",
+                "balance",
+                "description",
+                "createdAt",
+                "updatedAt",
+              ],
+            },
+          },
           attributes: {
             exclude: ["createdAt", "updatedAt"],
           },
@@ -214,11 +254,24 @@ const getRecipeDetail = async (req, res, next) => {
         },
         {
           model: RecipeRating,
-          include: User,
+          include: {
+            model: User,
+            attributes: {
+              exclude: [
+                "password",
+                "role",
+                "profilePict",
+                "balance",
+                "description",
+                "createdAt",
+                "updatedAt",
+              ],
+            },
+          },
           attributes: {
             exclude: ["createdAt", "updatedAt"],
           },
-        },
+        }
       ],
     });
     if (!response) throw { name: "notFound" };
