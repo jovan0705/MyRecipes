@@ -11,10 +11,10 @@ const ForumPage = () => {
   }
 
   return (
-    <div className="h-screen w-full flex py-10">
-      <div className="flex justify-center items-start">
-        <div className="flex flex-col gap-7">
-          {/* <div className="bg-primary-focus">
+    <div className="grid grid-col-1 h-screen w-full flex py-10 bg-gradient-to-r from-sky-500 to-indigo-500">
+      <div className="flex justify-center mb-2">
+        <div className="flex flex-nowrap">
+          {/* <div className="bg-primary text-xl">
             <p>Forum Chat</p>
           </div> */}
           {/* <Link to="chatPro" className="btn btn-primary w-72 text-xl">
