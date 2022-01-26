@@ -21,7 +21,7 @@ const UserProfile = () => {
   }, [])
 
   const totalPost =() => {
-    if(userRecipesReducer.userRecipes.userCreatedRecipes) {
+    if(userRecipesReducer.userRecipes.userCreatedRecipes !== []) {
       return userRecipesReducer.userRecipes.userCreatedRecipes.length
     } else {
       return 0

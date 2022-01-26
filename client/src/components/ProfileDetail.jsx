@@ -8,8 +8,7 @@ const ProfileDetail = ({item}) => {
                 <hr className="bg-gray-400" />
                 <div className="text-gray-700 py-3 flex">
                     <div className="w-1/2 p-3">
-                        <p className="text-sm text-gray-500 hover:text-gray-600 leading-6 ">Lorem ipsum dolor sit amet
-                        consectetur adipisicing elit.Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt</p>
+                        <p className="text-sm text-gray-500 hover:text-gray-600 leading-6 ">{item.description ? item.description : 'Insert your bio...'  }</p>
                     </div>
                     <div className="w-1/2 p-3 text-sm flex space-x-10 justify-center items-center">
                         <div className="space-y-2 font-semibold">

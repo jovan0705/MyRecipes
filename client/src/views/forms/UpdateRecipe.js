@@ -22,20 +22,30 @@ const UpdateRecipe = () => {
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(fetchIngredients());
+    dispatch(fetchRecipe(id))
   }, []);
 
   useEffect(() => {
-    dispatch(fetchRecipe(id))
-    if(recipeDetailReducer.recipe) {
+      console.log('waktu awal <<<<<<<<<<<<<<<')
+      dispatch(fetchCategories());
+      dispatch(fetchIngredients());
+      dispatch(fetchRecipe(id))
+      .then(data => {
         setInputData({
-        name: recipeDetailReducer.recipe.recipe.name,
-        category: recipeDetailReducer.recipe.recipe.category,
-        ingredients: recipeDetailReducer.recipe.recipe.ingredient,
-        steps: recipeDetailReducer.recipe.recipe.steps,
-        totalCalories: recipeDetailReducer.recipe.recipe.calorie,
+            name: recipeDetailReducer.recipe.recipe.name,
+            category: recipeDetailReducer.recipe.recipe.category,
+            ingredients: recipeDetailReducer.recipe.recipe.ingredient,
+            steps: recipeDetailReducer.recipe.recipe.steps,
+            totalCalories: recipeDetailReducer.recipe.recipe.calorie
         })
-    }
+      })
   }, [id])
+
+//   const stepRenderHandler = (data) => {
+
+//   }
+
+
 
   const animatedComponents = makeAnimated();
 
@@ -136,9 +146,15 @@ const UpdateRecipe = () => {
       });
   };
 
+    if(recipeDetailReducer.recipeLoading) {
+        return (
+            <p>loading....</p>
+        )
+    }
 
 
   return (
+      <>
     <div className="min-h-screen flex justify-center items-center">
       <div className="w-1/2 h-1/2 bg-white p-10 shadow-lg rounded-lg">
         <h1 className="heading text-center">Edit Recipe</h1>
@@ -282,6 +298,7 @@ const UpdateRecipe = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 
