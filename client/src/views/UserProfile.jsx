@@ -24,7 +24,7 @@ const UserProfile = () => {
                 <h1 className="font-bold text-gray-600">Post</h1>
               </div>
               <hr className="my-3" />
-              <div className="flex flex-wrap gap-3">
+              <div className="grid grid-cols-3 gap-10 p-3">
                 <RecipeCard />
                 <RecipeCard />
                 <RecipeCard />

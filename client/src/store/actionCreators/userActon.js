@@ -67,6 +67,23 @@ export const registerUser = (registerData) => {
   };
 };
 
+export const registerAdmin = (registerData) => {
+  return async (dispatch, getState) => {
+    dispatch(setUserLoading(true));
+    dispatch(setUserError(null));
+    try {
+      const { data: user } = await baseUrl.post("/users/adminregister", registerData);
+      return user;
+    } catch (err) {
+      dispatch(setUserError(err.response.data.message));
+      errorAlert(err.response.data.message);
+      throw new Error(err.response.data.message);
+    } finally {
+      dispatch(setUserLoading(false));
+    }
+  };
+};
+
 export const doTopUp = (amount) => {
   const payload = { amount };
   return async () => {
