@@ -8,24 +8,24 @@ const {
   Ingredient,
 } = require("../models");
 const { Op } = require("sequelize");
-const convertToArray = require('../helpers/sequelizePostgresArrayConverter')
+const convertToArray = require("../helpers/sequelizePostgresArrayConverter");
 
 
 const getRecipes = async (req, res, next) => {
   try {
     // untuk sementara belum ada paginasi
-    const {search, categoryId} = req.query
-    let filter = {}
+    const { search, categoryId } = req.query;
+    let filter = {};
     if (search) {
-      filter.name =  {[Op.iLike]: `%${search}%`}
+      filter.name = { [Op.iLike]: `%${search}%` };
     }
     if (categoryId) {
       filter = {
         ...filter,
-        categoryId
-      }
+        categoryId,
+      };
     }
-  
+
     const response = await Recipe.findAll({
       where: filter,
       include: [
@@ -51,22 +51,36 @@ const getRecipes = async (req, res, next) => {
         },
         {
           model: RecipeRating,
+          include: {
+            model: User,
+            attributes: {
+              exclude: [
+                "password",
+                "role",
+                "profilePict",
+                "balance",
+                "description",
+                "createdAt",
+                "updatedAt",
+              ],
+            },
+          },
           attributes: {
             exclude: ["createdAt", "updatedAt"],
           },
-        },
+        }
       ],
     });
     if (!response) throw { name: "notFound" };
 
-    const newResponse = await response.map(resp => {
-      const newSteps = convertToArray(resp.dataValues.steps)
+    const newResponse = await response.map((resp) => {
+      const newSteps = convertToArray(resp.dataValues.steps);
       const newResp = {
         ...resp.dataValues,
-        steps: newSteps
-      }
-      return newResp
-    })
+        steps: newSteps,
+      };
+      return newResp;
+    });
     res.status(200).json(newResponse);
   } catch (err) {
     next(err);
@@ -104,11 +118,24 @@ const getUserFavouritedRecipes = async (req, res, next) => {
           },
           {
             model: RecipeRating,
-            include: User,
+            include: {
+              model: User,
+              attributes: {
+                exclude: [
+                  "password",
+                  "role",
+                  "profilePict",
+                  "balance",
+                  "description",
+                  "createdAt",
+                  "updatedAt",
+                ],
+              },
+            },
             attributes: {
               exclude: ["createdAt", "updatedAt"],
             },
-          }
+          },
         ],
       },
     });
@@ -117,14 +144,14 @@ const getUserFavouritedRecipes = async (req, res, next) => {
       return recipe.Recipe;
     });
 
-    const newResponse = await payload.map(resp => {
-      const newSteps = convertToArray(resp.dataValues.steps)
+    const newResponse = await payload.map((resp) => {
+      const newSteps = convertToArray(resp.dataValues.steps);
       const newResp = {
         ...resp.dataValues,
-        steps: newSteps
-      }
-      return newResp
-    })
+        steps: newSteps,
+      };
+      return newResp;
+    });
     res.status(200).json({ favoritedRecipes: newResponse });
   } catch (err) {
     next(err);
@@ -159,7 +186,20 @@ const getLoggedInUserRecipes = async (req, res, next) => {
         },
         {
           model: RecipeRating,
-          include: User,
+          include: {
+            model: User,
+            attributes: {
+              exclude: [
+                "password",
+                "role",
+                "profilePict",
+                "balance",
+                "description",
+                "createdAt",
+                "updatedAt",
+              ],
+            },
+          },
           attributes: {
             exclude: ["createdAt", "updatedAt"],
           },
@@ -173,14 +213,14 @@ const getLoggedInUserRecipes = async (req, res, next) => {
     //   ...response.dataValues,
     //   steps: newSteps
     // }
-    const newResponse = await response.map(resp => {
-      const newSteps = convertToArray(resp.dataValues.steps)
+    const newResponse = await response.map((resp) => {
+      const newSteps = convertToArray(resp.dataValues.steps);
       const newResp = {
         ...resp.dataValues,
-        steps: newSteps
-      }
-      return newResp
-    })
+        steps: newSteps,
+      };
+      return newResp;
+    });
     res.status(200).json({ userCreatedRecipes: newResponse });
   } catch (err) {
     next(err);
@@ -191,34 +231,48 @@ const getRecipeDetail = async (req, res, next) => {
   try {
     const { id } = req.params;
     const response = await Recipe.findByPk(id, {
-      include: [{
-        model: User,
-        attributes: {
-          exclude: [
-            "password",
-            "role",
-            "profilePict",
-            "balance",
-            "description",
-            "createdAt",
-            "updatedAt",
-          ],
+      include: [
+        {
+          model: User,
+          attributes: {
+            exclude: [
+              "password",
+              "role",
+              "profilePict",
+              "balance",
+              "description",
+              "createdAt",
+              "updatedAt",
+            ],
+          },
         },
-      },
-      {
-        model: Category,
-        attributes: {
-          exclude: ["imageUrl", "createdAt", "updatedAt"],
+        {
+          model: Category,
+          attributes: {
+            exclude: ["imageUrl", "createdAt", "updatedAt"],
+          },
         },
-      },
-      {
-        model: RecipeRating,
-        include: User,
-        attributes: {
-          exclude: ["createdAt", "updatedAt"],
-        },
-      }
-    ],
+        {
+          model: RecipeRating,
+          include: {
+            model: User,
+            attributes: {
+              exclude: [
+                "password",
+                "role",
+                "profilePict",
+                "balance",
+                "description",
+                "createdAt",
+                "updatedAt",
+              ],
+            },
+          },
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
+        }
+      ],
     });
     if (!response) throw { name: "notFound" };
     const ingredients = await RecipeIngredients.findAll({
@@ -229,12 +283,14 @@ const getRecipeDetail = async (req, res, next) => {
       return ingredient.Ingredient.name;
     });
 
-    const newSteps = convertToArray(response.dataValues.steps)
+    const newSteps = convertToArray(response.dataValues.steps);
     const recipePayload = {
       ...response.dataValues,
-      steps: newSteps
-    }
-    res.status(200).json({ recipe: recipePayload, ingredients: ingredientPayload });
+      steps: newSteps,
+    };
+    res
+      .status(200)
+      .json({ recipe: recipePayload, ingredients: ingredientPayload });
   } catch (err) {
     next(err);
   }
@@ -254,7 +310,7 @@ const createRecipe = async (req, res, next) => {
     const newSteps = steps.split("~").map((step) => {
       return step;
     });
-    console.log(newSteps)
+    console.log(newSteps);
     const userId = req.user.id;
     const imageUrl = req.additionalData;
 
@@ -281,11 +337,11 @@ const createRecipe = async (req, res, next) => {
     });
     if (!createIngredients) throw err;
 
-    const stepsPayload = convertToArray(response.dataValues.steps)
+    const stepsPayload = convertToArray(response.dataValues.steps);
     const responsePayload = {
       ...response.dataValues,
-      steps: stepsPayload
-    }
+      steps: stepsPayload,
+    };
     res.status(201).json(responsePayload);
   } catch (err) {
     console.log(">>>>>>>>>>>>>ERROR " + err);
@@ -354,17 +410,18 @@ const createUserRating = async (req, res, next) => {
     next(err);
   }
 };
- 
+
 const getRatings = async (req, res, next) => {
   try {
-    const recipeId = req.params.id
+    const recipeId = req.params.id;
     const response = await RecipeRating.findAll({
-      include: User, Recipe,
-      where: {recipeId}
-    })
-    res.status(200).json(response)
+      include: User,
+      Recipe,
+      where: { recipeId },
+    });
+    res.status(200).json(response);
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
