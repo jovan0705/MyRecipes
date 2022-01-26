@@ -23,7 +23,7 @@ const MyRecipesPage = () => {
             <EmptyState message="You have not post any recipe yet :(" />
           </div>
         )}
-
+      <div className="grid grid-cols-3 gap-10 p-3">
       {userRecipesReducer.userRecipes.hasOwnProperty("userCreatedRecipes") &&
         userRecipesReducer.userRecipes.userCreatedRecipes.length > 0 &&
         userRecipesReducer.userRecipes.userCreatedRecipes.map(
@@ -37,7 +37,7 @@ const MyRecipesPage = () => {
             RecipeRatings,
           }) => {
             return (
-              <div className="grid grid-cols-3 gap-10 p-3">
+              
                 <RecipeCard
                   key={id}
                   id={id}
@@ -49,10 +49,11 @@ const MyRecipesPage = () => {
                   page="myrecipes"
                   rating={RecipeRatings}
                 />
-              </div>
+              
             );
           }
         )}
+        </div>
     </div>
   );
 };
