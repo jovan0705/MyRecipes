@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchCategories } from "../../store/actionCreators/categoriesCreator";
 import { fetchIngredients } from "../../store/actionCreators/ingredientsCreator";
 import { rename } from "../../helpers/uploadFileName";
-import { postRecipe } from "../../store/actionCreators/recipesCreator";
+import { updateRecipe } from "../../store/actionCreators/recipesCreator";
 import { useNavigate, useParams } from "react-router-dom";
 import { successAlert } from "../../helpers/alerts";
 import { fetchRecipe } from "../../store/actionCreators/recipeDetailCreator";
@@ -35,15 +35,16 @@ const UpdateRecipe = () => {
             name: recipeDetailReducer.recipe.recipe.name,
             category: recipeDetailReducer.recipe.recipe.category,
             ingredients: recipeDetailReducer.recipe.recipe.ingredient,
-            steps: recipeDetailReducer.recipe.recipe.steps,
+            steps: stepRenderHandler(recipeDetailReducer.recipe.recipe.steps),
             totalCalories: recipeDetailReducer.recipe.recipe.calorie
         })
       })
   }, [id])
 
-//   const stepRenderHandler = (data) => {
-
-//   }
+  const stepRenderHandler = (data) => {
+    let result = data.join(' \n')
+    return result
+  }
 
 
 
@@ -86,10 +87,10 @@ const UpdateRecipe = () => {
 
     setImageLabel(e.target.value);
 
-    setInputData({
-      ...inputData,
-      [field]: val,
-    });
+    // setInputData({
+    //   ...inputData,
+    //   [field]: val,
+    // });
   };
 
   const handleIndegrients = (e) => {
@@ -127,7 +128,7 @@ const UpdateRecipe = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+      e.preventDefault();
     const fd = new FormData();
     fd.append("name", inputData.name);
     fd.append("imageFile", inputData.imageFile);
@@ -136,9 +137,9 @@ const UpdateRecipe = () => {
     fd.append("categoryId", inputData.category);
     fd.append("ingredients", inputData.ingredients);
 
-    dispatch(postRecipe(fd))
+    dispatch(updateRecipe(id,fd))
       .then(() => {
-        successAlert("Post created successfully");
+        successAlert("Update recipe successfully");
         navigate("/myrecipes");
       })
       .catch((err) => {
@@ -196,11 +197,19 @@ const UpdateRecipe = () => {
                   Choose Category
                 </option>
                 {categoryReducer.categories.map(({ id, name }) => {
-                  return (
-                    <option key={id} value={id}>
-                      {name}
-                    </option>
-                  );
+                    if(recipeDetailReducer.recipe.recipe.Category.id === id) {
+                        return (
+                        <option key={id} value={id} selected>
+                        {name}
+                        </option>
+                        )
+                    } else {
+                        return (
+                            <option key={id} value={id}>
+                            {name}
+                            </option>
+                        );
+                    }
                 })}
               </select>
             </div>

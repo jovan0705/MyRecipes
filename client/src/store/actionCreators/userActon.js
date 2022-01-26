@@ -146,6 +146,22 @@ export const fetchFeeds = () => {
   };
 };
 
+
+export const editProfile = (id, userdata) => {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await baseUrl.put(`users/editprofile/${id}`, userdata, {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      });
+      return data;
+    } catch (err) {
+      dispatch(setUserError(err));
+      errorAlert(err.response.data.message);
+      throw new Error(err.response.data.message);
+    }
+  }
 export const successTopUp = () => {
   return async (dispatch, getState) => {
     dispatch(setUserLoading(true));
@@ -156,8 +172,9 @@ export const successTopUp = () => {
       return data;
     } catch (err) {
       dispatch(setUserError(err.message));
+
     } finally {
       dispatch(setUserLoading(false));
     }
   };
-}
+

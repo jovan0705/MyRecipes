@@ -82,7 +82,7 @@ const doLogin = async (req, res, next) => {
 
 const editProfile = async (req, res, next) => {
   try {
-    const userId = req.params.id;
+    const userId = +req.params.id;
     let { name, description, password } = req.body;
     const profilePict = req.additionalData;
     let changePassword = false;

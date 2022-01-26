@@ -20,13 +20,13 @@ const UserProfile = () => {
     dispatch(fetchUserClasses())
   }, [])
 
-  const totalPost =() => {
-    if(userRecipesReducer.userRecipes.userCreatedRecipes !== []) {
-      return userRecipesReducer.userRecipes.userCreatedRecipes.length
-    } else {
-      return 0
-    }
-  }
+  // const totalPost =() => {
+  //   if(userRecipesReducer.userRecipes.userCreatedRecipes.length > 0) {
+  //     return userRecipesReducer.userRecipes.userCreatedRecipes.length
+  //   } else {
+  //     return 0
+  //   }
+  // }
 
 
   return (
@@ -36,7 +36,7 @@ const UserProfile = () => {
         <div className="md:flex no-wrap md:-mx-2 ">
           {/* <!-- Left Side --> */}
           <div className="w-full md:w-3/12 md:mx-2">
-            <ProfileCard totalPost={totalPost()} item={userReducer.user}/>
+            <ProfileCard totalPost={3} item={userReducer.user}/>
           </div>
           {/* <!-- Left Side end--> */}
           {/* <!-- Right Side --> */}

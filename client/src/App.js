@@ -35,6 +35,7 @@ import ClassDetailPage from "./views/ClassDetailPage";
 import MyClasses from "./views/MyClasses";
 import UpdateRecipe from "./views/forms/UpdateRecipe";
 import UsersPage from "./views/UsersPage";
+import EditProfile from "./views/forms/EditProfile";
 // import { io } from "socket.io-client";
 
 // const socket = io.connect("http://localhost:3000")
@@ -72,6 +73,7 @@ function App() {
           <Route path="" element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="users" element={<UsersPage />} />
+          <Route path="users/editProfile/:id" element={<EditProfile />} />
           <Route path="recipes" element={<RecipesPage />} />
           <Route path="detail/:id" element={<RecipeDetail />} />
           <Route path="updateRecipe/:id" element={<UpdateRecipe />} />
