@@ -1,9 +1,17 @@
-import { SET_USER, SET_USER_ERROR, SET_USER_LOADING } from "../actionTypes";
+import {
+  SET_USER,
+  SET_USER_ERROR,
+  SET_USER_LOADING,
+  SET_FEEDS,
+} from "../actionTypes";
 
 const initialState = {
   user: {},
   userError: null,
   userLoading: false,
+  feeds: [],
+  feedsError: null,
+  feedsLoading: true,
 };
 
 const userReducer = (state = initialState, { type, payload }) => {
@@ -25,6 +33,13 @@ const userReducer = (state = initialState, { type, payload }) => {
         ...state,
         userLoading: payload,
       };
+
+    case SET_FEEDS:
+      return {
+        ...state,
+        feeds: payload,
+      };
+
     default:
       return state;
   }

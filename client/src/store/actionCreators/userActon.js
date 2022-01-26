@@ -2,6 +2,7 @@ import {
   SET_USER,
   SET_USER_LOADING,
   SET_USER_ERROR,
+  SET_FEEDS,
 } from "../actionTypes/index";
 import { baseUrl } from "../../apis/baseUrl";
 import { successAlert, errorAlert } from "../../helpers/alerts";
@@ -16,6 +17,10 @@ const setUserError = (payload) => {
 
 const setUserLoading = (payload) => {
   return { type: SET_USER_LOADING, payload };
+};
+
+const setFeeds = (payload) => {
+  return { type: SET_FEEDS, payload };
 };
 
 export const fetchUserProfile = () => {
@@ -114,6 +119,21 @@ export const doRating = (id, payload) => {
       console.log(rating);
     } catch (err) {
       console.log(err);
+    }
+  };
+};
+
+export const fetchFeeds = () => {
+  return async (dispatch) => {
+    try {
+      const { data: feeds } = await baseUrl.get("/recipes/feeds");
+      console.log(feeds, "feedsssssssssssss");
+      dispatch(setFeeds(feeds));
+      return feeds;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      console.log("feeds");
     }
   };
 };

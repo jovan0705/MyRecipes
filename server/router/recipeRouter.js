@@ -13,10 +13,12 @@ const {
   createUserRating,
   getRatings,
   addFavourite,
-  deleteFavourite
+  deleteFavourite,
+  feeds,
 } = require("../controller/recipeController");
 
 // fetch all recipes
+router.get("/feeds", feeds);
 router.get("/", getRecipes);
 // fetch all user favourited recipes (untested)
 router.get("/favourites", getUserFavouritedRecipes);
@@ -32,16 +34,21 @@ router.post(
   createRecipe
 );
 // edit recipe
-router.put("/:id", instanceMulter.single("imageFile"), imageKitUpload, editRecipe);
+router.put(
+  "/:id",
+  instanceMulter.single("imageFile"),
+  imageKitUpload,
+  editRecipe
+);
 // delete recipe
 // authorizationnya dihapus dulu gara2 bikin error pas test
 router.delete("/:id", deleteRecipe);
 // create rating
-router.post('/:id/rate', createUserRating)
+router.post("/:id/rate", createUserRating);
 // get rating
-router.get('/:id/rate', getRatings)
+router.get("/:id/rate", getRatings);
 
-router.post('/favourite/:recipeId', addFavourite)
-router.delete('/favourite/:recipeId', deleteFavourite)
+router.post("/favourite/:recipeId", addFavourite);
+router.delete("/favourite/:recipeId", deleteFavourite);
 
 module.exports = router;
