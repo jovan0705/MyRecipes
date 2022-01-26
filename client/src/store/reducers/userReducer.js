@@ -1,7 +1,7 @@
 import { SET_USER, SET_USER_ERROR, SET_USER_LOADING } from "../actionTypes";
 
 const initialState = {
-  user: [],
+  user: {},
   userError: null,
   userLoading: false,
 };

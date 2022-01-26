@@ -1,4 +1,4 @@
-const ProfileDetail = () => {
+const ProfileDetail = ({item}) => {
     return (
         <>
             <div className="bg-white p-3 shadow-md rounded-lg mb-5 border">
@@ -18,9 +18,9 @@ const ProfileDetail = () => {
                             <h4 className="text-gray-500 hover:text-gray-600">Email :</h4>
                         </div>
                         <div className="space-y-2 text-gray-500">
-                            <p>Jane Doe</p>
-                            <p>Aulag</p>
-                            <p>janeDoe@mail.com</p>
+                            <p>{item.name}</p>
+                            <p>{item.username}</p>
+                            <p>{item.email}</p>
                         </div>
                     </div>
                 </div>

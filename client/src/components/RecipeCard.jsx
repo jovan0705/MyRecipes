@@ -82,6 +82,13 @@ const RecipeCard = ({
       });
   };
 
+
+  const toUpdatePage = (event, id) => {
+    event.preventDefault()
+    navigate(`/updateRecipe/${id}`)
+  }
+
+
   return (
     <>
       <div className="w-auto h-auto border shadow-md flex gap-2 rounded-md text-gray-400 hover:shadow-xl duration-200 ease-in ">
@@ -132,7 +139,7 @@ const RecipeCard = ({
             )}
             {page === "myrecipes" && (
               <div>
-                <button className="btn btn-success">Edit</button>
+                <button className="btn btn-success" onClick={(event) => toUpdatePage(event, id)}>Edit</button>
               </div>
             )}
             {page != "myrecipes" && !liked && (

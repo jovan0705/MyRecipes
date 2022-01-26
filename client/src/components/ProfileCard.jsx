@@ -1,4 +1,4 @@
-const ProfileCard = () => {
+const ProfileCard = ({totalPost, item}) => {
     return (
         <>
             {/* <!-- Profile Card --> */}
@@ -8,20 +8,12 @@ const ProfileCard = () => {
                         src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
                         alt="" />
                 </div>
-                <h1 className="text-gray-800 font-bold text-xl leading-8 my-3 text-center">Jane Doe</h1>
+                <h1 className="text-gray-800 font-bold text-xl leading-8 my-3 text-center">{item.username}</h1>
                 <hr className="my-2"/>
-                <div className="flex justify-between text-center my-3 text-gray-500 text-sm">
+                <div className="flex justify-center text-center my-3 text-gray-500 text-sm">
                     <div className="p-3 space-y-2">
                         <h3 className="font-bold">Post</h3>
-                        <p className="text-gray-400">30</p>
-                    </div>
-                    <div className="p-3 space-y-2">
-                        <h3 className="font-bold">Followers</h3>
-                        <p className="text-gray-400">100</p>
-                    </div>
-                    <div className="p-3 space-y-2">
-                        <h3 className="font-bold">Following</h3>
-                        <p className="text-gray-400">10</p>
+                        <p className="text-gray-400">{totalPost}</p>
                     </div>
                 </div>
             </div>

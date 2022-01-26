@@ -1,5 +1,6 @@
 import {
   SET_CLASSES,
+  SET_USER_CLASSES,
   SET_CLASSES_DETAIL,
   SET_CLASSES_ERROR,
   SET_CLASSES_LOADING,
@@ -9,6 +10,9 @@ import { baseUrl, uploadFile } from "../../apis/baseUrl";
 
 const setClasses = (payload) => {
   return { type: SET_CLASSES, payload };
+};
+const setUserClasses = (payload) => {
+  return { type: SET_USER_CLASSES, payload };
 };
 const setClassesDetail = (payload) => {
   return { type: SET_CLASSES_DETAIL, payload };
@@ -35,6 +39,23 @@ export const fetchClasses = () => {
         },
       });
       dispatch(setClasses(classes));
+    } catch (err) {
+      dispatch(setClassesError(err.message));
+    } finally {
+      dispatch(setClassesLoading(false));
+    }
+  };
+};
+
+export const fetchUserClasses = () => {
+  return async (dispatch) => {
+    try {
+      const { data: classes } = await baseUrl.get("/class/myClass", {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      });
+      dispatch(setUserClasses(classes));
     } catch (err) {
       dispatch(setClassesError(err.message));
     } finally {
@@ -140,15 +161,4 @@ export const deleteClass = (id) => {
   };
 };
 
-export const fetchUserClasses = () => {
-  return async (dispatch) => {
-    try {
-      const { data: classes } = await baseUrl.get("/class/myClass", {
-        headers: { access_token: localStorage.access_token },
-      });
-      dispatch(setUserClasses(classes));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
+

@@ -35,7 +35,7 @@ function ForumChatThree() {
     useEffect(() => {
         socket.on("get_msg_home_cook", (data) => {
             console.log(data, 'DATA GET MSG');
-            setMessageList(data);
+            setMessageList((el) => [...el, data]);
             console.log(messageList, 'MSG LIST');
         })
     }, [socket]);
@@ -43,7 +43,7 @@ function ForumChatThree() {
     return (
     <div className="chat-window">
     <div className="chat-header">
-        <p>Live Chat</p>
+        <p>HOME COOK</p>
     </div>
     <div className="chat-body overflow-y-scroll">
         {messageList.map((msg) => {
@@ -55,11 +55,11 @@ function ForumChatThree() {
                     key={msg.username}
                     >
                     <div>
-                    <div className="message-content">
-                        <p>{msg.message}</p>
-                    </div>
                     <div className="message-meta">
                         <p id="author">@{msg.username}</p>
+                    </div>
+                    <div className="message-content shadow-xl">
+                        <p>{msg.message}</p>
                     </div>
                     </div>
                 </div>
