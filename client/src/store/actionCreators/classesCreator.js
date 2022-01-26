@@ -55,6 +55,9 @@ export const registerClass = (classId) => {
     } catch (err) {
       dispatch(setClassesError(err.message));
       return err
+    }
+  }
+}
 
 export const fetchClassesDetail = (id) => {
   return async (dispatch) => {
@@ -149,4 +152,3 @@ export const fetchUserClasses = () => {
     }
   };
 };
-
