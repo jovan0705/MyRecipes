@@ -2,7 +2,7 @@
 
 
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserClasses, registerClass, fetchClasses } from "../store/actionCreators/classesCreator";
 import { successAlert, errorAlert } from "../helpers/alerts";
@@ -10,11 +10,13 @@ import { useEffect, useState } from "react";
 
 
 const ClassCard = ({ id, name, image, link, date, page }) => {
+  const location = useLocation()
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { classes } = useSelector((store) => store.classReducer)
   const [bought, setBought] = useState(false)
   useEffect(() => {
+    console.log(location.pathname, 'INI LOCATION')
     dispatch(fetchUserClasses())
       .then((data) => {
         console.log(data, 'INI DATA')
@@ -66,9 +68,12 @@ const ClassCard = ({ id, name, image, link, date, page }) => {
           {name}
           <div class="badge mx-2">NEW</div>
         </h2>
-        <p>
+        {(location.pathname === '/classes') ? <p>
+          Date
+        </p> : <p>
           {link}
-        </p>
+        </p>}
+        
         <p>{`${date.split('T')[0]}`}</p>
         <div class="card-actions">
           {btnRenderHandler()}
