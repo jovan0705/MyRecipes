@@ -26,7 +26,6 @@ const UpdateRecipe = () => {
   }, []);
 
   useEffect(() => {
-      console.log('waktu awal <<<<<<<<<<<<<<<')
       dispatch(fetchCategories());
       dispatch(fetchIngredients());
       dispatch(fetchRecipe(id))
@@ -105,7 +104,6 @@ const UpdateRecipe = () => {
 
     const newIngredients = e.map((el) => el.value).join(",");
 
-    console.log(newIngredients);
     setInputData({
       ...inputData,
       ingredients: newIngredients,
@@ -136,7 +134,6 @@ const UpdateRecipe = () => {
     fd.append("totalCalories", inputData.totalCalories);
     fd.append("categoryId", inputData.category);
     fd.append("ingredients", inputData.ingredients);
-    console.log(inputData, 'INI INPUT DATA')
     dispatch(updateRecipe(id,fd))
       .then(() => {
         successAlert("Update recipe successfully");

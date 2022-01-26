@@ -17,7 +17,6 @@ const TopNavbar = () => {
     const name = event.target.name;
     setFilterName(name);
     setFilterValue(value);
-    console.log();
   };
 
   const { userReducer } = useSelector((store) => store);

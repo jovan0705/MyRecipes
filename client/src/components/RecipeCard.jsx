@@ -42,7 +42,6 @@ const RecipeCard = ({
 
   useEffect(() => {
     dispatch(fetchFavourites()).then((data) => {
-      console.log(data.favoritedRecipes, "INI DATAA");
       data.favoritedRecipes.forEach((el) => {
         if (el.id === id) {
           setLiked(true);

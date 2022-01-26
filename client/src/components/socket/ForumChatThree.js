@@ -37,9 +37,7 @@ function ForumChatThree() {
 
   useEffect(() => {
     socket.on("get_msg_home_cook", (data) => {
-      console.log(data, "DATA GET MSG");
       setMessageList((el) => [...el, data]);
-      console.log(messageList, "MSG LIST");
     });
   }, [socket]);
 

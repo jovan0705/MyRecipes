@@ -37,9 +37,7 @@ function ForumChatTwo() {
 
   useEffect(() => {
     socket.on("get_msg_amateur", (data) => {
-      console.log(data, "DATA GET MSG");
       setMessageList((el) => [...el, data]);
-      console.log(messageList, "MSG LIST");
     });
   }, [socket]);
 

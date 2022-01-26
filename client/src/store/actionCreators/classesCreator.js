@@ -64,7 +64,6 @@ export const fetchUserClasses = () => {
 export const registerClass = (classId) => {
   return async (dispatch) => {
     try {
-      console.log(localStorage.access_token, 'INI ACCESS TOKEN')
       const data = await baseUrl.post(`/class/register/${classId}`, {}, {
         headers: {
           access_token: localStorage.access_token,
@@ -121,7 +120,6 @@ export const updateClass = (id, formData) => {
     dispatch(setClassesLoading(true));
     dispatch(setClassesError(null));
     try {
-      // console.log(formData, '<<<<<<<<<<<<<<<')
       const { data: classData } = await uploadFile.put(
         `/class/edit/${id}`,
         formData

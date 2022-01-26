@@ -79,7 +79,6 @@ const AddRecipe = () => {
 
     const newIngredients = e.map((el) => el.value).join(",");
 
-    console.log(newIngredients);
     setInputData({
       ...inputData,
       ingredients: newIngredients,

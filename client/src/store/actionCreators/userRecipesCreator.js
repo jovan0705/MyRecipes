@@ -40,7 +40,6 @@ export const deleteRecipe = (id) => {
       });
 
       const { userRecipesReducer } = getState();
-      console.log(userRecipesReducer.userRecipes.userCreatedRecipes);
       const newUserRecipes =
         userRecipesReducer.userRecipes.userCreatedRecipes.filter(
           (el) => el.id != id

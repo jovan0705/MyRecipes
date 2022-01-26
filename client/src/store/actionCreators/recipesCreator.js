@@ -25,7 +25,6 @@ const setRecipePostStatus = (payload) => {
 };
 
 export const setFilter = (payload) => {
-  console.log(payload, 'INI PAYLOAD')
   return {type: SET_RECIPE_FILTER, payload}
 }
 
@@ -34,8 +33,6 @@ export const fetchRecipes = (filter) => {
     dispatch(setRecipesLoading(true));
     dispatch(setRecipesError(null));
     try {
-      
-      console.log(filter, 'INI FILTER')
       if (filter === "") {     
         const { data: recipes } = await baseUrl.get("/recipes", {
           headers: {
@@ -49,7 +46,6 @@ export const fetchRecipes = (filter) => {
             access_token: localStorage.access_token,
           },
         });
-        console.log(recipes, 'INI RECIPES')
         dispatch(setRecipes(recipes));
       }
     } catch (err) {

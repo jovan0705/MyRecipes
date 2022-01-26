@@ -16,10 +16,8 @@ const ClassCard = ({ id, name, image, link, date, page }) => {
   const { classes } = useSelector((store) => store.classReducer)
   const [bought, setBought] = useState(false)
   useEffect(() => {
-    console.log(location.pathname, 'INI LOCATION')
     dispatch(fetchUserClasses())
       .then((data) => {
-        console.log(data, 'INI DATA')
         data.forEach(el => {
           if (el.Class.id === id) {
             setBought(true)
@@ -42,7 +40,6 @@ const ClassCard = ({ id, name, image, link, date, page }) => {
           dispatch(fetchClasses());
           successAlert(data.data.message)
         } else {
-          console.log(data.response.data.message, '<<<<<< ini err')
           errorAlert(data.response.data.message)
         }
       })

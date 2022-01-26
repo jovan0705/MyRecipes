@@ -47,7 +47,6 @@ const WalletPage = () => {
       } else {
         dispatch(doTopUp(amount))
           .then((data) => {
-            console.log(data);
             window.snap.pay(data.token);
           })
           .catch((err) => {

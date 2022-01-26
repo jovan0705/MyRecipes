@@ -44,7 +44,6 @@ const EditClass = () => {
 
     const addHandlerBtn = (event) => {
         event.preventDefault()
-        console.log(addForm, '<<<<<<<<<<<<<<<')
         const payload = new FormData()
         payload.append("name", addForm.name)
         payload.append("imageFile", imageFile)

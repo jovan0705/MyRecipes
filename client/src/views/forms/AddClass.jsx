@@ -27,7 +27,6 @@ const AddClass = () => {
 
     const addHandlerBtn = (event) => {
         event.preventDefault()
-        // console.log(imageFile, '<<<<<<<<<<<<<<<')
         const payload = new FormData()
         payload.append("name", addForm.name)
         payload.append("imageFile", imageFile)

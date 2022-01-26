@@ -29,7 +29,6 @@ const EditCategoryModal = ({closeModal}) => {
 
     const updateHandlerBtn = (event) => {
         event.preventDefault()
-        // // console.log(imageFile, '<<<<<<<<<<<<<<<')
         const payload = new FormData()
         payload.append("name", name)
         payload.append("imageUrl", imageFile)

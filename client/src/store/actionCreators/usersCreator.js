@@ -45,9 +45,7 @@ export const doFollow = (id) => {
   return async () => {
     const targetId = id;
     try {
-      console.log('haha')
       const { data: user } = await baseUrl.post("/users/follows", { targetId });
-      console.log(user);
     } catch (err) {
       console.log(err);
     }
@@ -57,7 +55,6 @@ export const doFollow = (id) => {
 export const doUnfollow = (id) => {
   return async () => {
     try {
-      console.log('hehe')
       const { data: user } = await baseUrl.delete(`/users/unfollow/${id}`);
       console.log(user);
     } catch (err) {

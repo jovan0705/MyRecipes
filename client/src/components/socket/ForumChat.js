@@ -39,9 +39,7 @@ function ForumChat() {
 
   useEffect(() => {
     socket.on("get_msg_pro", (data) => {
-      console.log(data, "DATA GET MSG");
       setMessageList((el) => [...el, data]);
-      console.log(messageList, "MSG LIST");
     });
   }, [socket]);
 
