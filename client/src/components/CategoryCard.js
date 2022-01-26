@@ -2,7 +2,7 @@ import { IoChevronForwardCircleSharp } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setFilter } from "../store/actionCreators/recipesCreator";
-const CategoryCard = ({ id, name, imageUrl }) => {
+const CategoryCard = ({ id, name, imageUrl }) => {a
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const handleClick = () => {
