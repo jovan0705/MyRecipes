@@ -16,7 +16,7 @@ router.post(
   userController.adminRegister
 );
 router.post("/topup", userController.topUpBalance);
-router.put("/successTopUp", userController.successTopUp);
+router.patch("/successTopUp", userController.successTopUp);
 
 router.get("/profile", userController.profileDetails);
 router.get("/followers", userController.getFollowers);

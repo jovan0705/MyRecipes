@@ -705,10 +705,10 @@ describe("POST /users/topup", () => {
   });
 })
 
-describe("POST /successTopUp", () => {
+describe("PATCH /successTopUp", () => {
   test("Success Top Up should return message : Success add Balance with Amount (amount)", (done) => {
     request(app)
-      .put("/users/successTopUp")
+      .patch("/users/successTopUp")
       .set("access_token", userToken2)
       .then((response) => {
         const result = response.body;

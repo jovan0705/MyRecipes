@@ -4,10 +4,23 @@ import Swal from "sweetalert2";
 import { errorAlert } from "../helpers/alerts";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { doTopUp, fetchUserProfile } from "../store/actionCreators/userActon";
-
+import { doTopUp, fetchUserProfile, successTopUp } from "../store/actionCreators/userActon";
+import { useLocation, useNavigate } from "react-router-dom";
 const WalletPage = () => {
+  const params = useLocation().search
+  const navigate = useNavigate()
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (params !== "") {
+      dispatch(successTopUp())
+        .then(() => {
+          navigate('/wallet')
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }, [])
   useEffect(() => {
     dispatch(fetchUserProfile());
   }, []);
