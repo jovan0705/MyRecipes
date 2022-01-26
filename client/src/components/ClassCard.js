@@ -69,7 +69,7 @@ const ClassCard = ({ id, name, image, link, date, page }) => {
         <p>
           {link}
         </p>
-        <p>{date}</p>
+        <p>{`${date.split('T')[0]}`}</p>
         <div class="card-actions">
           {btnRenderHandler()}
           {/* <button class="btn btn-primary" onClick={() => handleClick()}>Buy This Class</button> */}

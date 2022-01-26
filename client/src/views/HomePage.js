@@ -11,7 +11,7 @@ import RecipeCardLoading from "../components/RecipesCardLoading";
 import InternalServerError from "../components/InternalServerError";
 
 // React Utilites
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,15 +24,20 @@ import { fetchCategories } from "../store/actionCreators/categoriesCreator";
 
 const HomePage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { recipeReducer, categoryReducer } = useSelector((store) => store);
   useEffect(() => {
     dispatch(setFilter(""));
   }, []);
 
   useEffect(() => {
-    dispatch(fetchRecipes(recipeReducer.filter)); // LIMIT BY 3
+    dispatch(fetchRecipes("")); // LIMIT BY 3
     dispatch(fetchCategories()); // LIMIT BY 6
   }, []);
+
+  const handleToCategories = () => {
+    navigate('/categories')
+  }
 
   return (
     <div className="py-10">
@@ -43,7 +48,7 @@ const HomePage = () => {
       <div className="mb-20">
         <div className="flex justify-between">
           <div className="heading">Recipe Categories</div>
-          <div className="flex hover:scale-110 duration-200 cursor-pointer">
+          <div className="flex hover:scale-110 duration-200 cursor-pointer" onClick={() => handleToCategories()}>
             <div className="mr-4 text-primary font-bold text-2xl">View All</div>
             <div className="text-primary text-3xl">
               <IoChevronForwardCircleSharp />

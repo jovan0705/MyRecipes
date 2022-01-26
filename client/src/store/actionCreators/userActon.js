@@ -22,8 +22,11 @@ const setUserLoading = (payload) => {
 
 const setFeeds = (payload) => {
   return { type: SET_FEEDS, payload };
+}
+
 const setUserAlreadyRated = (payload) => {
   return { type: SET_USER_ALREADYRATED, payload };
+}
 
 export const fetchUserProfile = () => {
   return async (dispatch) => {

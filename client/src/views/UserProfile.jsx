@@ -59,6 +59,7 @@ const UserProfile = () => {
                       userId={el.userId}
                       category={el.Category.name}
                       user={el.User.name}
+                      rating={el.RecipeRatings}
                     />
                   )
                 })}
