@@ -23,4 +23,28 @@ body {
   .heading {
     @apply text-4xl font-bold mb-10;
   }
+
+  .socket-container {
+    @apply w-full h-[700px];
+  }
+
+  .socket-header {
+    @apply py-5 bg-primary rounded-t-xl text-center text-2xl;
+  }
+
+  .socket-body {
+    @apply h-5/6 overflow-y-auto border border-primary;
+  }
+
+  .socket-footer {
+    @apply bg-primary h-16 flex rounded-b-xl overflow-hidden;
+  }
+
+  .socket-input {
+    @apply h-full w-5/6 border border-primary p-3 text-lg focus:outline-none;
+  }
+
+  .socket-send-message {
+    @apply w-1/6 flex items-center justify-center;
+  }
 }

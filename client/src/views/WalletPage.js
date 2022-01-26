@@ -4,10 +4,23 @@ import Swal from "sweetalert2";
 import { errorAlert } from "../helpers/alerts";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { doTopUp, fetchUserProfile } from "../store/actionCreators/userActon";
-
+import { doTopUp, fetchUserProfile, successTopUp } from "../store/actionCreators/userActon";
+import { useLocation, useNavigate } from "react-router-dom";
 const WalletPage = () => {
+  const params = useLocation().search
+  const navigate = useNavigate()
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (params !== "") {
+      dispatch(successTopUp())
+        .then(() => {
+          navigate('/wallet')
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }, [])
   useEffect(() => {
     dispatch(fetchUserProfile());
   }, []);
@@ -44,15 +57,25 @@ const WalletPage = () => {
     }
   };
 
+  const handleUpdateBalance = () => {
+    dispatch(fetchUserProfile());
+  };
+
   return (
     <div className="h-screen flex justify-center items-center flex-col">
       <BalanceCard
         name={userReducer.user.name}
         balance={userReducer.user.balance}
       />
-      <div>
+      <div className="flex gap-10">
         <button class="btn btn-accent mt-10" onClick={handleClick}>
           Top Up
+        </button>
+        <button
+          class="btn btn-primary mt-10 text-zinc-50"
+          onClick={handleUpdateBalance}
+        >
+          Update Balance
         </button>
       </div>
     </div>

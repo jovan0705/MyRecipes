@@ -18,13 +18,13 @@ import {
 import DropdownIcon from "./DropdownIcon";
 import { Link } from "react-router-dom";
 
-function Dropdown() {
+function Dropdown({ name }) {
   return (
     <div className="text-right">
       <Menu as="div" className="relative inline-block text-left z-10 shadow">
         <div>
           <Menu.Button className="text-lg  inline-flex justify-center w-full px-4 py-4 font-medium bg-primary rounded-md hover:bg-opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 text-base-content">
-            Welcome, Jordy
+            Welcome, {name}
             <ChevronDownIcon
               className="w-7 h-7 ml-2 -mr-1 text-base-content "
               aria-hidden="true"

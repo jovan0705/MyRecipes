@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserFollowing } from "../store/actionCreators/usersCreator";
 
-const UserCard = ({ id, name, username }) => {
+const UserCard = ({ id, name, username, profilePict }) => {
   const dispatch = useDispatch();
   const [followed, setFollowed] = useState(false);
 
@@ -40,7 +40,7 @@ const UserCard = ({ id, name, username }) => {
       <div className="flex">
         <div className="avatar">
           <div className="w-24 h-24 mask mask-squircle">
-            <img src="http://daisyui.com/tailwind-css-component-profile-1@94w.png" />
+            <img src={profilePict} />
           </div>
         </div>
         <div className="flex flex-col justify-center ml-4">
