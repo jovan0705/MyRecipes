@@ -1,9 +1,10 @@
-import { SET_USER, SET_USER_ERROR, SET_USER_LOADING } from "../actionTypes";
+import { SET_USER, SET_USER_ERROR, SET_USER_LOADING, SET_USER_ALREADYRATED } from "../actionTypes";
 
 const initialState = {
   user: {},
   userError: null,
   userLoading: false,
+  userAlreadyRated: false,
 };
 
 const userReducer = (state = initialState, { type, payload }) => {
@@ -24,6 +25,12 @@ const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         userLoading: payload,
+      };
+
+    case SET_USER_ALREADYRATED:
+      return {
+        ...state,
+        userAlreadyRated: payload,
       };
     default:
       return state;

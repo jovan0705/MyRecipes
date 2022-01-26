@@ -2,6 +2,7 @@ import {
   SET_USER,
   SET_USER_LOADING,
   SET_USER_ERROR,
+  SET_USER_ALREADYRATED,
 } from "../actionTypes/index";
 import { baseUrl } from "../../apis/baseUrl";
 import { successAlert, errorAlert } from "../../helpers/alerts";
@@ -16,6 +17,10 @@ const setUserError = (payload) => {
 
 const setUserLoading = (payload) => {
   return { type: SET_USER_LOADING, payload };
+};
+
+const setUserAlreadyRated = (payload) => {
+  return { type: SET_USER_ALREADYRATED, payload };
 };
 
 export const fetchUserProfile = () => {
@@ -104,14 +109,16 @@ export const doTopUp = (amount) => {
 };
 
 export const doRating = (id, payload) => {
-  return async () => {
+  return async (dispatch) => {
     try {
+      dispatch(setUserAlreadyRated(false))
       const { data: rating } = await baseUrl.post(
         `/recipes/${id}/rate`,
         payload,
         { headers: { access_token: localStorage.access_token } }
       );
       console.log(rating);
+      dispatch(setUserAlreadyRated(true))
     } catch (err) {
       console.log(err);
     }
