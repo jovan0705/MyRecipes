@@ -3,6 +3,7 @@ import {
   SET_RECIPES_ERROR,
   SET_RECIPES_LOADING,
   SET_RECIPE_POST_STATUS,
+  SET_RECIPE_FILTER
 } from "../actionTypes";
 import { baseUrl, uploadFile } from "../../apis/baseUrl";
 import { errorAlert } from "../../helpers/alerts";
@@ -23,17 +24,33 @@ const setRecipePostStatus = (payload) => {
   return { type: SET_RECIPE_POST_STATUS, payload };
 };
 
-export const fetchRecipes = () => {
+export const setFilter = (payload) => {
+  console.log(payload, 'INI PAYLOAD')
+  return {type: SET_RECIPE_FILTER, payload}
+}
+
+export const fetchRecipes = (filter) => {
   return async (dispatch) => {
     dispatch(setRecipesLoading(true));
     dispatch(setRecipesError(null));
     try {
-      const { data: recipes } = await baseUrl.get("/recipes", {
-        headers: {
-          access_token: localStorage.access_token,
-        },
-      });
-      dispatch(setRecipes(recipes));
+      console.log(filter, 'INI FILTER')
+      if (filter === "") {     
+        const { data: recipes } = await baseUrl.get("/recipes", {
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        dispatch(setRecipes(recipes));
+      } else {
+        const { data: recipes } = await baseUrl.get(`/recipes/${filter}`, {
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        console.log(recipes, 'INI RECIPES')
+        dispatch(setRecipes(recipes));
+      }
     } catch (err) {
       dispatch(setRecipesError(err.message));
     } finally {

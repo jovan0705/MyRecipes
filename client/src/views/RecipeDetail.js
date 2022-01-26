@@ -8,12 +8,15 @@ import { useEffect } from "react";
 import { fetchRecipe } from "../store/actionCreators/recipeDetailCreator";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+import { doRating } from "../store/actionCreators/userActon";
+import { errorAlert } from "../helpers/alerts";
 
 const RecipeDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { recipeDetailReducer } = useSelector((store) => store);
   const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
 
   const handleRating = (num) => {
     setRating(num);
@@ -22,6 +25,21 @@ const RecipeDetail = () => {
   useEffect(() => {
     dispatch(fetchRecipe(id));
   }, []);
+
+  const handleReview = (e) => {
+    const value = e.target.value;
+    setReview(value);
+  };
+
+  const handleSubmit = () => {
+    if (!rating) errorAlert("Please insert rating");
+    if (!review) errorAlert("Please insert review");
+    const payload = {
+      rating,
+      review,
+    };
+    dispatch(doRating(id, payload));
+  };
   return (
     <div className="py-10">
       <div className="text-gray-700 body-font border shadow-lg py-10">
@@ -36,9 +54,14 @@ const RecipeDetail = () => {
                 />
               </div>
               <div className="w-full mt-6 px-5 space-y-3 pb-7 rounded-md">
-                <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                  {recipeDetailReducer.recipe.recipe.name}
-                </h1>
+                <div className="flex">
+                  <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+                    {recipeDetailReducer.recipe.recipe.name}
+                  </h1>
+                  <div class="badge ml-2 badge-outline">
+                    {recipeDetailReducer.recipe.recipe.totalCalories} Cal
+                  </div>
+                </div>
                 <div className="flex mb-4">
                   <div className="rating rating-sm">
                     <Rating />
@@ -71,58 +94,83 @@ const RecipeDetail = () => {
                   <div>
                     <label
                       for="my-modal-2"
-                      class="btn btn-primary modal-button"
+                      className="btn btn-primary modal-button"
                     >
-                      open modal
+                      Rate Now
                     </label>
                     <input
                       type="checkbox"
                       id="my-modal-2"
-                      class="modal-toggle"
+                      className="modal-toggle"
                     />
-                    <div class="modal">
-                      <div class="modal-box">
-                        <div class="rating">
-                          <input
-                            type="radio"
-                            name="rating-2"
-                            checked="checked"
-                            class="mask mask-star-2 bg-warning"
-                            onChange={() => handleRating(1)}
-                          />
-                          <input
-                            type="radio"
-                            name="rating-2"
-                            class="mask mask-star-2 bg-warning"
-                            onChange={() => handleRating(2)}
-                          />
-                          <input
-                            type="radio"
-                            name="rating-2"
-                            class="mask mask-star-2 bg-warning"
-                            onChange={() => handleRating(3)}
-                          />
-                          <input
-                            type="radio"
-                            name="rating-2"
-                            class="mask mask-star-2 bg-warning"
-                            // onChange={() => handleRating(4)}
-                          />
-                          <input
-                            type="radio"
-                            name="rating-2"
-                            class="mask mask-star-2 bg-warning"
-                            // onChange={() => handleRating(5)}
-                          />
+                    <div className="modal">
+                      <div className="modal-box">
+                        <div className="rating">
+                          <div onChange={() => handleRating(1)}>
+                            <input
+                              type="radio"
+                              name="rating-2"
+                              checked="checked"
+                              className="mask mask-star-2 bg-warning"
+                            />
+                          </div>
+                          <div onChange={() => handleRating(2)}>
+                            <input
+                              type="radio"
+                              name="rating-2"
+                              className="mask mask-star-2 bg-warning"
+                            />
+                          </div>
+                          <div onChange={() => handleRating(3)}>
+                            <input
+                              type="radio"
+                              name="rating-2"
+                              className="mask mask-star-2 bg-warning"
+                            />
+                          </div>
+                          <div onChange={() => handleRating(4)}>
+                            <input
+                              type="radio"
+                              name="rating-2"
+                              className="mask mask-star-2 bg-warning"
+                              // onChange={() => handleRating(4)}
+                            />
+                          </div>
+                          <div onChange={() => handleRating(5)}>
+                            <input
+                              type="radio"
+                              name="rating-2"
+                              className="mask mask-star-2 bg-warning"
+                            />
+                          </div>
                         </div>
 
-                        <p>Rating: {rating} </p>
+                        <p className="mb-8">Rating: {rating} </p>
 
-                        <div class="modal-action">
-                          <label for="my-modal-2" class="btn btn-primary">
-                            Accept
+                        <div>
+                          <div className="form-control">
+                            <label className="label">
+                              <span className="label-text text-lg">
+                                Write a review:
+                              </span>
+                            </label>
+                            <textarea
+                              className="textarea h-24 textarea-bordered textarea-primary"
+                              placeholder="Review..."
+                              onChange={(e) => handleReview(e)}
+                            ></textarea>
+                          </div>
+                        </div>
+
+                        <div className="modal-action">
+                          <label
+                            for="my-modal-2"
+                            className="btn btn-primary"
+                            onClick={handleSubmit}
+                          >
+                            Submit
                           </label>
-                          <label for="my-modal-2" class="btn">
+                          <label for="my-modal-2" className="btn">
                             Close
                           </label>
                         </div>

@@ -10,6 +10,8 @@ router.post("/adminregister", adminRegisterAuthorization, userController.adminRe
 router.post('/topup', userController.topUpBalance)
 router.put("/successTopUp", userController.successTopUp)
 router.get("/profile", userController.profileDetails)
+router.get("/followers", userController.getFollowers)
+router.get("/followings", userController.getFollowings)
 router.get("/:id", userController.detailUserbyId)
 
 router.put(

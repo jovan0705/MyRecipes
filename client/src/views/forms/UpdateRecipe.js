@@ -7,20 +7,35 @@ import { fetchCategories } from "../../store/actionCreators/categoriesCreator";
 import { fetchIngredients } from "../../store/actionCreators/ingredientsCreator";
 import { rename } from "../../helpers/uploadFileName";
 import { postRecipe } from "../../store/actionCreators/recipesCreator";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { successAlert } from "../../helpers/alerts";
+import { fetchRecipe } from "../../store/actionCreators/recipeDetailCreator";
 
-const AddRecipe = () => {
+const UpdateRecipe = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { categoryReducer, ingredientsReducer, recipeReducer } = useSelector(
+  const { categoryReducer, ingredientsReducer, recipeReducer, recipeDetailReducer } = useSelector(
     (store) => store
   );
+  const {id} = useParams()
 
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(fetchIngredients());
   }, []);
+
+  useEffect(() => {
+    dispatch(fetchRecipe(id))
+    if(recipeDetailReducer.recipe) {
+        setInputData({
+        name: recipeDetailReducer.recipe.recipe.name,
+        category: recipeDetailReducer.recipe.recipe.category,
+        ingredients: recipeDetailReducer.recipe.recipe.ingredient,
+        steps: recipeDetailReducer.recipe.recipe.steps,
+        totalCalories: recipeDetailReducer.recipe.recipe.calorie,
+        })
+    }
+  }, [id])
 
   const animatedComponents = makeAnimated();
 
@@ -121,10 +136,12 @@ const AddRecipe = () => {
       });
   };
 
+
+
   return (
     <div className="min-h-screen flex justify-center items-center">
       <div className="w-1/2 h-1/2 bg-white p-10 shadow-lg rounded-lg">
-        <h1 className="heading text-center">Add a New Recipe</h1>
+        <h1 className="heading text-center">Edit Recipe</h1>
         <form onSubmit={(e) => handleSubmit(e)}>
           {/* First Row */}
           {/* Name  */}
@@ -140,6 +157,7 @@ const AddRecipe = () => {
                 type="text"
                 className="input input-secondary input-bordered"
                 onChange={(e) => handleInput(e)}
+                value={inputData.name}
                 required
               />
             </div>
@@ -239,6 +257,7 @@ const AddRecipe = () => {
               onChange={(e) => handleInput(e)}
               name="steps"
               className="textarea h-24 textarea-bordered textarea-secondary"
+              value={inputData.steps}
               required
             ></textarea>
           </div>
@@ -266,4 +285,4 @@ const AddRecipe = () => {
   );
 };
 
-export default AddRecipe;
+export default UpdateRecipe;

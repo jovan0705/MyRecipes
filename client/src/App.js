@@ -31,6 +31,9 @@ import AddAdmin from "./views/admin/AddAdmin";
 import ClassesAdminPage from "./views/admin/ClassesAdminPage";
 import AddClass from "./views/forms/AddClass";
 import EditClass from "./views/forms/editClass";
+import ClassDetailPage from "./views/ClassDetailPage";
+import MyClasses from "./views/MyClasses";
+import UpdateRecipe from "./views/forms/UpdateRecipe";
 // import { io } from "socket.io-client";
 
 // const socket = io.connect("http://localhost:3000")
@@ -69,12 +72,14 @@ function App() {
           <Route path="home" element={<HomePage />} />
           <Route path="recipes" element={<RecipesPage />} />
           <Route path="detail/:id" element={<RecipeDetail />} />
+          <Route path="updateRecipe/:id" element={<UpdateRecipe />} />
           <Route path="UserProfile" element={<UserProfile />} />
           <Route path="post" element={<PostRecipe />} />
           <Route path="classes" element={<ClassPage />} />
           <Route path="wallet" element={<WalletPage />} />
           <Route path="categories" element={<CategoriesPage />} />
           <Route path="feeds" element={<Feed />} />
+          <Route path="myclasses" element={<MyClasses />} />
           <Route path="favourite" element={<FavouritePage />} />
           <Route path="forum" element={<ForumPage />}>
             <Route path="chatPro" element={<ForumChat />} />
@@ -83,6 +88,7 @@ function App() {
           </Route>
           <Route path="detail" element={<RecipeDetail />} />
           <Route path="myrecipes" element={<MyRecipesPage />} />
+          <Route path="classes/:id" element={<ClassDetailPage />} />
           <Route path="admin" element={<Dashboard />}>
             <Route path="" element={<RecipeAdmin />} />
             <Route path="addAdmin" element={<AddAdmin />} />

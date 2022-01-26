@@ -7,12 +7,25 @@ const {
   RecipeIngredients,
   Ingredient,
 } = require("../models");
+const { Op } = require("sequelize");
 
 const getRecipes = async (req, res, next) => {
   try {
     // untuk sementara belum ada paginasi
-
+    const {search, categoryId} = req.query
+    let filter = {}
+    if (search) {
+      filter.name =  {[Op.iLike]: `%${search}%`}
+    }
+    if (categoryId) {
+      filter = {
+        ...filter,
+        categoryId
+      }
+    }
+  
     const response = await Recipe.findAll({
+      where: filter,
       include: [
         {
           model: User,
@@ -32,6 +45,12 @@ const getRecipes = async (req, res, next) => {
           model: Category,
           attributes: {
             exclude: ["imageUrl", "createdAt", "updatedAt"],
+          },
+        },
+        {
+          model: RecipeRating,
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
           },
         },
       ],
@@ -72,6 +91,12 @@ const getUserFavouritedRecipes = async (req, res, next) => {
               exclude: ["imageUrl", "createdAt", "updatedAt"],
             },
           },
+          {
+            model: RecipeRating,
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
+          }
         ],
       },
     });
@@ -111,6 +136,12 @@ const getLoggedInUserRecipes = async (req, res, next) => {
             exclude: ["imageUrl", "createdAt", "updatedAt"],
           },
         },
+        {
+          model: RecipeRating,
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
+        }
       ],
     });
     if (!response) throw { name: "notFound" };
@@ -124,7 +155,7 @@ const getRecipeDetail = async (req, res, next) => {
   try {
     const { id } = req.params;
     const response = await Recipe.findByPk(id, {
-      include: {
+      include: [{
         model: User,
         attributes: {
           exclude: [
@@ -138,6 +169,13 @@ const getRecipeDetail = async (req, res, next) => {
           ],
         },
       },
+      {
+        model: RecipeRating,
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      }
+    ],
     });
     if (!response) throw { name: "notFound" };
     const ingredients = await RecipeIngredients.findAll({
@@ -272,6 +310,18 @@ const createUserRating = async (req, res, next) => {
   }
 };
 
+const getRatings = async (req, res, next) => {
+  try {
+    const recipeId = req.params.id
+    const response = await RecipeRating.findAll({
+      include: User, Recipe,
+      where: {recipeId}
+    })
+    res.status(200).json(response)
+  } catch (err) {
+    next(err)
+  }
+}
 const addFavourite = async (req, res, next) => {
   try {
     const { recipeId } = req.params;
@@ -328,6 +378,7 @@ module.exports = {
   editRecipe,
   deleteRecipe,
   createUserRating,
+  getRatings,
   addFavourite,
   deleteFavourite,
 };

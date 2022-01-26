@@ -1,4 +1,38 @@
-const ClassCard = ({ id, name, image }) => {
+
+
+
+
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { registerClass } from "../store/actionCreators/classesCreator";
+import { successAlert, errorAlert } from "../helpers/alerts";
+
+const ClassCard = ({ id, name, image, link, date, page }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const toDetail = (id) => {
+    navigate(`/classes/${id}`);
+  };
+  const handleClick = () => {
+    dispatch(registerClass(id))
+      .then((data) => {
+        if (data.data) {
+          successAlert(data.data.message)
+        } else {
+          console.log(data.response.data.message, '<<<<<< ini err')
+          errorAlert(data.response.data.message)
+        }
+      })
+      .catch((err) => {
+        console.log(err, '<<<<< ini err')
+      })
+  }
+
+  const btnRenderHandler = () => {
+    if(!page) {
+      return <button class="btn btn-primary" onClick={() => handleClick()}>Buy This Class</button>
+    }
+  }
   return (
     <div className="border border-primary flex col-span-1 rounded-xl overflow-hidden">
       <div className="flex-1 rounded-xl">
@@ -10,17 +44,21 @@ const ClassCard = ({ id, name, image }) => {
           <div class="badge mx-2">NEW</div>
         </h2>
         <p>
-          Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. Sit
-          sit necessitatibus veritatis sed molestiae voluptates incidunt iure
-          sapiente.
+          {link}
         </p>
+        <p>{date}</p>
         <div class="card-actions">
-          <button class="btn btn-primary">Buy This Class</button>
-          <button class="btn btn-ghost">More info</button>
+          {btnRenderHandler()}
+          {/* <button class="btn btn-primary" onClick={() => handleClick()}>Buy This Class</button> */}
+          {/* <button class="btn btn-ghost" onClick={() => toDetail(id)}>
+            More info
+          </button> */}
         </div>
       </div>
     </div>
   );
 };
+
+
 
 export default ClassCard;

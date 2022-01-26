@@ -1,7 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 
 const ForumPage = () => {
-  
   return (
     <div className="h-screen w-full flex py-10">
       <div className="flex-1 flex justify-center items-center border border-red-600">

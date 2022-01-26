@@ -36,8 +36,7 @@ const UserProfile = () => {
         <div className="md:flex no-wrap md:-mx-2 ">
           {/* <!-- Left Side --> */}
           <div className="w-full md:w-3/12 md:mx-2">
-            <ProfileCard totalPost={totalPost()}/>
-            <ClassCardProfile />
+            <ProfileCard totalPost={totalPost()} item={userReducer.user}/>
           </div>
           {/* <!-- Left Side end--> */}
           {/* <!-- Right Side --> */}

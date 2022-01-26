@@ -1,4 +1,4 @@
-const ProfileCard = ({totalPost}) => {
+const ProfileCard = ({totalPost, item}) => {
     return (
         <>
             {/* <!-- Profile Card --> */}
@@ -8,7 +8,7 @@ const ProfileCard = ({totalPost}) => {
                         src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
                         alt="" />
                 </div>
-                <h1 className="text-gray-800 font-bold text-xl leading-8 my-3 text-center">Jane Doe</h1>
+                <h1 className="text-gray-800 font-bold text-xl leading-8 my-3 text-center">{item.username}</h1>
                 <hr className="my-2"/>
                 <div className="flex justify-center text-center my-3 text-gray-500 text-sm">
                     <div className="p-3 space-y-2">
