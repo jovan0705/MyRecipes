@@ -9,9 +9,9 @@
 // export default ForumChat;
 
 import React, { useState, useEffect } from 'react';
-import { io } from "socket.io-client";
+import { socket } from "../../apis/socket";
 
-const socket = io.connect("http://localhost:5000")
+// const socket = io.connect("http://localhost:3000")
 
 function ForumChat() {
   // console.log(socket, 'SOCKET');
@@ -37,7 +37,7 @@ function ForumChat() {
     useEffect(() => {
         socket.on("get_msg_pro", (data) => {
             console.log(data, 'DATA GET MSG');
-            setMessageList((list) => [...list, data]);
+            setMessageList(data);
             console.log(messageList, 'MSG LIST');
         })
     }, [socket]);
@@ -47,19 +47,21 @@ function ForumChat() {
     <div className="chat-header">
         <p>Live Chat</p>
     </div>
-    <div className="chat-body">
+    <div className="chat-body overflow-y-scroll">
             {messageList.map((msg) => {
             return (
                 <div
-                    // className="message"
-                    className={username === msg.username ? 'text-right bg-amber-200' : 'text-left bg-amber-500'}
+                    className="message"
+                    // className={username === msg.username ? 'text-right bg-amber-200' : 'text-left bg-amber-500'}
+                    id={username === msg.username ? "you" : "other"}
+                    key={msg.username}
                     >
                     <div>
-                    <div className="message-content">
-                        <p>{msg.message}</p>
-                    </div>
                     <div className="message-meta">
                         <p id="author">@{msg.username}</p>
+                    </div>
+                    <div className="message-content">
+                        <p>{msg.message}</p>
                     </div>
                     </div>
                 </div>
