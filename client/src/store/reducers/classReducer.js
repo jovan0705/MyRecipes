@@ -10,6 +10,7 @@ const initialState = {
   classDetail: {},
   classesError: null,
   classesLoading: true,
+  registerMessage: ""
 };
 
 const classReducer = (state = initialState, { type, payload }) => {

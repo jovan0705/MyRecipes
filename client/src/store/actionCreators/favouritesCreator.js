@@ -24,6 +24,8 @@ export const fetchFavourites = () => {
         headers: { access_token: localStorage.access_token },
       });
       dispatch(setFavoruites(favourites));
+      console.log(favourites, 'INI FAVOURITES')
+      return favourites
     } catch (err) {
       dispatch(setFavoruitesError(err));
     } finally {
