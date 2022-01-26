@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: "Nunito";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer components {
+  .sidebar-icon {
+    @apply relative flex items-center justify-center h-20 w-20 m-2 mx-auto bg-primary text-base-content rounded-3xl hover:bg-primary-focus 
+    hover:rounded-xl hover:scale-110 hover:text-white transition-all duration-200 ease-linear cursor-pointer;
+  }
+
+  .sidebar-tooltip {
+    @apply absolute w-auto p-2 m-2 min-w-max left-14 rounded-md shadow-md text-white bg-primary text-lg font-bold transition-all duration-100 scale-0 origin-left z-10;
+  }
+
+  .heading {
+    @apply text-4xl font-bold mb-10;
+  }
+}
