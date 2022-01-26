@@ -68,7 +68,7 @@ const doLogin = async (req, res, next) => {
       role: user.role,
     };
     const accessToken = getToken(payload);
-    res.status(200).json({ accessToken });
+    res.status(200).json({ accessToken, username: user.username });
   } catch (err) {
     next(err);
   }

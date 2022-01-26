@@ -16,14 +16,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchFavourites } from "../store/actionCreators/favouritesCreator";
 
-const RecipeCard = ({
-  id,
-  imageUrl,
-  name,
-  totalCalories,
-  userId,
-  category,
-}) => {
+const RecipeCard = ({ id, imageUrl, name, totalCalories, category, user }) => {
   const [liked, setLiked] = useState(false);
   // const [bookmarked, setBookmarked] = useState(false);
   const navigate = useNavigate();
@@ -101,7 +94,7 @@ const RecipeCard = ({
           </div>
           <div className="">
             <p className="text-xs">
-              Posted by <span className="font-bold">{userId}</span>
+              Posted by <span className="font-bold">{user}</span>
             </p>
           </div>
           <div className="flex flex-row-reverse gap-3 py-2 px-5">

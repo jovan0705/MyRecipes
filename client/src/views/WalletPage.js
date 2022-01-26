@@ -36,7 +36,6 @@ const WalletPage = () => {
           .then((data) => {
             console.log(data);
             window.snap.pay(data.token);
-            // window.location.href = data.redirect_url;
           })
           .catch((err) => {
             console.log(err);
@@ -47,7 +46,10 @@ const WalletPage = () => {
 
   return (
     <div className="h-screen flex justify-center items-center flex-col">
-      <BalanceCard name={userReducer.user.name} />
+      <BalanceCard
+        name={userReducer.user.name}
+        balance={userReducer.user.balance}
+      />
       <div>
         <button class="btn btn-accent mt-10" onClick={handleClick}>
           Top Up

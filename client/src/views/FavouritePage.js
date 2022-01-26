@@ -19,7 +19,7 @@ const FavouritePage = () => {
       <div className="grid grid-cols-3 gap-10 p-3">
         {favouritesReducer.favourites.hasOwnProperty("favoritedRecipes") &&
           favouritesReducer.favourites.favoritedRecipes.map(
-            ({ id, name, imageUrl, totalCalories, userId, Category }) => {
+            ({ id, name, imageUrl, totalCalories, userId, Category, User }) => {
               return (
                 <RecipeCard
                   key={id}
@@ -28,13 +28,13 @@ const FavouritePage = () => {
                   imageUrl={imageUrl}
                   totalCalories={totalCalories}
                   userId={userId}
-                  // category={Category.name}
+                  category={Category.name}
+                  user={User.name}
                 />
               );
             }
           )}
       </div>
-      {JSON.stringify(favouritesReducer.favourites.favoritedRecipes)}
     </div>
   );
 };

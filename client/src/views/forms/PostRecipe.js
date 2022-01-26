@@ -27,7 +27,7 @@ const AddRecipe = () => {
   const [inputData, setInputData] = useState({
     name: "",
     category: "",
-    indegrients: [],
+    ingredients: [],
     imageFile: "",
     steps: "",
     totalCalories: 0,
@@ -76,9 +76,13 @@ const AddRecipe = () => {
     } else {
       cal = e.map(({ calorie }) => calorie).reduce((prev, next) => prev + next);
     }
+
+    const newIngredients = e.map((el) => el.value).join(",");
+
+    console.log(newIngredients);
     setInputData({
       ...inputData,
-      indegrients: e,
+      ingredients: newIngredients,
       totalCalories: +cal,
     });
   };
@@ -105,6 +109,7 @@ const AddRecipe = () => {
     fd.append("steps", inputData.steps);
     fd.append("totalCalories", inputData.totalCalories);
     fd.append("categoryId", inputData.category);
+    fd.append("ingredients", inputData.ingredients);
 
     dispatch(postRecipe(fd))
       .then(() => {
@@ -112,7 +117,7 @@ const AddRecipe = () => {
         navigate("/myrecipes");
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
       });
   };
 

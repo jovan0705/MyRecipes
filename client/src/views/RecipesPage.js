@@ -37,7 +37,7 @@ const RecipesPage = () => {
       {!recipeReducer.recipesLoading && recipeReducer.recipes && (
         <div className="grid grid-cols-3 gap-10 p-3">
           {recipeReducer.recipes.map(
-            ({ id, imageUrl, name, totalCalories, userId, Category }) => {
+            ({ id, imageUrl, name, totalCalories, userId, Category, User }) => {
               return (
                 <RecipeCard
                   key={id}
@@ -47,6 +47,7 @@ const RecipesPage = () => {
                   totalCalories={totalCalories}
                   userId={userId}
                   category={Category.name}
+                  user={User.name}
                 />
               );
             }

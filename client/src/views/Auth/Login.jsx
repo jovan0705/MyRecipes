@@ -29,6 +29,7 @@ const Login = () => {
     dispatch(login(loginForm))
       .then((data) => {
         localStorage.setItem("access_token", data.accessToken);
+        localStorage.setItem("username", data.username);
         successAlert("Login Success");
         navigate("/home");
       })
