@@ -1,5 +1,5 @@
 .chat-window {
-  width: 600px;
+  width: 60%;
   height: 800px;
 }
 
@@ -11,22 +11,23 @@
   border-radius: 6px;
   background: #f9d72f;
   position: relative;
-  cursor: pointer;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 .chat-window .chat-header p {
   display: block;
-  padding: 0 1em 0 2em;
+  padding: 0 1em 0 1em;
   color: #263238;
   font-weight: 700;
   line-height: 45px;
+  font-size: 20px;
 }
 
 .chat-window .chat-body {
   height: calc(800px - (45px + 70px));
   border: 1px solid #111827;
   border-bottom: none;
+  /* background-image: url("https://image.freepik.com/free-vector/hand-drawn-healthy-food-background_23-2148241421.jpg"); */
   background: #e5e7eb;
   border-radius: 5px;
   border-top-right-radius: 2px;
@@ -53,7 +54,7 @@
   width: auto;
   height: auto;
   min-height: 40px;
-  max-width: 400px;
+  max-width: 600px;
   background-color: #43a047;
   border-radius: 5px;
   color: white;
@@ -65,7 +66,7 @@
   padding-left: 5px;
   overflow-wrap: break-word;
   word-break: break-word;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 #other {
@@ -79,6 +80,7 @@
 #other .message-meta {
   justify-content: flex-start;
   margin-right: 5px;
+  font-size: 20px;
 }
 
 #you {
@@ -92,7 +94,8 @@
 
 #you .message-meta {
   justify-content: flex-end;
-  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 20px;
 }
 
 .message-meta #author {
@@ -106,7 +109,7 @@
 }
 
 .chat-window .chat-footer {
-  height: 40px;
+  height: 60px;
   border: 1px solid #111827;
   /* border-top: none; */
   display: flex;
@@ -117,7 +120,7 @@
   flex: 85%;
   border: 0;
   padding: 0 0.7em;
-  font-size: 1em;
+  font-size: 1.5em;
   border-right: 1px dotted #607d8b;
 
   outline: none;
@@ -133,7 +136,7 @@
   height: 100%;
   background: #111827;
   outline: none;
-  font-size: 25px;
+  font-size: 30px;
   color: #f9d72f;
 }
 
