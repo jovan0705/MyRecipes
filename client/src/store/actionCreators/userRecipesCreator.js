@@ -25,6 +25,7 @@ export const fetchUserRecipes = () => {
       });
       dispatch(setUserRecipes(userRecipes));
     } catch (err) {
+      console.log(err, '<<<<<<<<<<<<<<<<<<<')
       setUserRecipesError(err);
     } finally {
       dispatch(setUserRecipesLoading(false));

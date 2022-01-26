@@ -22,6 +22,7 @@ export const SET_CATEGORIES_LOADING = "categories/loading";
 
 // Class
 export const SET_CLASSES = "class/set";
+export const SET_USER_CLASSES = "class/setUserClasses";
 export const SET_CLASSES_DETAIL = "class/setDetail";
 export const SET_CLASSES_ERROR = "class/error";
 export const SET_CLASSES_LOADING = "class/loading";
