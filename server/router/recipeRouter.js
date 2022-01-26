@@ -10,7 +10,8 @@ const {
   createRecipe,
   editRecipe,
   deleteRecipe,
-  createUserRating
+  createUserRating,
+  getRatings
 } = require("../controller/recipeController");
 
 // fetch all recipes
@@ -35,4 +36,6 @@ router.put("/:id", instanceMulter.single("imageFile"), imageKitUpload, editRecip
 router.delete("/:id", deleteRecipe);
 // create rating
 router.post('/:id/rate', createUserRating)
+// get rating
+router.get('/:id/rate', getRatings)
 module.exports = router;

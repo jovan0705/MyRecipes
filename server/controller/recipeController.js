@@ -34,6 +34,12 @@ const getRecipes = async (req, res, next) => {
             exclude: ["imageUrl", "createdAt", "updatedAt"],
           },
         },
+        {
+          model: RecipeRating,
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
+        },
       ],
     });
     if (!response) throw { name: "notFound" };
@@ -270,6 +276,19 @@ const createUserRating = async (req, res, next) => {
   }
 };
 
+const getRatings = async (req, res, next) => {
+  try {
+    const recipeId = req.params.id
+    const response = await RecipeRating.findAll({
+      include: User, Recipe,
+      where: {recipeId}
+    })
+    res.status(200).json(response)
+  } catch (err) {
+    next(err)
+  }
+}
+
 module.exports = {
   getRecipes,
   getUserFavouritedRecipes,
@@ -279,4 +298,5 @@ module.exports = {
   editRecipe,
   deleteRecipe,
   createUserRating,
+  getRatings
 };
