@@ -8,7 +8,7 @@ export const SET_RECIPE_POST_STATUS = "recipes/postStatus";
 export const SET_USER_RECIPES = "userRecipes/set";
 export const SET_USER_RECIPES_ERROR = "userRecipes/error";
 export const SET_USER_RECIPES_LOADING = "userRecipes/loading";
-export const SET_RECIPE_FILTER = "userRecipes/setFilter"
+export const SET_RECIPE_FILTER = "userRecipes/setFilter";
 
 // Recipe Detail
 export const SET_RECIPE_DETAIL = "recipeDetail/set";
@@ -50,3 +50,16 @@ export const SET_FAVOURITES_LOADING = "likes/loading";
 export const SET_USER_CLASS = "userClass/set";
 export const SET_USER_CLASS_ERROR = "userClass/error";
 export const SET_USER_CLASS_LOADING = "userClass/loading";
+
+// Users
+export const SET_USERS = "users/set";
+export const SET_USERS_ERROR = "users/error";
+export const SET_USERS_LOADING = "users/loading";
+
+// UserFollowing
+export const SET_USER_FOLLOWING = "userFollowing/set";
+
+// Feeds
+export const SET_FEEDS = "feeds/set";
+export const SET_FEEDS_ERROR = "feeds/error";
+export const SET_FEEDS_LOADING = "feeds/loading";

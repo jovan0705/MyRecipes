@@ -6,10 +6,10 @@ const {
   Category,
   RecipeIngredients,
   Ingredient,
+  UserFollow,
 } = require("../models");
 const { Op } = require("sequelize");
 const convertToArray = require("../helpers/sequelizePostgresArrayConverter");
-
 
 const getRecipes = async (req, res, next) => {
   try {
@@ -203,7 +203,7 @@ const getLoggedInUserRecipes = async (req, res, next) => {
           attributes: {
             exclude: ["createdAt", "updatedAt"],
           },
-        }
+        },
       ],
     });
     if (!response) throw { name: "notFound" };
@@ -472,6 +472,23 @@ const deleteFavourite = async (req, res, next) => {
   }
 };
 
+const feeds = async (req, res, next) => {
+  try {
+    const followingList = await UserFollow.findAll();
+
+    const followedUser = followingList.map((el) => el.followingId);
+
+    const recipes = await Recipe.findAll({
+      where: { userId: followedUser },
+      include: [{ model: User, attributes: ["name", "username"] }],
+    });
+
+    res.status(200).json(recipes);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getRecipes,
   getUserFavouritedRecipes,
@@ -484,4 +501,5 @@ module.exports = {
   getRatings,
   addFavourite,
   deleteFavourite,
+  feeds,
 };

@@ -12,6 +12,8 @@ import {
   IoHeartOutline,
   IoNewspaper,
   IoNewspaperOutline,
+  IoWallet,
+  IoWalletOutline,
 } from "react-icons/io5";
 import DropdownIcon from "./DropdownIcon";
 import { Link } from "react-router-dom";
@@ -114,6 +116,26 @@ function Dropdown() {
                         <DropdownIcon icon={<IoNewspaperOutline size="26" />} />
                       )}
                       <span className="text-lg">My Recipes</span>
+                    </button>
+                  )}
+                </Menu.Item>
+              </Link>
+            </div>
+            <div className="px-2 py-1">
+              <Link to="/wallet">
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      className={`${
+                        active ? "bg-primary text-white" : "text-gray-900"
+                      } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      {active ? (
+                        <DropdownIcon icon={<IoWallet size="26" />} />
+                      ) : (
+                        <DropdownIcon icon={<IoWalletOutline size="26" />} />
+                      )}
+                      <span className="text-lg">Wallet</span>
                     </button>
                   )}
                 </Menu.Item>
