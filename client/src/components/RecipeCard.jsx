@@ -26,6 +26,7 @@ const RecipeCard = ({
   name,
   totalCalories,
   category,
+  userId,
   user,
   page,
   rating,

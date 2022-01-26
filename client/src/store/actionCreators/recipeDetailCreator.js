@@ -28,6 +28,7 @@ export const fetchRecipe = (id) => {
         },
       });
       dispatch(setRecipe(recipe));
+      return recipe
     } catch (err) {
       dispatch(setRecipeError(err.message));
     } finally {
