@@ -26,8 +26,8 @@ io.on('connection', (socket) => {
             username: data.username,
             message: data.message
         });
-        io.emit("get_msg_pro", msgPro);
-        console.log(msgPro);
+        io.emit("get_msg_pro", data);
+        // console.log(msgPro);
     })
 
     socket.on("send_msg_amateur", (data) => {
@@ -37,8 +37,8 @@ io.on('connection', (socket) => {
             username: data.username,
             message: data.message
         });
-        io.emit("get_msg_amateur", msgAmt);
-        console.log(msgAmt);
+        io.emit("get_msg_amateur", data);
+        // console.log(msgAmt);
     })
 
     socket.on("send_msg_home_cook", (data) => {
@@ -48,8 +48,8 @@ io.on('connection', (socket) => {
             username: data.username,
             message: data.message
         });
-        io.emit("get_msg_home_cook", homeCook);
-        console.log(homeCook);
+        io.emit("get_msg_home_cook", data);
+        // console.log(homeCook);
     })
 
     // socket.on('disconnect', () => {

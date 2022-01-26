@@ -37,7 +37,7 @@ function ForumChat() {
     useEffect(() => {
         socket.on("get_msg_pro", (data) => {
             console.log(data, 'DATA GET MSG');
-            setMessageList(data);
+            setMessageList((el) => [...el, data]);
             console.log(messageList, 'MSG LIST');
         })
     }, [socket]);
@@ -45,7 +45,7 @@ function ForumChat() {
     return (
     <div className="chat-window">
     <div className="chat-header">
-        <p>Live Chat</p>
+        <p>PRO CHEF</p>
     </div>
     <div className="chat-body overflow-y-scroll">
             {messageList.map((msg) => {
@@ -60,7 +60,7 @@ function ForumChat() {
                     <div className="message-meta">
                         <p id="author">@{msg.username}</p>
                     </div>
-                    <div className="message-content">
+                    <div className="message-content shadow-xl">
                         <p>{msg.message}</p>
                     </div>
                     </div>

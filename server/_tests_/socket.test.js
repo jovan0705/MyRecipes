@@ -4,14 +4,14 @@ const server = require('../socket/config');
 
 describe('Suite of unit tests', function () {
   //ngejalain servernya
-  server.attach(3023); //kalo server in use, ganti server disini dan di localhost dibawah
+  server.attach(3025); //kalo server in use, ganti server disini dan di localhost dibawah
   // let sender;
   // let receiver;
   let socket;
 
   beforeEach(function (done) {
     // Setup
-    socket = io.connect('http://localhost:3023', {
+    socket = io.connect('http://localhost:3025', {
       'reconnection delay': 0
       , 'reopen delay': 0
       , 'force new connection': true
@@ -51,7 +51,7 @@ describe('Suite of unit tests', function () {
       socket.emit('send_msg_pro', payload);
 
       socket.on('get_msg_pro', data => {
-        expect(data).toEqual(expect.any(Array));
+        expect(data).toEqual(expect.any(Object));
         done();
       });
       
@@ -67,7 +67,7 @@ describe('Suite of unit tests', function () {
       socket.emit('send_msg_amateur', payload);
 
       socket.on('get_msg_amateur', data => {
-        expect(data).toEqual(expect.any(Array));
+        expect(data).toEqual(expect.any(Object));
         done();
       });
       
@@ -83,7 +83,7 @@ describe('Suite of unit tests', function () {
       socket.emit('send_msg_home_cook', payload);
 
       socket.on('get_msg_home_cook', data => {
-        expect(data).toEqual(expect.any(Array));
+        expect(data).toEqual(expect.any(Object));
         done();
       });
       
