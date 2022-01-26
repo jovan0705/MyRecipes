@@ -783,7 +783,7 @@ describe("GET /users/followers", () => {
 })
 
 describe("GET /users/followings", () => {
-  test("[success - 200] - success unfollow should be return an object with status code 200", (done) => {
+  test("[success - 200] - success get following should be return an object with status code 200", (done) => {
     request(app)
       .get("/users/followings")
       .set("access_token", userToken1)
