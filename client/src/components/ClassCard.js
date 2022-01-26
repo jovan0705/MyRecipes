@@ -1,11 +1,32 @@
+
+
+
+
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { registerClass } from "../store/actionCreators/classesCreator";
+import { successAlert, errorAlert } from "../helpers/alerts";
 
 const ClassCard = ({ id, name, image }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleClick = (id) => {
+  const toDetail = (id) => {
     navigate(`/classes/${id}`);
   };
-
+  const handleClick = () => {
+    dispatch(registerClass(id))
+      .then((data) => {
+        if (data.data) {
+          successAlert(data.data.message)
+        } else {
+          console.log(data.response.data.message, '<<<<<< ini err')
+          errorAlert(data.response.data.message)
+        }
+      })
+      .catch((err) => {
+        console.log(err, '<<<<< ini err')
+      })
+  }
   return (
     <div className="border border-primary flex col-span-1 rounded-xl overflow-hidden">
       <div className="flex-1 rounded-xl">
@@ -22,8 +43,8 @@ const ClassCard = ({ id, name, image }) => {
           sapiente.
         </p>
         <div class="card-actions">
-          <button class="btn btn-primary">Buy This Class</button>
-          <button class="btn btn-ghost" onClick={() => handleClick(id)}>
+          <button class="btn btn-primary" onClick={() => handleClick()}>Buy This Class</button>
+          <button class="btn btn-ghost" onClick={() => toDetail(id)}>
             More info
           </button>
         </div>
@@ -31,5 +52,7 @@ const ClassCard = ({ id, name, image }) => {
     </div>
   );
 };
+
+
 
 export default ClassCard;

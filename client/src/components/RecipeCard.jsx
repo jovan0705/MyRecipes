@@ -14,6 +14,9 @@ import {
 } from "../store/actionCreators/recipesCreator";
 import { useDispatch } from "react-redux";
 import { deleteRecipe } from "../store/actionCreators/userRecipesCreator";
+import { useEffect } from "react";
+import { fetchFavourites } from "../store/actionCreators/favouritesCreator";
+
 
 const RecipeCard = ({
   id,
@@ -31,6 +34,17 @@ const RecipeCard = ({
   const toDetail = (id) => {
     navigate(`/detail/${id}`);
   };
+  useEffect(() => {
+    dispatch(fetchFavourites())
+      .then((data) => {
+        console.log(data.favoritedRecipes, 'INI DATAA')
+        data.favoritedRecipes.forEach(el => {
+          if (el.id === id) {
+            setLiked(true)
+          } 
+        })
+      })
+  }, [])
 
   const handleLikeButton = (id) => {
     setLiked(true);
