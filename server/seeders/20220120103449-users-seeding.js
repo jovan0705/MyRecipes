@@ -20,6 +20,7 @@ module.exports = {
          email: "admin1@gmail.com",
          password: hashPassword("12345"),
          role: "admin",
+         profilePict: 'https://semantic-ui.com/images/avatar2/large/matthew.png',
          createdAt: new Date(),
          updatedAt: new Date()
        },
@@ -29,6 +30,7 @@ module.exports = {
         email: "admin2@gmail.com",
         password: hashPassword("12345"),
         role: "admin",
+        profilePict: 'https://semantic-ui.com/images/avatar2/large/matthew.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -38,6 +40,7 @@ module.exports = {
         email: "user1@gmail.com",
         password: hashPassword("12345"),
         role: "user",
+        profilePict: 'https://semantic-ui.com/images/avatar2/large/matthew.png',
         balance: 1000000,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -58,6 +61,7 @@ module.exports = {
         email: "user3@gmail.com",
         password: hashPassword("12345"),
         role: "user",
+        profilePict: 'https://semantic-ui.com/images/avatar2/large/matthew.png',
         balance: 0,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -68,6 +72,7 @@ module.exports = {
         email: "user4@gmail.com",
         password: hashPassword("12345"),
         role: "user",
+        profilePict: 'https://semantic-ui.com/images/avatar2/large/matthew.png',
         balance: 0,
         createdAt: new Date(),
         updatedAt: new Date()
