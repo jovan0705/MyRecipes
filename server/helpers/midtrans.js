@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 async function midtrans (id, price, email) {
-        const AUTH_STRING = new Buffer.from('SB-Mid-server-ejgmiwXrRhnl5dmLoTS4EqjW:').toString('base64')
+        const AUTH_STRING = new Buffer.from(process.env.MIDTRANS_KEY).toString('base64')
         // let midtrans = await axios({
         //     method: 'POST',
         //     url: 'https://app.sandbox.midtrans.com/snap/v1/transactions',
