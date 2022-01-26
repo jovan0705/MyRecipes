@@ -4,7 +4,10 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 // Store
-import { fetchRecipes, setFilter } from "../store/actionCreators/recipesCreator";
+import {
+  fetchRecipes,
+  setFilter,
+} from "../store/actionCreators/recipesCreator";
 
 // Components
 import RecipeCard from "../components/RecipeCard";
@@ -14,9 +17,9 @@ import InternalServerError from "../components/InternalServerError";
 const RecipesPage = () => {
   const dispatch = useDispatch();
   const { recipeReducer } = useSelector((store) => store);
-  
+
   const search = useLocation().search;
-  const categoryId = useLocation().categoryId
+  const categoryId = useLocation().categoryId;
   useEffect(() => {
     if (search) {
       dispatch(fetchRecipes(search));
@@ -27,7 +30,6 @@ const RecipesPage = () => {
     }
   }, []);
 
-  
   return (
     <div className="min-h-screen py-10">
       <h1 className="heading text-center">Recipes</h1>
@@ -47,7 +49,16 @@ const RecipesPage = () => {
       {!recipeReducer.recipesLoading && recipeReducer.recipes && (
         <div className="grid grid-cols-3 gap-10 p-3">
           {recipeReducer.recipes.map(
-            ({ id, imageUrl, name, totalCalories, userId, Category, User }) => {
+            ({
+              id,
+              imageUrl,
+              name,
+              totalCalories,
+              userId,
+              Category,
+              User,
+              RecipeRatings,
+            }) => {
               return (
                 <RecipeCard
                   key={id}
@@ -58,6 +69,7 @@ const RecipesPage = () => {
                   userId={userId}
                   category={Category.name}
                   user={User.name}
+                  rating={RecipeRatings}
                 />
               );
             }

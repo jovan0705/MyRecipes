@@ -25,7 +25,7 @@ export const fetchUserRecipes = () => {
       });
       dispatch(setUserRecipes(userRecipes));
     } catch (err) {
-      setUserRecipesError(err);
+      dispatch(setUserRecipesError(err));
     } finally {
       dispatch(setUserRecipesLoading(false));
     }
@@ -40,12 +40,13 @@ export const deleteRecipe = (id) => {
       });
 
       const { userRecipesReducer } = getState();
+      console.log(userRecipesReducer.userRecipes.userCreatedRecipes);
       const newUserRecipes =
         userRecipesReducer.userRecipes.userCreatedRecipes.filter(
-          (el) => el.id !== id
+          (el) => el.id != id
         );
       dispatch(setUserRecipes(newUserRecipes));
-      return recipe;
+      return newUserRecipes;
     } catch (err) {
       console.log(err);
     }
