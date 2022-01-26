@@ -10,7 +10,7 @@ const FavouritePage = () => {
 
   useEffect(() => {
     dispatch(fetchFavourites());
-  }, []);
+  }, [favouritesReducer.favourites]);
 
   return (
     <div className="h-screen py-10">

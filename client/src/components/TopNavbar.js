@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setFilter } from "../store/actionCreators/recipesCreator";
+import LogoMyRecipe from '../assets/LogoMyRecipe.png';
+
 
 const TopNavbar = () => {
   const dispatch = useDispatch()
@@ -24,11 +26,11 @@ const TopNavbar = () => {
   }
 
   return (
-    <div className="flex justify-between items-center mb-20">
-      <h1 className="flex-1">Logo</h1>
+    <div className="flex justify-between items-center mb-10">
+      <img src={LogoMyRecipe} className="flex-1 mr-20" style={{width: "10px", height: "100px", maxWidth: "280px"}}/>
 
-      <div className="form-control flex-1">
-        <div className="relative">
+      <div className="form-control flex-1 ml-20">
+        <div className="relative ml-20">
           <input
             name="search"
             type="text"

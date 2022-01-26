@@ -21,6 +21,7 @@ const userRegister = async (req, res, next) => {
       password,
       role: "user",
       balance: 0,
+      profilePict: 'https://semantic-ui.com/images/avatar2/large/matthew.png'
     });
     res.status(201).json({ id: newUser.id, email: newUser.email });
   } catch (err) {
@@ -166,6 +167,23 @@ const doFollows = async (req, res, next) => {
   }
 };
 
+const doUnfollow = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const { id } = req.params;
+
+    const followedUser = await UserFollow.findOne({
+      where: { followingId: id, followerId: userId },
+    });
+
+    await followedUser.destroy();
+    res.status(200).json(followedUser);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+
 const topUpBalance = async (req, res, next) => {
   try {
     const { id } = req.user;
@@ -259,6 +277,16 @@ const getFollowings = async (req, res, next) => {
   }
 };
 
+const allUsers = async (req, res, next) => {
+  try {
+    const users = await User.findAll({
+      attributes: ["name", "username", "id"],
+    });
+    res.status(200).json(users);
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports = {
   userRegister,
@@ -271,5 +299,7 @@ module.exports = {
   detailUserbyId,
   profileDetails,
   getFollowers,
-  getFollowings
+  getFollowings,
+  allUsers,
+  doUnfollow,
 };

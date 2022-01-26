@@ -21,7 +21,7 @@ const UserProfile = () => {
   }, [])
 
   const totalPost =() => {
-    if(userRecipesReducer.userRecipes.userCreatedRecipes) {
+    if(userRecipesReducer.userRecipes.userCreatedRecipes !== []) {
       return userRecipesReducer.userRecipes.userCreatedRecipes.length
     } else {
       return 0
@@ -59,6 +59,7 @@ const UserProfile = () => {
                       userId={el.userId}
                       category={el.Category.name}
                       user={el.User.name}
+                      rating={el.RecipeRatings}
                     />
                   )
                 })}
