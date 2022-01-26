@@ -42,3 +42,8 @@ export const SET_USER_LOADING = "user/loading";
 export const SET_FAVOURITES = "likes/fetch";
 export const SET_FAVOURITES_ERROR = "likes/error";
 export const SET_FAVOURITES_LOADING = "likes/loading";
+
+// User Class
+export const SET_USER_CLASS = "userClass/set";
+export const SET_USER_CLASS_ERROR = "userClass/error";
+export const SET_USER_CLASS_LOADING = "userClass/loading";

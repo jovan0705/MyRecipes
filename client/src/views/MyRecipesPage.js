@@ -29,6 +29,7 @@ const MyRecipesPage = () => {
                   totalCalories={totalCalories}
                   user={User.name}
                   category={Category.name}
+                  page="myrecipes"
                 />
               );
             }

@@ -51,9 +51,6 @@ const Sidebar = () => {
         <Link to="/categories">
           <SidebarIcon icon={<IoFastFood />} text="Categories" />
         </Link>
-        <Link to="/feeds">
-          <SidebarIcon icon={<IoIosImages />} text="Feeds" />
-        </Link>
         <Link to="/wallet">
           <SidebarIcon icon={<IoWallet />} text="Wallet" />
         </Link>

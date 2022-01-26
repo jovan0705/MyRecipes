@@ -31,3 +31,23 @@ export const fetchUserRecipes = () => {
     }
   };
 };
+
+export const deleteRecipe = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      const { data: recipe } = await baseUrl.delete(`/recipes/${id}`, {
+        headers: { access_token: localStorage.access_token },
+      });
+
+      const { userRecipesReducer } = getState();
+      const newUserRecipes =
+        userRecipesReducer.userRecipes.userCreatedRecipes.filter(
+          (el) => el.id !== id
+        );
+      dispatch(setUserRecipes(newUserRecipes));
+      return recipe;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};

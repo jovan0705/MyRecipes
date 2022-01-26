@@ -1,4 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 const ClassCard = ({ id, name, image }) => {
+  const navigate = useNavigate();
+  const handleClick = (id) => {
+    navigate(`/classes/${id}`);
+  };
+
   return (
     <div className="border border-primary flex col-span-1 rounded-xl overflow-hidden">
       <div className="flex-1 rounded-xl">
@@ -16,7 +23,9 @@ const ClassCard = ({ id, name, image }) => {
         </p>
         <div class="card-actions">
           <button class="btn btn-primary">Buy This Class</button>
-          <button class="btn btn-ghost">More info</button>
+          <button class="btn btn-ghost" onClick={() => handleClick(id)}>
+            More info
+          </button>
         </div>
       </div>
     </div>
