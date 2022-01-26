@@ -6,26 +6,6 @@ const Rating = () => {
         name="rating-2"
         className="mask mask-star-2 bg-warning "
       />
-      <input
-        type="radio"
-        name="rating-2"
-        className="mask mask-star-2 bg-warning "
-      />
-      <input
-        type="radio"
-        name="rating-2"
-        className="mask mask-star-2 bg-warning "
-      />
-      <input
-        type="radio"
-        name="rating-2"
-        className="mask mask-star-2 bg-warning "
-      />
-      <input
-        type="radio"
-        name="rating-2"
-        className="mask mask-star-2 bg-warning "
-      />
     </>
   );
 };

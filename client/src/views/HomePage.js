@@ -16,15 +16,18 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // Store
-import { fetchRecipes, setFilter } from "../store/actionCreators/recipesCreator";
+import {
+  fetchRecipes,
+  setFilter,
+} from "../store/actionCreators/recipesCreator";
 import { fetchCategories } from "../store/actionCreators/categoriesCreator";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const { recipeReducer, categoryReducer } = useSelector((store) => store);
   useEffect(() => {
-    dispatch(setFilter(""))
-  })
+    dispatch(setFilter(""));
+  }, []);
 
   useEffect(() => {
     dispatch(fetchRecipes(recipeReducer.filter)); // LIMIT BY 3
@@ -120,6 +123,7 @@ const HomePage = () => {
                       userId,
                       Category,
                       User,
+                      RecipeRatings,
                     }) => {
                       return (
                         <RecipeCard
@@ -131,6 +135,7 @@ const HomePage = () => {
                           userId={userId}
                           category={Category.name}
                           user={User.name}
+                          rating={RecipeRatings}
                         />
                       );
                     }

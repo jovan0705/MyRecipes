@@ -19,7 +19,16 @@ const FavouritePage = () => {
       <div className="grid grid-cols-3 gap-10 p-3">
         {favouritesReducer.favourites.hasOwnProperty("favoritedRecipes") &&
           favouritesReducer.favourites.favoritedRecipes.map(
-            ({ id, name, imageUrl, totalCalories, userId, Category, User }) => {
+            ({
+              id,
+              name,
+              imageUrl,
+              totalCalories,
+              userId,
+              Category,
+              User,
+              RecipeRatings,
+            }) => {
               return (
                 <RecipeCard
                   key={id}
@@ -30,6 +39,7 @@ const FavouritePage = () => {
                   userId={userId}
                   category={Category.name}
                   user={User.name}
+                  rating={RecipeRatings}
                 />
               );
             }

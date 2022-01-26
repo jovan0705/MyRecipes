@@ -64,9 +64,30 @@ const RecipeDetail = () => {
                 </div>
                 <div className="flex mb-4">
                   <div className="rating rating-sm">
-                    <Rating />
+                    {recipeDetailReducer.recipe.recipe.RecipeRatings.length ===
+                      0 && <h1>No rating yet...</h1>}
+                    {recipeDetailReducer.recipe.recipe.RecipeRatings.length ===
+                      1 &&
+                      Array(
+                        recipeDetailReducer.recipe.recipe.RecipeRatings[0]
+                          .rating
+                      ).fill(<Rating />)}
+                    {recipeDetailReducer.recipe.recipe.RecipeRatings.length >
+                      1 &&
+                      Array(
+                        Math.round(
+                          recipeDetailReducer.recipe.recipe.RecipeRatings.map(
+                            (el) => el.rating
+                          ).reduce((prev, next) => prev + next) /
+                            recipeDetailReducer.recipe.recipe.RecipeRatings
+                              .length
+                        )
+                      ).fill(<Rating />)}
                   </div>
-                  <span className="text-gray-600 ml-3">4 Reviews</span>
+                  <span className="text-gray-600 ml-3">
+                    {recipeDetailReducer.recipe.recipe.RecipeRatings.length}{" "}
+                    Reviews
+                  </span>
                 </div>
                 <hr className="" />
                 <p className="leading-relaxed">
@@ -92,6 +113,9 @@ const RecipeDetail = () => {
                     </div>
                   </div>
                   <div>
+                    {/* {
+                      recipeDetailReducer.recipe.recipe.RecipeRatings.find(el => el)
+                    } */}
                     <label
                       for="my-modal-2"
                       className="btn btn-primary modal-button"
@@ -196,21 +220,24 @@ const RecipeDetail = () => {
         </div>
       </div>
 
-      <div className="my-5 border shadow-lg p-5 text-gray-700">
-        <div className="flex gap-3 items-center">
-          <p className="text-yellow-500 text-xl">
-            <IoStarOutline />
-          </p>
-          <h1 className="font-bold">Review & Rating</h1>
+      {recipeDetailReducer.recipe.hasOwnProperty("recipe") && (
+        <div className="my-5 border shadow-lg p-5 text-gray-700">
+          <div className="flex gap-3 items-center">
+            <p className="text-yellow-500 text-xl">
+              <IoStarOutline />
+            </p>
+            <h1 className="font-bold">Review & Rating</h1>
+          </div>
+          <hr className="my-3" />
+          <div>
+            {recipeDetailReducer.recipe.recipe.RecipeRatings.map(
+              ({ rating, review }) => {
+                return <ReviewList rating={rating} review={review} />;
+              }
+            )}
+          </div>
         </div>
-        <hr className="my-3" />
-        <div>
-          <ReviewList />
-          {/* <ReviewList />
-          <ReviewList />
-          <ReviewList /> */}
-        </div>
-      </div>
+      )}
     </div>
   );
 };

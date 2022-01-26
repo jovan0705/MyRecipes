@@ -13,10 +13,12 @@ import {
   unlikeRecipe,
 } from "../store/actionCreators/recipesCreator";
 import { useDispatch } from "react-redux";
-import { deleteRecipe } from "../store/actionCreators/userRecipesCreator";
+import {
+  deleteRecipe,
+  fetchUserRecipes,
+} from "../store/actionCreators/userRecipesCreator";
 import { useEffect } from "react";
 import { fetchFavourites } from "../store/actionCreators/favouritesCreator";
-
 
 const RecipeCard = ({
   id,
@@ -26,6 +28,7 @@ const RecipeCard = ({
   category,
   user,
   page,
+  rating,
 }) => {
   const [liked, setLiked] = useState(false);
   // const [bookmarked, setBookmarked] = useState(false);
@@ -34,17 +37,17 @@ const RecipeCard = ({
   const toDetail = (id) => {
     navigate(`/detail/${id}`);
   };
+
   useEffect(() => {
-    dispatch(fetchFavourites())
-      .then((data) => {
-        console.log(data.favoritedRecipes, 'INI DATAA')
-        data.favoritedRecipes.forEach(el => {
-          if (el.id === id) {
-            setLiked(true)
-          } 
-        })
-      })
-  }, [])
+    dispatch(fetchFavourites()).then((data) => {
+      console.log(data.favoritedRecipes, "INI DATAA");
+      data.favoritedRecipes.forEach((el) => {
+        if (el.id === id) {
+          setLiked(true);
+        }
+      });
+    });
+  }, []);
 
   const handleLikeButton = (id) => {
     setLiked(true);
@@ -72,6 +75,7 @@ const RecipeCard = ({
     dispatch(deleteRecipe(id))
       .then(() => {
         successAlert("Recipe has been deleted");
+        dispatch(fetchUserRecipes());
       })
       .catch((err) => {
         console.log(err);
@@ -110,7 +114,16 @@ const RecipeCard = ({
               <h3 className="font-bold text-xl">{name}</h3>
             </div>
             <div className="rating rating-sm">
-              <Rating />
+              {rating.length === 0 && <h1>No rating yet...</h1>}
+              {rating.length === 1 && Array(rating[0].rating).fill(<Rating />)}
+              {rating.length > 1 &&
+                Array(
+                  Math.round(
+                    rating
+                      .map((el) => el.rating)
+                      .reduce((prev, next) => prev + next) / rating.length
+                  )
+                ).fill(<Rating />)}
             </div>
           </div>
           <div className="">

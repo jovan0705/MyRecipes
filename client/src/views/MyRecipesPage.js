@@ -19,7 +19,15 @@ const MyRecipesPage = () => {
       <div className="grid grid-cols-3 gap-10 p-3">
         {userRecipesReducer.userRecipes.hasOwnProperty("userCreatedRecipes") &&
           userRecipesReducer.userRecipes.userCreatedRecipes.map(
-            ({ id, imageUrl, name, totalCalories, User, Category }) => {
+            ({
+              id,
+              imageUrl,
+              name,
+              totalCalories,
+              User,
+              Category,
+              RecipeRatings,
+            }) => {
               return (
                 <RecipeCard
                   key={id}
@@ -30,6 +38,7 @@ const MyRecipesPage = () => {
                   user={User.name}
                   category={Category.name}
                   page="myrecipes"
+                  rating={RecipeRatings}
                 />
               );
             }
