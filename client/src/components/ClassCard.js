@@ -76,7 +76,8 @@ const ClassCard = ({ id, name, image, link, date, page }) => {
         
         <p>{`${date.split('T')[0]}`}</p>
         <div class="card-actions">
-          {btnRenderHandler()}
+          {(location.pathname === '/classes') ? btnRenderHandler() : <p></p>}
+          
           {/* <button class="btn btn-primary" onClick={() => handleClick()}>Buy This Class</button> */}
           {/* <button class="btn btn-ghost" onClick={() => toDetail(id)}>
             More info
