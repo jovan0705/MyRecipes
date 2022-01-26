@@ -761,3 +761,43 @@ describe("GET /users/profile", () => {
       });
   });
 })
+
+describe("GET /users/followers", () => {
+  test("[success - 200] - success get followers should be return an object with status code 200", (done) => {
+    request(app)
+      .get("/users/followers")
+      .set("access_token", userToken2)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(expect.any(Array));
+        expect(response.body[0]).toHaveProperty("id", 1);
+        expect(response.body[0]).toHaveProperty("followerId", 2);
+        expect(response.body[0]).toHaveProperty("followingId", 3);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+})
+
+describe("GET /users/followings", () => {
+  test("[success - 200] - success get followings should be return an object with status code 200", (done) => {
+    request(app)
+      .get("/users/followings")
+      .set("access_token", userToken1)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(expect.any(Array));
+        expect(response.body[0]).toHaveProperty("id", 1);
+        expect(response.body[0]).toHaveProperty("followerId", 2);
+        expect(response.body[0]).toHaveProperty("followingId", 3);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+})
