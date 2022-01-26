@@ -20,8 +20,16 @@ const UsersPage = () => {
         <h1 className="heading text-center">Users</h1>
       </div>
       <div className="flex justify-center items-center w-1/3 h-11/12 mx-auto rounded-lg flex-col gap-10 bg-zinc-50">
-        {usersReducer.users.map(({ id, name, username }) => {
-          return <UserCard key={id} id={id} name={name} username={username} />;
+        {usersReducer.users.map(({ id, name, username, profilePict }) => {
+          return (
+            <UserCard
+              key={id}
+              id={id}
+              name={name}
+              username={username}
+              profilePict={profilePict}
+            />
+          );
         })}
       </div>
     </div>

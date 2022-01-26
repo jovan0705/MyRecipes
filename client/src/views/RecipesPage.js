@@ -73,6 +73,9 @@ const RecipesPage = () => {
           <RecipeCardLoading />
           <RecipeCardLoading />
           <RecipeCardLoading />
+          <RecipeCardLoading />
+          <RecipeCardLoading />
+          <RecipeCardLoading />
         </div>
       )}
 

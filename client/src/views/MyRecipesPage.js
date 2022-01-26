@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserRecipes } from "../store/actionCreators/userRecipesCreator";
 import RecipeCard from "../components/RecipeCard";
 import TopNavbar from "../components/TopNavbar";
+import EmptyState from "../components/EmptyState";
 
 const MyRecipesPage = () => {
   const dispatch = useDispatch();
@@ -15,20 +16,28 @@ const MyRecipesPage = () => {
   return (
     <div className="py-10 h-screen">
       <TopNavbar />
-      <h1 className="heading">My Recipes</h1>
-      <div className="grid grid-cols-3 gap-10 p-3">
-        {userRecipesReducer.userRecipes.hasOwnProperty("userCreatedRecipes") &&
-          userRecipesReducer.userRecipes.userCreatedRecipes.map(
-            ({
-              id,
-              imageUrl,
-              name,
-              totalCalories,
-              User,
-              Category,
-              RecipeRatings,
-            }) => {
-              return (
+      <h1 className="heading text-center">My Recipes</h1>
+      {userRecipesReducer.userRecipes.hasOwnProperty("userCreatedRecipes") &&
+        userRecipesReducer.userRecipes.userCreatedRecipes.length === 0 && (
+          <div className="w-full h-1/2">
+            <EmptyState message="You have not post any recipe yet :(" />
+          </div>
+        )}
+
+      {userRecipesReducer.userRecipes.hasOwnProperty("userCreatedRecipes") &&
+        userRecipesReducer.userRecipes.userCreatedRecipes.length > 0 &&
+        userRecipesReducer.userRecipes.userCreatedRecipes.map(
+          ({
+            id,
+            imageUrl,
+            name,
+            totalCalories,
+            User,
+            Category,
+            RecipeRatings,
+          }) => {
+            return (
+              <div className="grid grid-cols-3 gap-10 p-3">
                 <RecipeCard
                   key={id}
                   id={id}
@@ -40,10 +49,10 @@ const MyRecipesPage = () => {
                   page="myrecipes"
                   rating={RecipeRatings}
                 />
-              );
-            }
-          )}
-      </div>
+              </div>
+            );
+          }
+        )}
     </div>
   );
 };

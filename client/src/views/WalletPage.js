@@ -44,15 +44,25 @@ const WalletPage = () => {
     }
   };
 
+  const handleUpdateBalance = () => {
+    dispatch(fetchUserProfile());
+  };
+
   return (
     <div className="h-screen flex justify-center items-center flex-col">
       <BalanceCard
         name={userReducer.user.name}
         balance={userReducer.user.balance}
       />
-      <div>
+      <div className="flex gap-10">
         <button class="btn btn-accent mt-10" onClick={handleClick}>
           Top Up
+        </button>
+        <button
+          class="btn btn-primary mt-10 text-zinc-50"
+          onClick={handleUpdateBalance}
+        >
+          Update Balance
         </button>
       </div>
     </div>
