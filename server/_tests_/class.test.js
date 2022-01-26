@@ -210,23 +210,6 @@ describe("POST /class", () => {
           });
       });
 
-    test("Error - POST /add return Date cannot be Null", (done) => {
-        request(app)
-          .post("/class/add")
-          .set("access_token", adminToken)
-          .field("name", "Baguette")
-          .field("link", "http://inilinkzoom.hehe")
-          .field("price", 50000)
-          .attach("imageFile", "test_asset/hehe.jpg")
-          .then((response) => {
-            const result = response.body;
-            expect(response.status).toEqual(400);
-            expect(result).toBeInstanceOf(Object);
-            expect(result.message).toBe('Date cannot be Null')
-            done();
-          });
-      });
-
     test("Error - POST /add return Validation notEmpty on price failed", (done) => {
         request(app)
           .post("/class/add")

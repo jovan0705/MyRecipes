@@ -26,10 +26,6 @@ const setClassesLoading = (payload) => {
   return { type: SET_CLASSES_LOADING, payload };
 };
 
-const setUserClasses = (payload) => {
-  return { type: SET_USER_CLASS, payload };
-};
-
 export const fetchClasses = () => {
   return async (dispatch) => {
     try {
