@@ -9,9 +9,7 @@
 // export default ForumChat;
 
 import React, { useState, useEffect } from 'react';
-import { io } from "socket.io-client";
-
-const socket = io.connect("http://localhost:5000")
+import { socket } from "../../apis/socket";
 
 function ForumChatTwo() {
   // console.log(socket, 'SOCKET');
@@ -37,7 +35,7 @@ function ForumChatTwo() {
     useEffect(() => {
         socket.on("get_msg_amateur", (data) => {
             console.log(data, 'DATA GET MSG');
-            setMessageList((list) => [...list, data]);
+            setMessageList(data);
             console.log(messageList, 'MSG LIST');
         })
     }, [socket]);
@@ -47,12 +45,14 @@ function ForumChatTwo() {
     <div className="chat-header">
         <p>Live Chat</p>
     </div>
-    <div className="chat-body">
+    <div className="chat-body overflow-y-scroll">
         {messageList.map((msg) => {
             return (
                 <div
-                    // className="message"
-                    className={username === msg.username ? 'text-right bg-amber-200' : 'text-left bg-amber-500'}
+                    className="message"
+                    // className={username === msg.username ? 'text-right bg-amber-200' : 'text-left bg-amber-500'}
+                    id={username === msg.username ? "you" : "other"}
+                    key={msg.username}
                     >
                     <div>
                     <div className="message-content">
