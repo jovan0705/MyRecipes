@@ -145,3 +145,19 @@ export const fetchFeeds = () => {
     }
   };
 };
+
+export const successTopUp = () => {
+  return async (dispatch, getState) => {
+    dispatch(setUserLoading(true));
+    dispatch(setUserError(null));
+
+    try {
+      const { data } = await baseUrl.patch(`/users/successTopUp`);
+      return data;
+    } catch (err) {
+      dispatch(setUserError(err.message));
+    } finally {
+      dispatch(setUserLoading(false));
+    }
+  };
+}
