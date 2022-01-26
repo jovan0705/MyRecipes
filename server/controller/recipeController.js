@@ -78,6 +78,12 @@ const getUserFavouritedRecipes = async (req, res, next) => {
               exclude: ["imageUrl", "createdAt", "updatedAt"],
             },
           },
+          {
+            model: RecipeRating,
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
+          }
         ],
       },
     });
@@ -117,6 +123,12 @@ const getLoggedInUserRecipes = async (req, res, next) => {
             exclude: ["imageUrl", "createdAt", "updatedAt"],
           },
         },
+        {
+          model: RecipeRating,
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
+        }
       ],
     });
     if (!response) throw { name: "notFound" };
@@ -130,7 +142,7 @@ const getRecipeDetail = async (req, res, next) => {
   try {
     const { id } = req.params;
     const response = await Recipe.findByPk(id, {
-      include: {
+      include: [{
         model: User,
         attributes: {
           exclude: [
@@ -144,6 +156,13 @@ const getRecipeDetail = async (req, res, next) => {
           ],
         },
       },
+      {
+        model: RecipeRating,
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      }
+    ],
     });
     if (!response) throw { name: "notFound" };
     const ingredients = await RecipeIngredients.findAll({
@@ -346,7 +365,7 @@ module.exports = {
   editRecipe,
   deleteRecipe,
   createUserRating,
-  getRatings
+  getRatings,
   addFavourite,
   deleteFavourite,
 };
