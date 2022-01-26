@@ -27,9 +27,8 @@ export const fetchRecipe = (id) => {
           access_token: localStorage.access_token,
         },
       });
-      dispatch(setRecipe(recipe))
+      dispatch(setRecipe(recipe));
       return recipe
-      
     } catch (err) {
       dispatch(setRecipeError(err.message));
     } finally {

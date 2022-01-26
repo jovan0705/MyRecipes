@@ -6,6 +6,7 @@ import ReviewList from "../components/ReviewList";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchRecipe } from "../store/actionCreators/recipeDetailCreator";
+import { fetchUserProfile } from "../store/actionCreators/userActon";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { doRating } from "../store/actionCreators/userActon";
@@ -14,7 +15,8 @@ import { errorAlert } from "../helpers/alerts";
 const RecipeDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { recipeDetailReducer } = useSelector((store) => store);
+  const { recipeDetailReducer, userReducer } = useSelector((store) => store);
+  // const {userReducer} = useSelector((store) => store)
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
 
@@ -24,7 +26,8 @@ const RecipeDetail = () => {
 
   useEffect(() => {
     dispatch(fetchRecipe(id));
-  }, []);
+    dispatch(fetchUserProfile());
+  }, [userReducer.userAlreadyRated]);
 
   const handleReview = (e) => {
     const value = e.target.value;
@@ -113,15 +116,30 @@ const RecipeDetail = () => {
                     </div>
                   </div>
                   <div>
-                    {/* {
-                      recipeDetailReducer.recipe.recipe.RecipeRatings.find(el => el)
-                    } */}
-                    <label
+                    {recipeDetailReducer.recipe.recipe.RecipeRatings.find(
+                      (el) => el.userId === userReducer.user.id
+                    ) ? (
+                      <label
+                        for="my-modal-2"
+                        className="btn btn-primary"
+                        disabled
+                      >
+                        You Already Rated This Recipe
+                      </label>
+                    ) : (
+                      <label
+                        for="my-modal-2"
+                        className="btn btn-primary modal-button"
+                      >
+                        Rate Now
+                      </label>
+                    )}
+                    {/* <label
                       for="my-modal-2"
                       className="btn btn-primary modal-button"
                     >
                       Rate Now
-                    </label>
+                    </label> */}
                     <input
                       type="checkbox"
                       id="my-modal-2"
