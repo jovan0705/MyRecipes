@@ -28,7 +28,11 @@ export const fetchRecipes = () => {
     dispatch(setRecipesLoading(true));
     dispatch(setRecipesError(null));
     try {
-      const { data: recipes } = await baseUrl.get("/recipes");
+      const { data: recipes } = await baseUrl.get("/recipes", {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      });
       dispatch(setRecipes(recipes));
     } catch (err) {
       dispatch(setRecipesError(err.message));
@@ -43,11 +47,45 @@ export const postRecipe = (fd) => {
     try {
       dispatch(setRecipePostStatus(true));
       const { data: recipe } = await uploadFile.post("/recipes", fd);
-      console.log(recipe);
+      return recipe;
     } catch (err) {
       errorAlert(err.response.data.message);
+      throw new Error(err.response.data.message);
     } finally {
       dispatch(setRecipePostStatus(false));
+    }
+  };
+};
+
+export const likeRecipe = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data: recipe } = await baseUrl.post(`/recipes/favourite/${id}`, {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      });
+      return recipe;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const unlikeRecipe = (id) => {
+  return async () => {
+    try {
+      const { data: recipe } = await baseUrl.delete(
+        `/recipes/favourite/${id}`,
+        {
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        }
+      );
+      return recipe;
+    } catch (err) {
+      console.log(err);
     }
   };
 };

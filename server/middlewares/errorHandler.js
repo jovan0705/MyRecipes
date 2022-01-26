@@ -89,6 +89,14 @@ const errorHandler = (err, req, res, next) => {
       res.status(400).json({ message: "Please insert an image" });
       break;
 
+    case "ALREADY_FAVORITED": 
+      res.status(400).json({ message: "Recipe already Favorited" })
+      break;
+
+    case "NOT_FAVORITED": 
+      res.status(400).json({ message: "Recipe not Favorited" })
+      break;
+      
     case "emptyCategoryId":
       res.status(400).json({ message: "Please enter an category" });
       break;

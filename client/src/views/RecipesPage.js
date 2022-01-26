@@ -37,7 +37,7 @@ const RecipesPage = () => {
       {!recipeReducer.recipesLoading && recipeReducer.recipes && (
         <div className="grid grid-cols-3 gap-10 p-3">
           {recipeReducer.recipes.map(
-            ({ id, imageUrl, name, totalCalories, userId }) => {
+            ({ id, imageUrl, name, totalCalories, userId, Category, User }) => {
               return (
                 <RecipeCard
                   key={id}
@@ -46,6 +46,8 @@ const RecipesPage = () => {
                   name={name}
                   totalCalories={totalCalories}
                   userId={userId}
+                  category={Category.name}
+                  user={User.name}
                 />
               );
             }
@@ -65,16 +67,6 @@ const RecipesPage = () => {
       )}
 
       {recipeReducer.recipesError && <InternalServerError />}
-
-      <div className="btn-group flex justify-center mt-20 mb-10">
-        <button className="btn">Previous</button>
-        <button className="btn">1</button>
-        <button className="btn btn-active">2</button>
-        <button className="btn">3</button>
-        <button className="btn">4</button>
-        <button className="btn">Next</button>
-      </div>
-      <div></div>
     </div>
   );
 };

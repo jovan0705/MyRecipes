@@ -1,43 +1,42 @@
 import "./styles/login.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { login } from '../../store/actionCreators/userActon'
-import { successAlert } from '../../helpers/alerts'
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../store/actionCreators/userActon";
+import { successAlert } from "../../helpers/alerts";
 
 const Login = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [loginForm, setLoginForm] = useState({
-    emailOrUsername: '',
-    password: ''
-  })
+    emailOrUsername: "",
+    password: "",
+  });
 
   const handleInput = (event) => {
-    const value = event.target.value
-    const name = event.target.name
+    const value = event.target.value;
+    const name = event.target.name;
     setLoginForm({
-        ...loginForm,
-        [name]: value
-    })
-  }
+      ...loginForm,
+      [name]: value,
+    });
+  };
 
   const loginHandleBtn = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     dispatch(login(loginForm))
-    .then( async (data) => {
-      localStorage.setItem('access_token', data.accessToken)
-      successAlert('Login Success')
-      navigate('/home')
-    })
-    .catch( async err => {
-      console.log(err)
-    })
-
-  }
-
+      .then((data) => {
+        localStorage.setItem("access_token", data.accessToken);
+        localStorage.setItem("username", data.username);
+        successAlert("Login Success");
+        navigate("/home");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -54,7 +53,10 @@ const Login = () => {
                       Welcome back
                     </h6>
                   </div>
-                  <form className="py-5" onSubmit={(event) => loginHandleBtn(event)}>
+                  <form
+                    className="py-5"
+                    onSubmit={(event) => loginHandleBtn(event)}
+                  >
                     <div className="relative w-full mb-7">
                       <label
                         className="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -103,7 +105,6 @@ const Login = () => {
                         className="bg-primary text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
                         type="submit"
                         style={{ transition: "all .15s ease" }}
-
                       >
                         Sign In
                       </button>

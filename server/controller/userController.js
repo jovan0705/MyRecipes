@@ -1,4 +1,4 @@
-const { User, UserFollow, BalanceHistory } = require("../models/index");
+const { User, UserFollow, BalanceHistory, UserFavoritedRecipe } = require("../models/index");
 const { decryptPassword, hashPassword } = require("../helpers/bcrypt");
 const { getToken } = require("../helpers/jwt");
 const midtrans = require("../helpers/midtrans");
@@ -15,6 +15,7 @@ const userRegister = async (req, res, next) => {
       email,
       password,
       role: "user",
+      balance: 0
     });
     res.status(201).json({ id: newUser.id, email: newUser.email });
   } catch (err) {
@@ -67,7 +68,7 @@ const doLogin = async (req, res, next) => {
       role: user.role,
     };
     const accessToken = getToken(payload);
-    res.status(200).json({ accessToken });
+    res.status(200).json({ accessToken, username: user.username });
   } catch (err) {
     next(err);
   }
@@ -204,6 +205,23 @@ const detailUserbyId = async (req, res, next) => {
   }
 };
 
+const profileDetails = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await User.findByPk(userId, {
+      attributes: { exclude: ["password"] },
+    });
+    // if (!user) {
+    //   throw { name: "notFound" };
+    // }
+
+    res.status(200).json(user);
+  } catch (err) {
+    next(err)
+  }
+}
+
 module.exports = {
   userRegister,
   adminRegister,
@@ -213,4 +231,5 @@ module.exports = {
   topUpBalance,
   successTopUp,
   detailUserbyId,
+  profileDetails
 };

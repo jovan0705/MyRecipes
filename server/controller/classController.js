@@ -1,11 +1,21 @@
 const { User, Class, UserClass } = require('../models')
-
+const { Op } = require("sequelize");
 class classController {
 
     static async fetchClasses(req, res, next) {
         try {
-            const classes = await Class.findAll()
-            res.status(200).json(classes)
+            const {search} = req.query
+            if (search) {
+                const classes = await Class.findAll({where: {
+                    name: {
+                        [Op.iLike]: `%${search}%`
+                    }
+                }})
+                res.status(200).json(classes)
+            } else {
+                const classes = await Class.findAll()
+                res.status(200).json(classes)
+            }
         } catch (err) {
             next(err)
         }

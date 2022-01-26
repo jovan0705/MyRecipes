@@ -12,10 +12,10 @@ const AddCategoryModal = ({closeModal}) => {
 
     const addHandlerBtn = (event) => {
         event.preventDefault()
-        console.log(imageFile)
+        // console.log(imageFile, '<<<<<<<<<<<<<<<')
         const payload = new FormData()
         payload.append("name", name)
-        payload.append("imageFile", imageFile)
+        payload.append("imageUrl", imageFile)
 
         dispatch(addCategory(payload))
         .then((data) => {

@@ -188,6 +188,7 @@ const createRecipe = async (req, res, next) => {
       imageUrl,
     });
     if (!response) throw { name: "errorCreateRecipe" };
+
     console.log(response.id);
     console.log(
       ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
@@ -206,6 +207,7 @@ const createRecipe = async (req, res, next) => {
       raw: true,
     });
     if (!createIngredients) throw err;
+
 
     res.status(201).json(response);
   } catch (err) {
@@ -288,6 +290,52 @@ const getRatings = async (req, res, next) => {
     next(err)
   }
 }
+const addFavourite = async (req, res, next) => {
+  try {
+    const { recipeId } = req.params;
+    const userId = req.user.id;
+    const isExist = await UserFavoritedRecipe.findOne({
+      where: {
+        userId,
+        recipeId,
+      },
+    });
+    if (isExist) {
+      throw { name: "ALREADY_FAVORITED" };
+    } else {
+      await UserFavoritedRecipe.create({ userId, recipeId });
+      res.status(201).json({ message: "Recipe Favorited" });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deleteFavourite = async (req, res, next) => {
+  try {
+    const { recipeId } = req.params;
+    const userId = req.user.id;
+    const isExist = await UserFavoritedRecipe.findOne({
+      where: {
+        userId,
+        recipeId,
+      },
+    });
+    if (!isExist) {
+      throw { name: "NOT_FAVORITED" };
+    } else {
+      await UserFavoritedRecipe.destroy({
+        where: {
+          userId,
+          recipeId,
+        },
+      });
+      res.status(200).json({ message: "Recipe Unfavorited" });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports = {
   getRecipes,
@@ -299,4 +347,6 @@ module.exports = {
   deleteRecipe,
   createUserRating,
   getRatings
+  addFavourite,
+  deleteFavourite,
 };

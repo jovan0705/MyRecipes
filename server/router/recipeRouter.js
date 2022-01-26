@@ -11,7 +11,9 @@ const {
   editRecipe,
   deleteRecipe,
   createUserRating,
-  getRatings
+  getRatings,
+  addFavourite,
+  deleteFavourite
 } = require("../controller/recipeController");
 
 // fetch all recipes
@@ -38,4 +40,8 @@ router.delete("/:id", deleteRecipe);
 router.post('/:id/rate', createUserRating)
 // get rating
 router.get('/:id/rate', getRatings)
+
+router.post('/favourite/:recipeId', addFavourite)
+router.delete('/favourite/:recipeId', deleteFavourite)
+
 module.exports = router;

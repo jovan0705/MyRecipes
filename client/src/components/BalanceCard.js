@@ -1,6 +1,6 @@
 import { rupiah } from "../helpers/currencyFormatter";
 
-const BalanceCard = () => {
+const BalanceCard = ({ name, balance }) => {
   return (
     <div>
       <div className="card-group">
@@ -17,8 +17,8 @@ const BalanceCard = () => {
               alt="chip"
             />
           </div>
-          <div className="number">{rupiah(10000)}</div>
-          <div className="name">Jordy</div>
+          <div className="number">{rupiah(balance)}</div>
+          <div className="name">{name}</div>
           <div className="ringCard"></div>
         </div>
       </div>
