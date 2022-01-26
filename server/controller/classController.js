@@ -82,13 +82,10 @@ class classController {
 
     static async registerClass(req, res, next) { // add UserClass
         try {
-            console.log('heheeeeeeeeeeeeeeeee')
             const id = req.user.id
             const { classId } = req.params
             const newClass = await Class.findByPk(classId)
             const userBalance = await User.findByPk(id)
-            console.log(userBalance.balance, "ini balance")
-            console.log(newClass.price, 'INI PRICE')
             if (userBalance.balance == null || newClass.price > userBalance.balance) {
                 throw { name: 'BALANCE_NOT_ENOUGH' }
             }

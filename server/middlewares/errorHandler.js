@@ -1,5 +1,4 @@
 const errorHandler = (err, req, res, next) => {
-  console.log(err);
   switch (err.name) {
     case "BALANCE_NOT_ENOUGH":
       res.status(400).json({ message: "Balance not Enough" });

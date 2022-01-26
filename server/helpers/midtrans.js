@@ -35,7 +35,6 @@ async function midtrans (id, price, email) {
                 Authorization: `Basic ${AUTH_STRING}`
             }
         })
-        console.log(midtrans, 'INI DATAAAAAAAAAAA')
         return midtrans.data
 }
 

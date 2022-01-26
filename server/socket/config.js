@@ -20,7 +20,6 @@ io.on('connection', (socket) => {
     // })
 
     socket.on("send_msg_pro", (data) => {
-        console.log(data);
         // socket.to(data.room).emit("get_msg", data);
         msgPro.push({
             username: data.username,
@@ -31,7 +30,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on("send_msg_amateur", (data) => {
-        console.log(data);
         // socket.to(data.room).emit("get_msg", data);
         msgAmt.push({
             username: data.username,
@@ -42,7 +40,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on("send_msg_home_cook", (data) => {
-        console.log(data);
         // socket.to(data.room).emit("get_msg", data);
         homeCook.push({
             username: data.username,
