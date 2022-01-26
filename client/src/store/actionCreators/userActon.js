@@ -25,6 +25,7 @@ export const fetchUserProfile = () => {
         headers: { access_token: localStorage.access_token },
       });
       dispatch(setUser(user));
+      
     } catch (err) {
       console.log(err);
     } finally {

@@ -19,6 +19,7 @@ import {
 } from "../store/actionCreators/userRecipesCreator";
 import { useEffect } from "react";
 import { fetchFavourites } from "../store/actionCreators/favouritesCreator";
+import {fetchRecipe} from '../store/actionCreators/recipeDetailCreator'
 
 const RecipeCard = ({
   id,
@@ -85,7 +86,10 @@ const RecipeCard = ({
 
   const toUpdatePage = (event, id) => {
     event.preventDefault()
-    navigate(`/updateRecipe/${id}`)
+    dispatch(fetchRecipe(id))
+    .then((data) => {
+      navigate(`/updateRecipe/${id}`)
+    })
   }
 
 
