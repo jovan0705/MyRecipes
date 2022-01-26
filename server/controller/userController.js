@@ -21,6 +21,7 @@ const userRegister = async (req, res, next) => {
       password,
       role: "user",
       balance: 0,
+      profilePict: 'https://semantic-ui.com/images/avatar2/large/matthew.png'
     });
     res.status(201).json({ id: newUser.id, email: newUser.email });
   } catch (err) {

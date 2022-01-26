@@ -3,7 +3,7 @@ import MethodsList from "../components/MethodsList";
 import { IoStarOutline } from "react-icons/io5";
 import Rating from "../components/Rating";
 import ReviewList from "../components/ReviewList";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchRecipe } from "../store/actionCreators/recipeDetailCreator";
 import { fetchUserProfile } from "../store/actionCreators/userActon";
@@ -14,16 +14,16 @@ import { errorAlert } from "../helpers/alerts";
 
 const RecipeDetail = () => {
   const { id } = useParams();
+
   const dispatch = useDispatch();
   const { recipeDetailReducer, userReducer } = useSelector((store) => store);
-  // const {userReducer} = useSelector((store) => store)
+//   const {userReducer} = useSelector((store) => store)
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
-
+  const [rated, setRated] = useState(false)
   const handleRating = (num) => {
     setRating(num);
   };
-
   useEffect(() => {
     dispatch(fetchRecipe(id));
     dispatch(fetchUserProfile());
@@ -41,8 +41,103 @@ const RecipeDetail = () => {
       rating,
       review,
     };
+    console.log('hehahs')
     dispatch(doRating(id, payload));
+    dispatch(fetchRecipe(id))
   };
+
+  const btnRatingHandler = () => {
+    if (rated) {
+      return <button class="btn btn-primary modal-button">Recipe already rated</button>
+    }
+    return <div>
+      <label
+                      for="my-modal-2"
+                      className="btn btn-primary modal-button"
+                    >
+                      Rate Now
+                    </label>
+                    <input
+                      type="checkbox"
+                      id="my-modal-2"
+                      className="modal-toggle"
+                    />
+                    <div className="modal">
+                      <div className="modal-box">
+                        <div className="rating">
+                          <div onChange={() => handleRating(1)}>
+                            <input
+                              type="radio"
+                              name="rating-2"
+                              checked="checked"
+                              className="mask mask-star-2 bg-warning"
+                            />
+                          </div>
+                          <div onChange={() => handleRating(2)}>
+                            <input
+                              type="radio"
+                              name="rating-2"
+                              className="mask mask-star-2 bg-warning"
+                            />
+                          </div>
+                          <div onChange={() => handleRating(3)}>
+                            <input
+                              type="radio"
+                              name="rating-2"
+                              className="mask mask-star-2 bg-warning"
+                            />
+                          </div>
+                          <div onChange={() => handleRating(4)}>
+                            <input
+                              type="radio"
+                              name="rating-2"
+                              className="mask mask-star-2 bg-warning"
+                              // onChange={() => handleRating(4)}
+                            />
+                          </div>
+                          <div onChange={() => handleRating(5)}>
+                            <input
+                              type="radio"
+                              name="rating-2"
+                              className="mask mask-star-2 bg-warning"
+                            />
+                          </div>
+                        </div>
+
+                        <p className="mb-8">Rating: {rating} </p>
+
+                        <div>
+                          <div className="form-control">
+                            <label className="label">
+                              <span className="label-text text-lg">
+                                Write a review:
+                              </span>
+                            </label>
+                            <textarea
+                              className="textarea h-24 textarea-bordered textarea-primary"
+                              placeholder="Review..."
+                              onChange={(e) => handleReview(e)}
+                            ></textarea>
+                          </div>
+                        </div>
+
+                        <div className="modal-action">
+                          <label
+                            for="my-modal-2"
+                            className="btn btn-primary"
+                            onClick={handleSubmit}
+                          >
+                            Submit
+                          </label>
+                          <label for="my-modal-2" className="btn">
+                            Close
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+      </div>
+  }
+  
   return (
     <div className="py-10">
       <div className="text-gray-700 body-font border shadow-lg py-10">

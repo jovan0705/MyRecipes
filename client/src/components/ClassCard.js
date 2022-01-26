@@ -4,20 +4,40 @@
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { registerClass } from "../store/actionCreators/classesCreator";
+import { fetchUserClasses, registerClass, fetchClasses } from "../store/actionCreators/classesCreator";
 import { successAlert, errorAlert } from "../helpers/alerts";
+import { useEffect, useState } from "react";
 
 
 const ClassCard = ({ id, name, image, link, date, page }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { classes } = useSelector((store) => store.classReducer)
+  const [bought, setBought] = useState(false)
+  useEffect(() => {
+    dispatch(fetchUserClasses())
+      .then((data) => {
+        console.log(data, 'INI DATA')
+        data.forEach(el => {
+          if (el.Class.id === id) {
+            setBought(true)
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [classes])
+
   const toDetail = (id) => {
     navigate(`/classes/${id}`);
   };
+
   const handleClick = () => {
     dispatch(registerClass(id))
       .then((data) => {
         if (data.data) {
+          dispatch(fetchClasses());
           successAlert(data.data.message)
         } else {
           console.log(data.response.data.message, '<<<<<< ini err')
@@ -29,8 +49,10 @@ const ClassCard = ({ id, name, image, link, date, page }) => {
       })
   }
   const btnRenderHandler = () => {
-    if(!page) {
+    if(!bought) {
       return <button class="btn btn-primary" onClick={() => handleClick()}>Buy This Class</button>
+    } else {
+      return <button class="btn btn-primary">Class already Bought</button>
     }
   }
 

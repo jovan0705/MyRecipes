@@ -52,6 +52,7 @@ export const fetchUserClasses = () => {
         },
       });
       dispatch(setUserClasses(classes));
+      return classes
     } catch (err) {
       dispatch(setClassesError(err.message));
     } finally {
@@ -63,7 +64,8 @@ export const fetchUserClasses = () => {
 export const registerClass = (classId) => {
   return async (dispatch) => {
     try {
-      const data = await baseUrl.post(`/class/register/${classId}`, {
+      console.log(localStorage.access_token, 'INI ACCESS TOKEN')
+      const data = await baseUrl.post(`/class/register/${classId}`, {}, {
         headers: {
           access_token: localStorage.access_token,
         },
