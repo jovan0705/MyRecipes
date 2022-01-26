@@ -175,11 +175,13 @@ const doUnfollow = async (req, res, next) => {
     const followedUser = await UserFollow.findOne({
       where: { followingId: id, followerId: userId },
     });
+    if (!followedUser) {
+      throw { name: "notFound" };
+    }
 
     await followedUser.destroy();
     res.status(200).json(followedUser);
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };

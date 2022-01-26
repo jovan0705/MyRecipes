@@ -783,17 +783,70 @@ describe("GET /users/followers", () => {
 })
 
 describe("GET /users/followings", () => {
-  test("[success - 200] - success get followings should be return an object with status code 200", (done) => {
+  test("[success - 200] - success unfollow should be return an object with status code 200", (done) => {
     request(app)
       .get("/users/followings")
       .set("access_token", userToken1)
       .then((response) => {
         const result = response.body;
         expect(response.status).toBe(200);
-        expect(response.body).toEqual(expect.any(Array));
+        expect(response.body).toEqual(expect.any(Object));
         expect(response.body[0]).toHaveProperty("id", 1);
         expect(response.body[0]).toHaveProperty("followerId", 2);
         expect(response.body[0]).toHaveProperty("followingId", 3);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+})
+
+describe("GET /users/unfollow/:id", () => {
+  test("[success - 200] - success unfollow should be return an object with status code 200", (done) => {
+    request(app)
+      .delete("/users/unfollow/3")
+      .set("access_token", userToken1)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty("id", 1);
+        expect(response.body).toHaveProperty("followerId", 2);
+        expect(response.body).toHaveProperty("followingId", 3);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test("[success - 404] - unfollow non existing user should be return an object with status code 404", (done) => {
+    request(app)
+      .delete("/users/unfollow/10")
+      .set("access_token", userToken1)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual(expect.any(Object));
+        expect(response.body).toHaveProperty("message", "Request Not Found");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+})
+
+describe("GET /users", ()  => {
+  test("[success - 200] - success get all users should be return an object with status code 200", (done) => {
+    request(app)
+      .get("/users")
+      .set("access_token", userToken1)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(expect.any(Array));
         done();
       })
       .catch((err) => {
