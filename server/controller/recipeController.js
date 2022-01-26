@@ -296,7 +296,7 @@ const createUserRating = async (req, res, next) => {
     next(err);
   }
 };
-
+ 
 const getRatings = async (req, res, next) => {
   try {
     const recipeId = req.params.id
@@ -308,7 +308,8 @@ const getRatings = async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-}
+};
+
 const addFavourite = async (req, res, next) => {
   try {
     const { recipeId } = req.params;
