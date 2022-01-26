@@ -249,8 +249,8 @@ const RecipeDetail = () => {
           <hr className="my-3" />
           <div>
             {recipeDetailReducer.recipe.recipe.RecipeRatings.map(
-              ({ rating, review }) => {
-                return <ReviewList rating={rating} review={review} />;
+              ({ rating, review, User, createdAt }) => {
+                return <ReviewList user={User} rating={rating} review={review} createdAt={createdAt}/>;
               }
             )}
           </div>

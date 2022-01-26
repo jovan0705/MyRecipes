@@ -20,7 +20,7 @@ const EditProfile = () => {
         fd.append("imageFile", imageFile);
         fd.append("description", description);
 
-        dispatch(editProfile(id))
+        dispatch(editProfile(id, fd))
         .then(data => {
             navigate('/userProfile')
         })

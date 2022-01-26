@@ -260,7 +260,6 @@ const getRecipeDetail = async (req, res, next) => {
               exclude: [
                 "password",
                 "role",
-                "profilePict",
                 "balance",
                 "description",
                 "createdAt",
@@ -269,7 +268,7 @@ const getRecipeDetail = async (req, res, next) => {
             },
           },
           attributes: {
-            exclude: ["createdAt", "updatedAt"],
+            exclude: ["updatedAt"],
           },
         }
       ],

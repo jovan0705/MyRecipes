@@ -11,24 +11,27 @@ const Feed = () => {
   useEffect(() => {
     dispatch(fetchFeeds());
   }, []);
+  
   return (
     <div className="min-h-screen py-10">
       <h1 className="heading text-center">Feeds</h1>
       {userReducer.feeds.length === 0 && (
         <EmptyState message="Follow more people to discover feeds" />
       )}
-      {userReducer.feeds.map(({ id, name, imageUrl, createdAt, User }) => {
-        return (
-          <FeedCard
-            key={id}
-            name={name}
-            imageUrl={imageUrl}
-            createdAt={createdAt}
-            creatorName={User.name}
-            creatorUserName={User.username}
-          />
-        );
-      })}
+      {userReducer.feeds.length > 0 && 
+        userReducer.feeds.map(({ id, name, imageUrl, createdAt, User }) => {
+          return (
+            <FeedCard
+              key={id}
+              name={name}
+              imageUrl={imageUrl}
+              createdAt={createdAt}
+              creatorName={User.name}
+              creatorUserName={User.username}
+            />
+          );
+        })
+      }
     </div>
   );
 };

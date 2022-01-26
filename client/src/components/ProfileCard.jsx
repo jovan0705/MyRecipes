@@ -1,4 +1,4 @@
-const ProfileCard = ({totalPost, item}) => {
+const ProfileCard = ({totalPost, followers, following, item}) => {
     return (
         <>
             {/* <!-- Profile Card --> */}
@@ -13,15 +13,16 @@ const ProfileCard = ({totalPost, item}) => {
                 <div className="flex justify-around text-center my-3 text-gray-500 text-sm">
                     <div className="p-3 space-y-2">
                         <h3 className="font-bold">Post</h3>
-                        <p className="text-gray-400">{totalPost}</p>
+                        {(totalPost) ? <p className="text-gray-400">{totalPost.length}</p> : <p className="text-gray-400">0</p>}
+                        
                     </div>
                     <div className="p-3 space-y-2">
                         <h3 className="font-bold">Followers</h3>
-                        <p className="text-gray-400">{totalPost}</p>
+                        <p className="text-gray-400">{followers.length}</p>
                     </div>
                     <div className="p-3 space-y-2">
                         <h3 className="font-bold">Following</h3>
-                        <p className="text-gray-400">{totalPost}</p>
+                        <p className="text-gray-400">{following.length}</p>
                     </div>
                 </div>
             </div>

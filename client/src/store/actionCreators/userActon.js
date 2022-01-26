@@ -162,6 +162,7 @@ export const editProfile = (id, userdata) => {
       throw new Error(err.response.data.message);
     }
   }
+}
 export const successTopUp = () => {
   return async (dispatch, getState) => {
     dispatch(setUserLoading(true));
@@ -176,5 +177,6 @@ export const successTopUp = () => {
     } finally {
       dispatch(setUserLoading(false));
     }
-  };
+  }
+}
 

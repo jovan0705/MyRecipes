@@ -64,7 +64,9 @@ export const postRecipe = (fd) => {
   return async (dispatch) => {
     try {
       dispatch(setRecipePostStatus(true));
-      const { data: recipe } = await uploadFile.post("/recipes", fd);
+      const { data: recipe } = await uploadFile.post("/recipes", fd, {headers: {
+        access_token: localStorage.access_token
+      }});
       return recipe;
     } catch (err) {
       errorAlert(err.response.data.message);
@@ -79,7 +81,9 @@ export const updateRecipe = (id, fd) => {
   return async (dispatch) => {
     try {
       dispatch(setRecipePostStatus(true));
-      const { data: recipe } = await uploadFile.put(`/recipes/${id}`, fd);
+      const { data: recipe } = await uploadFile.put(`/recipes/${id}`, fd, {headers: {
+        access_token: localStorage.access_token
+      }});
       return recipe;
     } catch (err) {
       errorAlert(err.response.data.message);

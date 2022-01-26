@@ -13,18 +13,18 @@ module.exports = {
     */
    await queryInterface.bulkInsert('Classes', [
      {
-       name: 'Cah Kangkung Lezat',
+       name: 'Cah Kangkung',
        image: 'https://www.piknikdong.com/wp-content/uploads/2021/01/Resep-Cah-Kangkung.jpg',
-       link: 'http://inilinkzoom',
+       link: 'http://kangkunglink',
        date: new Date('2022-01-20'),
        price: 50000,
        createdAt: new Date(),
        updatedAt: new Date()
      },
      {
-      name: 'Cah Kangkung Lezat 2',
-      image: 'https://www.piknikdong.com/wp-content/uploads/2021/01/Resep-Cah-Kangkung.jpg',
-      link: 'http://inilinkzoom',
+      name: 'Homemade Baguette',
+      image: 'https://cf.shopee.co.id/file/67c6ca65981779cc786c43f96052ff4c',
+      link: 'http://baguettelink',
       date: new Date('2022-01-22'),
       price: 50000,
       createdAt: new Date(),
@@ -36,6 +36,33 @@ module.exports = {
       link: 'http://inilinkzoommochi',
       date: new Date('2022-01-24'),
       price: 80000,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: 'Rawon Class',
+      image: 'https://awsimages.detik.net.id/community/media/visual/2021/10/14/resep-rawon-daging-surabaya-1.jpeg?w=700&q=90',
+      link: 'http://rawonlink',
+      date: new Date('2022-01-27'),
+      price: 40000,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: 'Soto Class',
+      image: 'https://awsimages.detik.net.id/community/media/visual/2021/12/14/resep-soto-ayam-jawa_43.jpeg?w=700&q=90',
+      link: 'http://sotolink',
+      date: new Date('2022-01-27'),
+      price: 30000,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: 'Sup Bibir Ikan Class',
+      image: 'https://i.ytimg.com/vi/2S00qQ85SwY/maxresdefault.jpg',
+      link: 'http://supbibirikanclasslink',
+      date: new Date('2022-01-30'),
+      price: 100000,
       createdAt: new Date(),
       updatedAt: new Date()
     },

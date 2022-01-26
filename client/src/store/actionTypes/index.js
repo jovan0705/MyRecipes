@@ -58,6 +58,7 @@ export const SET_USERS_LOADING = "users/loading";
 
 // UserFollowing
 export const SET_USER_FOLLOWING = "userFollowing/set";
+export const SET_USER_FOLLOWERS = "user/followers";
 
 // Feeds
 export const SET_FEEDS = "feeds/set";

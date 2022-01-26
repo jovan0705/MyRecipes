@@ -8,16 +8,19 @@ import { useDispatch, useSelector } from "react-redux";
 import {fetchUserProfile} from '../store/actionCreators/userActon'
 import { fetchUserRecipes} from '../store/actionCreators/userRecipesCreator'
 import { fetchUserClasses } from '../store/actionCreators/classesCreator'
+import { fetchUserFollowers, fetchUserFollowing } from "../store/actionCreators/usersCreator";
 
 
 const UserProfile = () => {
-  const { userReducer, userRecipesReducer, classReducer} = useSelector((store) => store);
+  const { userReducer, userRecipesReducer, classReducer, usersReducer} = useSelector((store) => store);
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchUserProfile())
     dispatch(fetchUserRecipes())
     dispatch(fetchUserClasses())
+    dispatch(fetchUserFollowing())
+    dispatch(fetchUserFollowers())
   }, [])
 
   // const totalPost =() => {
@@ -36,7 +39,7 @@ const UserProfile = () => {
         <div className="md:flex no-wrap md:-mx-2 ">
           {/* <!-- Left Side --> */}
           <div className="w-full md:w-3/12 md:mx-2">
-            <ProfileCard totalPost={3} item={userReducer.user}/>
+            <ProfileCard totalPost={userRecipesReducer.userRecipes.userCreatedRecipes} item={userReducer.user} followers={usersReducer.userFollowers} following={usersReducer.userFollowing}/>
           </div>
           {/* <!-- Left Side end--> */}
           {/* <!-- Right Side --> */}

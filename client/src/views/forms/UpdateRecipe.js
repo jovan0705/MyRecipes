@@ -54,7 +54,7 @@ const UpdateRecipe = () => {
     name: "",
     category: "",
     ingredients: [],
-    imageFile: "",
+    imageFile: "aaaa",
     steps: "",
     totalCalories: 0,
   });
@@ -87,10 +87,10 @@ const UpdateRecipe = () => {
 
     setImageLabel(e.target.value);
 
-    // setInputData({
-    //   ...inputData,
-    //   [field]: val,
-    // });
+    setInputData({
+      ...inputData,
+      [field]: val,
+    });
   };
 
   const handleIndegrients = (e) => {
@@ -128,7 +128,7 @@ const UpdateRecipe = () => {
   };
 
   const handleSubmit = (e) => {
-      e.preventDefault();
+    e.preventDefault();
     const fd = new FormData();
     fd.append("name", inputData.name);
     fd.append("imageFile", inputData.imageFile);
@@ -136,7 +136,7 @@ const UpdateRecipe = () => {
     fd.append("totalCalories", inputData.totalCalories);
     fd.append("categoryId", inputData.category);
     fd.append("ingredients", inputData.ingredients);
-
+    console.log(inputData, 'INI INPUT DATA')
     dispatch(updateRecipe(id,fd))
       .then(() => {
         successAlert("Update recipe successfully");
@@ -295,7 +295,7 @@ const UpdateRecipe = () => {
           <div className="flex justify-center">
             {!recipeReducer.posting && (
               <button className="btn btn-primary" type="submit">
-                Post a new recipe
+                Edit Recipe
               </button>
             )}
             {recipeReducer.posting && (

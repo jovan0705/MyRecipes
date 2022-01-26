@@ -3,6 +3,7 @@ import {
   SET_USERS_ERROR,
   SET_USERS_LOADING,
   SET_USER_FOLLOWING,
+  SET_USER_FOLLOWERS
 } from "../actionTypes";
 
 const initialState = {
@@ -10,6 +11,7 @@ const initialState = {
   usersLoading: true,
   usersError: false,
   userFollowing: [],
+  userFollowers: []
 };
 
 const usersReducer = (state = initialState, { type, payload }) => {
@@ -36,6 +38,12 @@ const usersReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         userFollowing: payload,
+      };
+
+    case SET_USER_FOLLOWERS:
+      return {
+        ...state,
+        userFollowers: payload,
       };
     default:
       return state;
