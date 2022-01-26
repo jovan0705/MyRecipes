@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://localhost:3000";
+const url = "https://my-recipes8.herokuapp.com/";
 
 export const baseUrl = axios.create({
   baseURL: url,
