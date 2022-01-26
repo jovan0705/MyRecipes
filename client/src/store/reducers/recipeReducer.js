@@ -3,6 +3,7 @@ import {
   SET_RECIPES_ERROR,
   SET_RECIPES_LOADING,
   SET_RECIPE_POST_STATUS,
+  SET_RECIPE_FILTER
 } from "../actionTypes";
 
 const initialState = {
@@ -10,6 +11,7 @@ const initialState = {
   recipesError: null,
   recipesLoading: true,
   posting: false,
+  filter: ""
 };
 
 const recipeReducer = (state = initialState, { type, payload }) => {
@@ -20,6 +22,12 @@ const recipeReducer = (state = initialState, { type, payload }) => {
         ...state,
         recipes: payload,
       };
+
+    case SET_RECIPE_FILTER:
+      return {
+        ...state,
+        filter: payload
+      }
 
     case SET_RECIPES_ERROR:
       return {

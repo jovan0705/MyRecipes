@@ -8,6 +8,7 @@ export const SET_RECIPE_POST_STATUS = "recipes/postStatus";
 export const SET_USER_RECIPES = "userRecipes/set";
 export const SET_USER_RECIPES_ERROR = "userRecipes/error";
 export const SET_USER_RECIPES_LOADING = "userRecipes/loading";
+export const SET_RECIPE_FILTER = "userRecipes/setFilter"
 
 // Recipe Detail
 export const SET_RECIPE_DETAIL = "recipeDetail/set";

@@ -16,15 +16,18 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // Store
-import { fetchRecipes } from "../store/actionCreators/recipesCreator";
+import { fetchRecipes, setFilter } from "../store/actionCreators/recipesCreator";
 import { fetchCategories } from "../store/actionCreators/categoriesCreator";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const { recipeReducer, categoryReducer } = useSelector((store) => store);
+  useEffect(() => {
+    dispatch(setFilter(""))
+  })
 
   useEffect(() => {
-    dispatch(fetchRecipes()); // LIMIT BY 3
+    dispatch(fetchRecipes(recipeReducer.filter)); // LIMIT BY 3
     dispatch(fetchCategories()); // LIMIT BY 6
   }, []);
 
