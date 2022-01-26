@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       User.belongsToMany(models.Class, {through: models.UserClass, foreignKey: 'userId'}),
       User.hasMany(models.UserFavoritedRecipe, {foreignKey: 'userId'}),
-      User.hasMany(models.Recipe, {foreignKey: 'userId'})
+      User.hasMany(models.Recipe, {foreignKey: 'userId'}),
+      User.hasMany(models.RecipeRating, {foreignKey: 'userId'})
     }
   }
   User.init({

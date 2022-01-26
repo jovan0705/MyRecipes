@@ -11,6 +11,7 @@ const {
   editRecipe,
   deleteRecipe,
   createUserRating,
+  getRatings,
   addFavourite,
   deleteFavourite
 } = require("../controller/recipeController");
@@ -37,6 +38,8 @@ router.put("/:id", instanceMulter.single("imageFile"), imageKitUpload, editRecip
 router.delete("/:id", deleteRecipe);
 // create rating
 router.post('/:id/rate', createUserRating)
+// get rating
+router.get('/:id/rate', getRatings)
 
 router.post('/favourite/:recipeId', addFavourite)
 router.delete('/favourite/:recipeId', deleteFavourite)
