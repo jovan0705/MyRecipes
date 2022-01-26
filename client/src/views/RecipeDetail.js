@@ -16,9 +16,8 @@ const RecipeDetail = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
-  const { recipeDetailReducer } = useSelector((store) => store);
-  const { recipe } = useSelector((store) => store.recipeDetailReducer);
-  const { user } = useSelector((store) => store.userReducer);
+  const { recipeDetailReducer, userReducer } = useSelector((store) => store);
+//   const {userReducer} = useSelector((store) => store)
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [rated, setRated] = useState(false)
@@ -26,23 +25,9 @@ const RecipeDetail = () => {
     setRating(num);
   };
   useEffect(() => {
-    dispatch(fetchUserProfile())
-  }, [])
-  useEffect(() => {
-    dispatch(fetchRecipe(id))
-      .then((data) => {
-        console.log(user, 'INI USER ID')
-        console.log(data.recipe.RecipeRatings, "INI RECIPE RATINGS")
-        data.recipe.RecipeRatings.forEach(el => {
-          if (el.userId === user.id) {
-            setRated(true)
-          }
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }, [recipe, user]);
+    dispatch(fetchRecipe(id));
+    dispatch(fetchUserProfile());
+  }, [userReducer.userAlreadyRated]);
 
   const handleReview = (e) => {
     const value = e.target.value;
@@ -159,83 +144,98 @@ const RecipeDetail = () => {
         <div className="container mx-auto">
           {recipeDetailReducer.recipe.hasOwnProperty("recipe") && (
             <div className="mx-auto h-auto flex">
-              <div>
-                <img
-                  alt="ecommerce"
-                  className="w-full object-cover object-center rounded border border-gray-200 h-96 "
-                  src={recipeDetailReducer.recipe.recipe.imageUrl}
-                />
-              </div>
-              <div className="w-full mt-6 px-5 space-y-3 pb-7 rounded-md">
-                <div className="flex">
-                  <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                    {recipeDetailReducer.recipe.recipe.name}
-                  </h1>
-                  <div class="badge ml-2 badge-outline">
-                    {recipeDetailReducer.recipe.recipe.totalCalories} Cal
-                  </div>
+              <div className="flex">
+                <div>
+                  <img
+                    alt="ecommerce"
+                    className="w-full object-cover object-center rounded border border-gray-200 h-96 "
+                    src={recipeDetailReducer.recipe.recipe.imageUrl}
+                  />
                 </div>
-                <div className="flex mb-4">
-                  <div className="rating rating-sm">
-                    {recipeDetailReducer.recipe.recipe.RecipeRatings.length ===
-                      0 && <h1>No rating yet...</h1>}
-                    {recipeDetailReducer.recipe.recipe.RecipeRatings.length ===
-                      1 &&
-                      Array(
-                        recipeDetailReducer.recipe.recipe.RecipeRatings[0]
-                          .rating
-                      ).fill(<Rating />)}
-                    {recipeDetailReducer.recipe.recipe.RecipeRatings.length >
-                      1 &&
-                      Array(
-                        Math.round(
-                          recipeDetailReducer.recipe.recipe.RecipeRatings.map(
-                            (el) => el.rating
-                          ).reduce((prev, next) => prev + next) /
-                            recipeDetailReducer.recipe.recipe.RecipeRatings
-                              .length
-                        )
-                      ).fill(<Rating />)}
-                  </div>
-                  <span className="text-gray-600 ml-3">
-                    {recipeDetailReducer.recipe.recipe.RecipeRatings.length}{" "}
-                    Reviews
-                  </span>
-                </div>
-                <hr className="" />
-                <p className="leading-relaxed">
-                  {recipeDetailReducer.recipe.recipe.steps}
-                </p>
-                <div className="flex flex-col mt-6 gap-5">
-                  {/* ingredient start */}
-                  <div className="flex flex-col gap-2">
-                    <h2 className="text-lg title-font text-gray-500 tracking-widest">
-                      Ingredient
-                    </h2>
-                    <div className="ml-4">
-                      {recipeDetailReducer.recipe.ingredients.map(
-                        (ingredient) => {
-                          return (
-                            <IngredientList
-                              key={ingredient}
-                              name={ingredient}
-                            />
-                          );
-                        }
-                      )}
+                <div className="w-full mt-6 px-5 space-y-3 pb-7 rounded-md">
+                  <div className="flex">
+                    <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+                      {recipeDetailReducer.recipe.recipe.name}
+                    </h1>
+                    <div class="badge ml-2 badge-outline">
+                      {recipeDetailReducer.recipe.recipe.totalCalories} Cal
                     </div>
                   </div>
+                  <div className="flex mb-4">
+                    <div className="rating rating-sm">
+                      {recipeDetailReducer.recipe.recipe.RecipeRatings
+                        .length === 0 && <h1>No rating yet...</h1>}
+                      {recipeDetailReducer.recipe.recipe.RecipeRatings
+                        .length === 1 &&
+                        Array(
+                          recipeDetailReducer.recipe.recipe.RecipeRatings[0]
+                            .rating
+                        ).fill(<Rating />)}
+                      {recipeDetailReducer.recipe.recipe.RecipeRatings.length >
+                        1 &&
+                        Array(
+                          Math.round(
+                            recipeDetailReducer.recipe.recipe.RecipeRatings.map(
+                              (el) => el.rating
+                            ).reduce((prev, next) => prev + next) /
+                              recipeDetailReducer.recipe.recipe.RecipeRatings
+                                .length
+                          )
+                        ).fill(<Rating />)}
+                    </div>
+                    <span className="text-gray-600 ml-3">
+                      {recipeDetailReducer.recipe.recipe.RecipeRatings.length}{" "}
+                      Reviews
+                    </span>
+                  </div>
+                  <hr className="" />
+                  <p className="leading-relaxed">
+                    {recipeDetailReducer.recipe.recipe.steps}
+                  </p>
+                  <div className="flex flex-col mt-6 gap-5">
+                    {/* ingredient start */}
+                    <div className="flex flex-col gap-2">
+                      <h2 className="text-lg title-font text-gray-500 tracking-widest">
+                        Ingredient
+                      </h2>
+                      <div className="ml-4">
+                        {recipeDetailReducer.recipe.ingredients.map(
+                          (ingredient) => {
+                            return (
+                              <IngredientList
+                                key={ingredient}
+                                name={ingredient}
+                              />
+                            );
+                          }
+                        )}
+                      </div>
+                    </div>
                   <div>
-                    {/* {
-                      recipeDetailReducer.recipe.recipe.RecipeRatings.find(el => el)
-                    } */}
-                    {btnRatingHandler()}
+                    {recipeDetailReducer.recipe.recipe.RecipeRatings.find(
+                      (el) => el.userId === userReducer.user.id
+                    ) ? (
+                      <label
+                        for="my-modal-2"
+                        className="btn btn-primary"
+                        disabled
+                      >
+                        You Already Rated This Recipe
+                      </label>
+                    ) : (
+                      <label
+                        for="my-modal-2"
+                        className="btn btn-primary modal-button"
+                      >
+                        Rate Now
+                      </label>
+                    )}
                     {/* <label
                       for="my-modal-2"
                       className="btn btn-primary modal-button"
                     >
                       Rate Now
-                    </label>
+                    </label> */}
                     <input
                       type="checkbox"
                       id="my-modal-2"
@@ -266,56 +266,40 @@ const RecipeDetail = () => {
                               className="mask mask-star-2 bg-warning"
                             />
                           </div>
-                          <div onChange={() => handleRating(4)}>
-                            <input
-                              type="radio"
-                              name="rating-2"
-                              className="mask mask-star-2 bg-warning"
-                              // onChange={() => handleRating(4)}
-                            />
-                          </div>
-                          <div onChange={() => handleRating(5)}>
-                            <input
-                              type="radio"
-                              name="rating-2"
-                              className="mask mask-star-2 bg-warning"
-                            />
-                          </div>
-                        </div>
 
-                        <p className="mb-8">Rating: {rating} </p>
+                          <p className="mb-8">Rating: {rating} </p>
 
-                        <div>
-                          <div className="form-control">
-                            <label className="label">
-                              <span className="label-text text-lg">
-                                Write a review:
-                              </span>
+                          <div>
+                            <div className="form-control">
+                              <label className="label">
+                                <span className="label-text text-lg">
+                                  Write a review:
+                                </span>
+                              </label>
+                              <textarea
+                                className="textarea h-24 textarea-bordered textarea-primary"
+                                placeholder="Review..."
+                                onChange={(e) => handleReview(e)}
+                              ></textarea>
+                            </div>
+                          </div>
+
+                          <div className="modal-action">
+                            <label
+                              for="my-modal-2"
+                              className="btn btn-primary"
+                              onClick={handleSubmit}
+                            >
+                              Submit
                             </label>
-                            <textarea
-                              className="textarea h-24 textarea-bordered textarea-primary"
-                              placeholder="Review..."
-                              onChange={(e) => handleReview(e)}
-                            ></textarea>
+                            <label for="my-modal-2" className="btn">
+                              Close
+                            </label>
                           </div>
-                        </div>
-
-                        <div className="modal-action">
-                          <label
-                            for="my-modal-2"
-                            className="btn btn-primary"
-                            onClick={handleSubmit}
-                          >
-                            Submit
-                          </label>
-                          <label for="my-modal-2" className="btn">
-                            Close
-                          </label>
                         </div>
                       </div>
-                    </div> */}
-                  </div>
-                  {/* <div>
+                    </div>
+                    {/* <div>
                     <h2 className="text-lg title-font text-gray-500 tracking-widest">
                       Methods
                     </h2>
@@ -327,8 +311,10 @@ const RecipeDetail = () => {
                       <MethodsList />
                     </div>
                   </div> */}
+                  </div>
                 </div>
               </div>
+              <div>test</div>
             </div>
           )}
         </div>

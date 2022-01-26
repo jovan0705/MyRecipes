@@ -33,18 +33,6 @@ const RecipesPage = () => {
   return (
     <div className="min-h-screen py-10">
       <h1 className="heading text-center">Recipes</h1>
-      <div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text">Accent</span>
-          </label>
-          <input
-            type="text"
-            placeholder="username"
-            class="input input-accent input-bordered"
-          />
-        </div>
-      </div>
 
       {!recipeReducer.recipesLoading && recipeReducer.recipes && (
         <div className="grid grid-cols-3 gap-10 p-3">
