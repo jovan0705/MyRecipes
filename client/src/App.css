@@ -1,46 +1,3 @@
-.chat-window {
-  width: 60%;
-  height: 800px;
-}
-
-.chat-window p {
-  margin: 0;
-}
-.chat-window .chat-header {
-  height: 45px;
-  border-radius: 6px;
-  background: #f9d72f;
-  position: relative;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.chat-window .chat-header p {
-  display: block;
-  padding: 0 1em 0 1em;
-  color: #263238;
-  font-weight: 700;
-  line-height: 45px;
-  font-size: 20px;
-}
-
-.chat-window .chat-body {
-  height: calc(800px - (45px + 70px));
-  border: 1px solid #111827;
-  border-bottom: none;
-  /* background-image: url("https://image.freepik.com/free-vector/hand-drawn-healthy-food-background_23-2148241421.jpg"); */
-  background: #e5e7eb;
-  border-radius: 5px;
-  border-top-right-radius: 2px;
-  border-top-left-radius: 2px;
-  position: relative;
-}
-.chat-window .chat-body .message-container {
-  width: 100%;
-  height: 100%;
-  /* overflow-y: scroll; */
-  overflow-x: hidden;
-}
-
 .chat-window .chat-body .message-container::-webkit-scrollbar {
   display: none;
 }
@@ -55,7 +12,7 @@
   height: auto;
   min-height: 40px;
   max-width: 600px;
-  background-color: #43a047;
+  background-color: black;
   border-radius: 5px;
   color: white;
   display: flex;
@@ -89,7 +46,8 @@
 
 #you .message-content {
   justify-content: flex-end;
-  background-color: cornflowerblue;
+  background-color: rgba(249, 215, 47, 0.9);
+  color: black;
 }
 
 #you .message-meta {
@@ -106,43 +64,4 @@
 .chat-window .chat-body .message .message-meta {
   display: flex;
   font-size: 18px;
-}
-
-.chat-window .chat-footer {
-  height: 60px;
-  border: 1px solid #111827;
-  /* border-top: none; */
-  display: flex;
-}
-
-.chat-window .chat-footer input {
-  height: 100%;
-  flex: 85%;
-  border: 0;
-  padding: 0 0.7em;
-  font-size: 1.5em;
-  border-right: 1px dotted #607d8b;
-
-  outline: none;
-  font-family: "Open Sans", sans-serif;
-}
-
-.chat-window .chat-footer button {
-  border: 0;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  flex: 15%;
-  height: 100%;
-  background: #111827;
-  outline: none;
-  font-size: 30px;
-  color: #f9d72f;
-}
-
-.chat-window .chat-footer button:hover {
-  color: #43a047;
-}
-.hide {
-  opacity: 0 !important;
 }

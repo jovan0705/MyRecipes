@@ -21,7 +21,7 @@ const userRegister = async (req, res, next) => {
       password,
       role: "user",
       balance: 0,
-      profilePict: 'https://semantic-ui.com/images/avatar2/large/matthew.png'
+      profilePict: "https://semantic-ui.com/images/avatar2/large/matthew.png",
     });
     res.status(201).json({ id: newUser.id, email: newUser.email });
   } catch (err) {
@@ -282,7 +282,7 @@ const getFollowings = async (req, res, next) => {
 const allUsers = async (req, res, next) => {
   try {
     const users = await User.findAll({
-      attributes: ["name", "username", "id"],
+      attributes: ["name", "username", "id", "profilePict"],
     });
     res.status(200).json(users);
   } catch (err) {
