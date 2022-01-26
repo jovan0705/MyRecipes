@@ -2,12 +2,14 @@ import TopNavbar from "../components/TopNavbar";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserClasses } from "../store/actionCreators/classesCreator";
-import ClassCard from "../components/ClassCard";
-
 
 const MyClasses = () => {
   const dispatch = useDispatch();
   const { userClasses } = useSelector((store) => store.classReducer);
+
+const MyClasses = () => {
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     dispatch(fetchUserClasses());
@@ -19,6 +21,7 @@ const MyClasses = () => {
       <div>
         <h1 className="heading">My Classes</h1>
       </div>
+
       <div className="grid grid-cols-3 gap-10 p-3">
             {userClasses && userClasses.map(({ Class }) => {
               return (

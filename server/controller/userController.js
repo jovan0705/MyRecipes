@@ -1,4 +1,9 @@
-const { User, UserFollow, BalanceHistory, UserFavoritedRecipe } = require("../models/index");
+const {
+  User,
+  UserFollow,
+  BalanceHistory,
+  UserFavoritedRecipe,
+} = require("../models/index");
 const { decryptPassword, hashPassword } = require("../helpers/bcrypt");
 const { getToken } = require("../helpers/jwt");
 const midtrans = require("../helpers/midtrans");
@@ -15,7 +20,7 @@ const userRegister = async (req, res, next) => {
       email,
       password,
       role: "user",
-      balance: 0
+      balance: 0,
     });
     res.status(201).json({ id: newUser.id, email: newUser.email });
   } catch (err) {
@@ -165,7 +170,11 @@ const topUpBalance = async (req, res, next) => {
   try {
     const { id } = req.user;
     const { amount } = req.body;
-    const balanceHistory = await BalanceHistory.create({ userId: id, amount,  isDone: false});
+    const balanceHistory = await BalanceHistory.create({
+      userId: id,
+      amount,
+      isDone: false,
+    });
     const token = await midtrans(balanceHistory.id, amount, req.user.email);
     res.status(201).json(token);
   } catch (err) {
@@ -218,9 +227,37 @@ const profileDetails = async (req, res, next) => {
 
     res.status(200).json(user);
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
+
+const getFollowers = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const followers = await UserFollow.findAll({
+      where: { followingId: userId },
+    });
+
+    res.status(200).json(followers);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getFollowings = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const following = await UserFollow.findAll({
+      where: { followerId: userId },
+    });
+
+    res.status(200).json(following);
+  } catch (err) {
+    next(err);
+  }
+};
 
 const getFollowers = async (req, res, next) => {
   try {

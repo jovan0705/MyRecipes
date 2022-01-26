@@ -78,10 +78,12 @@ const RecipeCard = ({
       });
   };
 
+
   const toUpdatePage = (event, id) => {
     event.preventDefault()
     navigate(`/updateRecipe/${id}`)
   }
+
 
   return (
     <>

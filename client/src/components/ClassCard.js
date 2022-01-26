@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerClass } from "../store/actionCreators/classesCreator";
 import { successAlert, errorAlert } from "../helpers/alerts";
 
+
 const ClassCard = ({ id, name, image, link, date, page }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,12 +28,12 @@ const ClassCard = ({ id, name, image, link, date, page }) => {
         console.log(err, '<<<<< ini err')
       })
   }
-
   const btnRenderHandler = () => {
     if(!page) {
       return <button class="btn btn-primary" onClick={() => handleClick()}>Buy This Class</button>
     }
   }
+
   return (
     <div className="border border-primary flex col-span-1 rounded-xl overflow-hidden">
       <div className="flex-1 rounded-xl">

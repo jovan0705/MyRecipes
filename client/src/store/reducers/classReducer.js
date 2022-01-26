@@ -31,7 +31,6 @@ const classReducer = (state = initialState, { type, payload }) => {
         userClasses: payload,
       };
 
-
     case SET_CLASSES_DETAIL:
       return {
         ...state,
