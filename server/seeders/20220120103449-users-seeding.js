@@ -15,26 +15,6 @@ module.exports = {
     */
      await queryInterface.bulkInsert('Users', [
        {
-         name: "admin1",
-         username: "admin1name",
-         email: "admin1@gmail.com",
-         password: hashPassword("12345"),
-         role: "admin",
-         profilePict: 'https://semantic-ui.com/images/avatar2/large/matthew.png',
-         createdAt: new Date(),
-         updatedAt: new Date()
-       },
-       {
-        name: "admin2",
-        username: "admin2name",
-        email: "admin2@gmail.com",
-        password: hashPassword("12345"),
-        role: "admin",
-        profilePict: 'https://semantic-ui.com/images/avatar2/large/matthew.png',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-       {
         name: "Jovan Gunawan",
         username: "jovangunawan",
         email: "jovan@mail.com",
