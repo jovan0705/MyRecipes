@@ -540,7 +540,6 @@ describe("POST /recipes", () => {
       .field("ingredients", sampleInput.ingredients)
       .then((response) => {
         const result = response.body;
-        console.log(result, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
         expect(response.status).toEqual(400);
         expect(result).toBeInstanceOf(Object);

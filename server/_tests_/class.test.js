@@ -290,7 +290,6 @@ describe("POST /class", () => {
           .post("/class/register/1")
           .set("access_token", userToken)
           .then((response) => {
-              console.log('hehe')
             const result = response.body;
             expect(response.status).toEqual(201);
             expect(result).toBeInstanceOf(Object);

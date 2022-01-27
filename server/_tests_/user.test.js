@@ -692,7 +692,6 @@ describe("POST /users/topup", () => {
       .send({ amount: 50000 })
       .then((response) => {
         const result = response.body;
-        console.log(result, '<<<<<<<<<<< ini result')
         expect(response.status).toBe(201);
         expect(response.body).toEqual(expect.any(Object));
         expect(response.body).toHaveProperty("token", "initokendummy");
@@ -705,10 +704,10 @@ describe("POST /users/topup", () => {
   });
 })
 
-describe("PATCH /successTopUp", () => {
+describe("POST /successTopUp", () => {
   test("Success Top Up should return message : Success add Balance with Amount (amount)", (done) => {
     request(app)
-      .patch("/users/successTopUp")
+      .post("/users/successTopUp")
       .set("access_token", userToken2)
       .then((response) => {
         const result = response.body;
