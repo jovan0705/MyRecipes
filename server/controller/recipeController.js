@@ -484,7 +484,7 @@ const deleteFavourite = async (req, res, next) => {
 
 const feeds = async (req, res, next) => {
   try {
-    const followingList = await UserFollow.findAll();
+    const followingList = await UserFollow.findAll({where: {followerId: req.user.id}});
 
     const followedUser = followingList.map((el) => ({userId: el.followingId}));
     if (!followedUser) {
