@@ -210,6 +210,7 @@ const successTopUp = async (req, res, next) => {
     });
     const userBalance = await User.findByPk(id)
     await User.update({ balance: userBalance.balance+transaction.amount }, { where: { id } });
+    await BalanceHistory.update({isDone: true}, {where: {userId: id}})
     res.status(200).json({
       message: `Success add Balance with Amount ${transaction.amount}`,
     });
