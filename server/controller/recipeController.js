@@ -347,7 +347,10 @@ const createRecipe = async (req, res, next) => {
 const editRecipe = async (req, res, next) => {
   try {
     // asumsi struktur tipe data step adalah array dan totalCalories sudah tertotal pas mengirimkan data input ke server
-    const { name, steps, totalCalories } = req.body;
+    let { name, steps, totalCalories, ingredients } = req.body;
+    if(ingredients) {
+      ingredients = ingredients.split(",");
+    }
     const newSteps = steps.split(",").map((step) => {
       return step;
     });
@@ -363,7 +366,19 @@ const editRecipe = async (req, res, next) => {
       { where: { id, userId } }
     );
     if (!response) throw { name: "errorUpdateRecipe" };
-
+    
+    if(ingredients) {
+      const payload = await ingredients.map((ingredientId) => {
+        return {
+          recipeId: response.id,
+          ingredientId: +ingredientId,
+          weight: 0,
+        };
+      });
+      const createIngredients = await RecipeIngredients.bulkCreate(payload, {
+        raw: true,
+      });
+    }
     res.status(200).json({ message: "Edit Successful" });
   } catch (err) {
     next(err);
@@ -471,14 +486,18 @@ const feeds = async (req, res, next) => {
   try {
     const followingList = await UserFollow.findAll();
 
-    const followedUser = followingList.map((el) => el.followingId);
-
-    const recipes = await Recipe.findAll({
-      where: { userId: followedUser },
-      include: [{ model: User, attributes: ["name", "username", "profilePict"] }],
-    });
-
-    res.status(200).json(recipes);
+    const followedUser = followingList.map((el) => ({userId: el.followingId}));
+    if (!followedUser) {
+      res.status(200).json([])
+    } else {
+      let filter = {[Op.or]: followedUser}
+      const recipes = await Recipe.findAll({
+        where: filter,
+        include: [{ model: User, attributes: ["name", "username", "profilePict"] }],
+      });
+  
+      res.status(200).json(recipes);
+    }
   } catch (err) {
     next(err);
   }
