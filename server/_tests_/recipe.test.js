@@ -549,6 +549,40 @@ describe("POST /recipes", () => {
       .catch((err) => done(err));
   });
 
+  test("POST /recipes should return status code 400 when categoryId empty", (done) => {
+    const resp = {
+      data: {
+        url: testImageUrl,
+      },
+    };
+    // console.log(resp)
+    axios.post.mockResolvedValue(resp);
+
+    request(app)
+      .post("/recipes")
+      .set({
+        access_token: adminToken,
+        testing: true,
+      })
+      .field("name", sampleInput.name)
+      .field("steps", sampleInput.steps)
+      .field("totalCalories", sampleInput.totalCalories)
+      .field("ingredients", sampleInput.ingredients)
+      .attach(
+        "imageFile",
+        "_tests_/testImage/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
+      )
+      .then((response) => {
+        const result = response.body;
+
+        expect(response.status).toEqual(400);
+        expect(result).toBeInstanceOf(Object);
+        expect(result).toHaveProperty("message", "Please enter an category");
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
   test("POST /recipes should return status code 500 when error create", (done) => {
     const resp = {
       data: {
@@ -672,6 +706,7 @@ describe("PUT /recipes", () => {
       })
       .catch((err) => done(err));
   });
+  
 
   test("EDIT /recipes/:id should return status code 500 when update operation failed", (done) => {
     const resp = {
@@ -710,7 +745,9 @@ describe("PUT /recipes", () => {
         );
         done();
       })
-      .catch((err) => done(err));
+      .catch((err) => {
+        done(err)
+      });
   });
 });
 
@@ -824,6 +861,70 @@ describe("POST /recipes/favourite/:recipeId", () => {
         expect(response.status).toEqual(400);
         expect(result).toBeInstanceOf(Object);
         expect(result).toHaveProperty("message", "Recipe already Favorited");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+})
+
+describe("GET /recipes/:id/rate", () => {
+  test("should return status code 201 when success", (done) => {
+    request(app)
+      .get("/recipes/1/rate")
+      .set("access_token", userToken1)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toEqual(200);
+        expect(result).toBeInstanceOf(Array);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test("should return status code 201 when success", (done) => {
+    request(app)
+      .get("/recipes/1/rate")
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toEqual(400);
+        expect(result).toBeInstanceOf(Object);
+        expect(result).toHaveProperty("message", "Invalid Access Token");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+})
+
+describe("GET /recipes/feeds", () => {
+  test("should return status code 201 when success", (done) => {
+    request(app)
+      .get("/recipes/feeds")
+      .set("access_token", userToken1)
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toEqual(200);
+        expect(result).toBeInstanceOf(Array);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test("should return status code 400 when Invalid Access Token", (done) => {
+    request(app)
+      .get("/recipes/feeds")
+      .then((response) => {
+        const result = response.body;
+        expect(response.status).toEqual(400);
+        expect(result).toBeInstanceOf(Object);
+        expect(result).toHaveProperty("message", "Invalid Access Token");
         done();
       })
       .catch((err) => {

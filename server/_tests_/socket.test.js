@@ -4,14 +4,14 @@ const server = require('../socket/config');
 
 describe('Suite of unit tests', function () {
   //ngejalain servernya
-  server.attach(3025); //kalo server in use, ganti server disini dan di localhost dibawah
+  server.attach(3002); //kalo server in use, ganti server disini dan di localhost dibawah
   // let sender;
   // let receiver;
   let socket;
 
   beforeEach(function (done) {
     // Setup
-    socket = io.connect('http://localhost:3025', {
+    socket = io.connect('http://localhost:3002', {
       'reconnection delay': 0
       , 'reopen delay': 0
       , 'force new connection': true

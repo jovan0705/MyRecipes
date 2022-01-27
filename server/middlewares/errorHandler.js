@@ -111,6 +111,10 @@ const errorHandler = (err, req, res, next) => {
     case "errorDeleteRecipe":
       res.status(500).json({message: 'Internal Server Error: error deleting recipe'})
       break;
+    
+      case "TypeError":
+        res.status(500).json({message: 'Internal Server Error: error updating recipe'})
+        break;  
 
     default:
       res.status(500).json(err);
