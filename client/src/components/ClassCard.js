@@ -1,7 +1,7 @@
 
 
 
-
+import Swal from "sweetalert2";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserClasses, registerClass, fetchClasses } from "../store/actionCreators/classesCreator";
@@ -9,7 +9,7 @@ import { successAlert, errorAlert } from "../helpers/alerts";
 import { useEffect, useState } from "react";
 
 
-const ClassCard = ({ id, name, image, link, date, page }) => {
+const ClassCard = ({ id, name, image, link, date, page, price }) => {
   const location = useLocation()
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,18 +34,31 @@ const ClassCard = ({ id, name, image, link, date, page }) => {
   };
 
   const handleClick = () => {
-    dispatch(registerClass(id))
-      .then((data) => {
-        if (data.data) {
-          dispatch(fetchClasses());
-          successAlert(data.data.message)
-        } else {
-          errorAlert(data.response.data.message)
-        }
-      })
-      .catch((err) => {
-        console.log(err, '<<<<< ini err')
-      })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Buy Class!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(registerClass(id))
+        .then((data) => {
+          if (data.data) {
+            dispatch(fetchClasses());
+            successAlert(data.data.message)
+          } else {
+            errorAlert(data.response.data.message)
+          }
+        })
+        .catch((err) => {
+          console.log(err, '<<<<< ini err')
+        })
+      }
+    })
+    
   }
   const btnRenderHandler = () => {
     if(!bought) {
@@ -70,6 +83,7 @@ const ClassCard = ({ id, name, image, link, date, page }) => {
         </p> : <p>
           {link}
         </p>}
+        <p className="font-bold text-lg my-3">{price}</p>
         
         <p>{`${date.split('T')[0]}`}</p>
         <div class="card-actions">

@@ -35,8 +35,8 @@ const ClassPage = () => {
       </div>
       {classReducer.classes && (
         <div className="grid grid-cols-2 gap-20">
-          {classReducer.classes.map(({ id, name, image, link, date }) => {
-            return <ClassCard key={id} id={id} name={name} image={image} link={link} date={date} />;
+          {classReducer.classes.map(({ id, name, image, link, date, price }) => {
+            return <ClassCard key={id} id={id} name={name} image={image} link={link} date={date} price={price} />;
           })}
         </div>
       )}
