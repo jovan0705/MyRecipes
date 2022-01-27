@@ -208,7 +208,7 @@ const successTopUp = async (req, res, next) => {
     const transaction = await BalanceHistory.findOne({
       where: { userId: id, isDone: false },
     });
-    await User.update({ balance: transaction.amount }, { where: { id } });
+    await User.update({ balance: balance+transaction.amount }, { where: { id } });
     res.status(200).json({
       message: `Success add Balance with Amount ${transaction.amount}`,
     });
