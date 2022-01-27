@@ -475,7 +475,7 @@ const feeds = async (req, res, next) => {
 
     const recipes = await Recipe.findAll({
       where: { userId: followedUser },
-      include: [{ model: User, attributes: ["name", "username"] }],
+      include: [{ model: User, attributes: ["name", "username", "profilePict"] }],
     });
 
     res.status(200).json(recipes);

@@ -28,6 +28,7 @@ const Feed = () => {
               createdAt={createdAt}
               creatorName={User.name}
               creatorUserName={User.username}
+              profilePict={User.profilePict}
             />
           );
         })
