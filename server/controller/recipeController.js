@@ -348,6 +348,7 @@ const editRecipe = async (req, res, next) => {
   try {
     // asumsi struktur tipe data step adalah array dan totalCalories sudah tertotal pas mengirimkan data input ke server
     let { name, steps, totalCalories, ingredients } = req.body;
+
     if(ingredients) {
       ingredients = ingredients.split(",");
     }
@@ -361,11 +362,14 @@ const editRecipe = async (req, res, next) => {
     const found = await Recipe.findByPk(id);
     if (!found) throw { name: "notFound" };
 
-    const response = await Recipe.update(
+    const resp = await Recipe.update(
       { name, steps: newSteps, totalCalories, imageUrl },
-      { where: { id, userId } }
+      { where: { id, userId },
+        returning: true }
     );
+    const response = resp[1][0].dataValues
     if (!response) throw { name: "errorUpdateRecipe" };
+    // console.log(response, 'INI RESPONSE')
     
     if(ingredients) {
       const payload = await ingredients.map((ingredientId) => {
@@ -375,6 +379,7 @@ const editRecipe = async (req, res, next) => {
           weight: 0,
         };
       });
+      console.log(payload, 'INI PAYLOAD')
       const createIngredients = await RecipeIngredients.bulkCreate(payload, {
         raw: true,
       });
