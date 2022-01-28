@@ -17,7 +17,7 @@ const BalanceCard = ({ name, balance }) => {
               alt="chip"
             />
           </div>
-          <div className="number">{rupiah(balance)}</div>
+          <div className="number">{(balance) ? rupiah(balance) : rupiah(0)}</div>
           <div className="name">{name}</div>
           <div className="ringCard"></div>
         </div>

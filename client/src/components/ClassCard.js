@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserClasses, registerClass, fetchClasses } from "../store/actionCreators/classesCreator";
 import { successAlert, errorAlert } from "../helpers/alerts";
 import { useEffect, useState } from "react";
-
+import { rupiah } from "../helpers/currencyFormatter";
 
 const ClassCard = ({ id, name, image, link, date, page, price }) => {
   const location = useLocation()
@@ -83,9 +83,10 @@ const ClassCard = ({ id, name, image, link, date, page, price }) => {
         </p> : <p>
           {link}
         </p>}
-        <p className="font-bold text-lg my-3">{price}</p>
-        
         <p>{`${date.split('T')[0]}`}</p>
+        {(location.pathname === '/classes') ? <p className="font-bold text-lg my-3">{rupiah(price)}</p> : <p></p>}
+        
+        
         <div class="card-actions">
           {(location.pathname === '/classes') ? btnRenderHandler() : <p></p>}
           

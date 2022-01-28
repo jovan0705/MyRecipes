@@ -609,7 +609,6 @@ describe("POST /recipes", () => {
       )
       .then((response) => {
         const result = response.body;
-        console.log(result, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
         expect(response.status).toEqual(500);
         expect(result).toBeInstanceOf(Object);
